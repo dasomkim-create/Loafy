@@ -1,0 +1,294 @@
+(function () {
+  const COATS = {
+    cheese:   { base: '#F49A3C', light: '#FFBE73', shade: '#D8742A', stripe: '#C45F1C', belly: '#FFE8C8', bellyShade: '#F2C995', line: '#5E2E14', ear: '#F6A2A6' },
+    mackerel: { base: '#9AA2AC', light: '#C3C9D0', shade: '#7A838E', stripe: '#565F6B', belly: '#F0F2F4', bellyShade: '#D1D6DB', line: '#2A2E36', ear: '#F2A7B0' },
+    tuxedo:   { base: '#3C3D47', light: '#5A5C6A', shade: '#2A2B33', stripe: '#3C3D47', belly: '#FAFAF6', bellyShade: '#D9D9D2', line: '#141419', ear: '#E99AA4' },
+    cow:      { base: '#FAFAF7', light: '#FFFFFF', shade: '#DCDCD6', stripe: '#FAFAF7', belly: '#FFFFFF', bellyShade: '#E4E4DE', line: '#1E1E24', ear: '#F2A2AC', patch: '#2A2A31', patchShade: '#18181C', patchLight: '#40404A' },
+    cream:    { base: '#EFD8B0', light: '#FAEBD0', shade: '#D8BA8A', stripe: '#CFA972', belly: '#FFF8EC', bellyShade: '#EEDDC2', line: '#6A4A2A', ear: '#F4A9AE' }
+  };
+  const COAT_NAMES = { cheese: '치즈', mackerel: '고등어', tuxedo: '턱시도', cow: '젖소', cream: '크림' };
+  const TYPES = {
+    slim:   { head: { x: 16, y: 10.6, rx: 7.2, ry: 6.3 }, chest: { x: 16, y: 20, rx: 4.7, ry: 6.4 }, haunch: { x: 16, y: 26, rx: 6.8, ry: 4.8 }, fp: { dx: 1.9, rx: 1.8, ry: 1.4 }, bp: { dx: 5.6, rx: 2, ry: 1.3 }, legs: 3.6 },
+    bulk:   { head: { x: 16, y: 10.2, rx: 7.6, ry: 6.4 }, chest: { x: 16, y: 19.6, rx: 9.8, ry: 6.2 }, haunch: { x: 16, y: 25.4, rx: 9.2, ry: 5.4 }, arms: { dx: 8.4, y: 23.4, rx: 3.7, ry: 6.8 }, fp: { dx: 8.2, rx: 3, ry: 1.6 }, legs: 0 },
+    normal: { head: { x: 16, y: 10.6, rx: 8.4, ry: 6.9 }, chest: { x: 16, y: 19.8, rx: 6, ry: 6.2 }, haunch: { x: 16, y: 25.3, rx: 8.8, ry: 5.5 }, fp: { dx: 2.4, rx: 2.2, ry: 1.5 }, bp: { dx: 7.4, rx: 2.3, ry: 1.4 }, legs: 4.4 },
+    jjin:   { head: { x: 16, y: 11.2, rx: 8.8, ry: 7 }, chest: { x: 16, y: 20.4, rx: 8.8, ry: 7 }, haunch: { x: 16, y: 25, rx: 11.4, ry: 5.9 }, fp: { dx: 3, rx: 2.4, ry: 1.5 }, bp: { dx: 9.2, rx: 2.4, ry: 1.4 }, legs: 5 },
+    loaf:   { head: { x: 16, y: 12.4, rx: 9, ry: 7 }, chest: null, haunch: { x: 16, y: 22.6, rx: 13.6, ry: 8.3 }, fp: { dx: 3.4, rx: 2.4, ry: 1.3 }, bp: { dx: 10.2, rx: 2.3, ry: 1.2 }, legs: 0 }
+  };
+  const BODY_NAMES = { slim: '날렵', bulk: '벌크', normal: '보통', jjin: '찐빵', loaf: '식빵' };
+  const W = 32, H = 32;
+  const inE = (px, py, e) => ((px - e.x) / e.rx) ** 2 + ((py - e.y) / e.ry) ** 2 <= 1;
+  const inSE = (px, py, e, p) => Math.abs((px - e.x) / e.rx) ** p + Math.abs((py - e.y) / e.ry) ** p <= 1;
+  const sgn = (p1, p2, p3) => (p1[0] - p3[0]) * (p2[1] - p3[1]) - (p2[0] - p3[0]) * (p1[1] - p3[1]);
+  const inT = (p, a, b, c) => { const d1 = sgn(p, a, b), d2 = sgn(p, b, c), d3 = sgn(p, c, a); return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); };
+  const shrink = (t, k) => { const cx = (t[0][0] + t[1][0] + t[2][0]) / 3, cy = (t[0][1] + t[1][1] + t[2][1]) / 3; return t.map(p => [cx + (p[0] - cx) * k, cy + (p[1] - cy) * k + 0.5]); };
+  const cache = {};
+
+  function make(type, coat, expr, pose) {
+    expr = expr || 'idle'; pose = pose || 'sit';
+    const key = [type, coat, expr, pose].join('|');
+    if (cache[key]) return cache[key];
+    const T = TYPES[type] || TYPES.normal, C = COATS[coat] || COATS.cheese;
+    const h = T.head, ch = T.chest, hn = T.haunch;
+    const ears = [-1, 1].map(s => [[h.x + s * (h.rx - 0.6), h.y - h.ry * 0.35], [h.x + s * (h.rx - 5.2), h.y - h.ry + 0.4], [h.x + s * (h.rx - 1.6), h.y - h.ry - 2.6]]);
+    const earsIn = ears.map(t => shrink(t, 0.48));
+    const tail = { x: 16 + hn.rx - 0.4 + (T.arms ? 2 : 0), y: 29.3, rx: 3.6, ry: 1.4 };
+    const legTop = ch ? ch.y + 2.5 : 99;
+    const region = new Array(W * H).fill(null);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const px = x + 0.5, py = y + 0.5; let r = null;
+      if (inE(px, py, tail)) r = 'tail';
+      if (inE(px, py, hn) || (ch && inE(px, py, ch))) r = 'body';
+      if (r === 'body' && T.legs && Math.abs(px - 16) < T.legs && py > legTop) r = 'leg';
+      if (T.arms && [-1, 1].some(s => inE(px, py, { ...T.arms, x: 16 + s * T.arms.dx }))) r = 'arm';
+      if (ears.some(t => inT([px, py], ...t))) r = earsIn.some(t => inT([px, py], ...t)) ? 'earIn' : 'ear';
+      if (inSE(px, py, h, 2.3)) r = 'head';
+      if (T.bp && [-1, 1].some(s => inE(px, py, { x: 16 + s * T.bp.dx, y: 30.3, rx: T.bp.rx, ry: T.bp.ry }))) r = 'paw';
+      if ([-1, 1].some(s => inE(px, py, { x: 16 + s * T.fp.dx, y: 30.1, rx: T.fp.rx, ry: T.fp.ry }))) r = 'paw';
+      if (py > 31) r = null;
+      region[y * W + x] = r;
+    }
+    const R = (x, y) => (x < 0 || y < 0 || x >= W || y >= H) ? null : region[y * W + x];
+    const M = (x, y) => !!R(x, y);
+    const belly = ch ? { x: 16, y: ch.y + 0.6, rx: ch.rx * 0.62, ry: ch.ry * 0.95 } : { x: 16, y: hn.y - 1.5, rx: hn.rx * 0.48, ry: 6 };
+    const ey = Math.round(h.y + 0.6), ex = Math.round(16 - h.rx * 0.52) - 1, ny = ey + 2;
+    const muzzle = { x: 16, y: ey + 2.7, rx: 3.6, ry: 2.3 };
+    const patches = C.patch ? [
+      { x: h.x - h.rx * 0.5, y: h.y - h.ry * 0.55, rx: h.rx * 0.55, ry: h.ry * 0.62 },
+      { x: 16 + hn.rx * 0.55, y: hn.y - 0.5, rx: hn.rx * 0.42, ry: hn.ry * 0.8 },
+      { x: 16 - (ch ? ch.rx : hn.rx * 0.6) * 0.85, y: (ch ? ch.y : hn.y - 4) - 1, rx: 2.4, ry: 2.2 }
+    ] : [];
+    const px = new Array(W * H).fill(null);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const r = R(x, y), cx = x + 0.5, cy = y + 0.5;
+      if (!r) { if (M(x + 1, y) || M(x - 1, y) || M(x, y + 1) || M(x, y - 1)) px[y * W + x] = C.line; continue; }
+      let kind = 'base';
+      if (r === 'earIn') kind = 'ear';
+      else if (r === 'paw') kind = 'belly';
+      else if (r === 'head') {
+        const top = h.y - h.ry;
+        if (inE(cx, cy, muzzle)) kind = 'belly';
+        else if ((x === 13 || x === 15 || x === 16 || x === 18) && cy < top + 3.8 && ((x === 15 || x === 16) ? cy < top + 3.2 : cy > top + 1)) kind = 'stripe';
+        else if (Math.abs(cx - 16) > h.rx - 2.2 && (y === ey || y === ey + 2)) kind = 'stripe';
+      } else if (r === 'body') {
+        if (inE(cx, cy, belly)) kind = 'belly';
+        else if (y % 3 === 1 && Math.abs(cx - 16) > Math.max(belly.rx, T.legs) + 0.8) kind = 'stripe';
+      } else if (r === 'leg') {
+        if (cy < legTop + 2 && inE(cx, cy, belly)) kind = 'belly';
+        else if (x === 15 || x === 16 || Math.abs(cx - 16) > T.legs - 1) kind = 'legline';
+        else if (y % 3 === 2) kind = 'stripe';
+      } else if (r === 'arm') {
+        if (y % 3 === 0) kind = 'stripe';
+        const s = x < 16 ? 1 : -1;
+        if (R(x + s, y) === 'body') kind = 'stripe';
+      } else if (r === 'tail') { if (x % 2 === 0) kind = 'stripe'; }
+      const patched = patches.length && (kind === 'base' || kind === 'stripe' || kind === 'legline') && (r === 'tail' || patches.some(p => inE(cx, cy, p)));
+      const shade = !M(x + 2, y + 1) || !M(x + 1, y + 2);
+      const light = !shade && (!M(x - 2, y - 1) || !M(x - 1, y - 2));
+      const chin = (r === 'body' || r === 'arm' || r === 'leg') && R(x, y - 1) === 'head';
+      const pawTop = r === 'paw' && R(x, y - 1) !== 'paw';
+      let c;
+      if (patched) c = (shade || chin || kind === 'legline') ? C.patchShade : light ? C.patchLight : C.patch;
+      else if (kind === 'base') c = (shade || chin) ? C.shade : light ? C.light : C.base;
+      else if (kind === 'legline') c = C.shade;
+      else if (kind === 'belly') c = (shade || chin || pawTop) ? C.bellyShade : C.belly;
+      else if (kind === 'stripe') c = chin ? C.shade : C.stripe;
+      else c = C[kind];
+      px[y * W + x] = c;
+    }
+    const set = (x, y, c) => { if (x >= 0 && y >= 0 && x < W && y < H) px[y * W + x] = c; };
+    const D = '#20140E', WH = '#FFFFFF', BL = '#FF8E9A', AM = '#7A5A48';
+    const EYES = {
+      idle:     [[0, -1, WH], [1, -1, D], [2, -1, D], [0, 0, D], [1, 0, D], [2, 0, D], [0, 1, D], [1, 1, AM], [2, 1, D], [1, -2, D]],
+      blink:    [[0, 0, D], [1, 0, D], [2, 0, D]],
+      happy:    [[0, 0, D], [1, -1, D], [2, 0, D]],
+      eat:      [[0, 0, D], [1, -1, D], [2, 0, D]],
+      sleep:    [[0, -1, D], [1, 0, D], [2, -1, D]],
+      surprise: [[1, -2, D], [0, -1, D], [2, -1, D], [0, 0, D], [2, 0, D], [1, 1, D], [1, -1, WH], [1, 0, WH]],
+      up:       [[0, -2, WH], [1, -2, D], [2, -2, D], [0, -1, D], [1, -1, D], [2, -1, D], [1, 0, AM]]
+    };
+    const rex = 31 - ex - 2;
+    (EYES[expr] || EYES.idle).forEach(([dx, dy, c]) => { set(ex + dx, ey + dy, c); set(rex + dx, ey + dy, c); });
+    [[ex - 1, ny], [ex, ny]].forEach(([x, y]) => { set(x, y, BL); set(31 - x, y, BL); });
+    set(15, ny, '#E2707C'); set(16, ny, '#E2707C');
+    const L = C.line;
+    if (expr === 'eat') { set(15, ny + 1, L); set(16, ny + 1, L); set(14, ny + 2, L); set(17, ny + 2, L); set(15, ny + 2, '#C2434E'); set(16, ny + 2, '#C2434E'); set(15, ny + 3, L); set(16, ny + 3, L); }
+    else if (expr === 'surprise') { set(15, ny + 1, L); set(16, ny + 1, L); set(14, ny + 2, L); set(17, ny + 2, L); set(15, ny + 3, L); set(16, ny + 3, L); set(15, ny + 2, '#C2434E'); set(16, ny + 2, '#C2434E'); }
+    else if (expr === 'sleep') { set(15, ny + 1, L); set(16, ny + 1, L); }
+    else { set(15, ny + 1, L); set(16, ny + 1, L); set(14, ny + 2, L); set(17, ny + 2, L); set(13, ny + 1, L); set(18, ny + 1, L); }
+
+    const bmp = (rows, ox, oy, map) => rows.forEach((row, yy) => [...row].forEach((k, xx) => { if (map[k]) set(ox + xx, oy + yy, map[k]); }));
+    if (pose === 'letter') {
+      const ox = 11, oy = (ch ? Math.round(ch.y) + 1 : 20);
+      bmp(['##########', '#oWWWWWWo#', '#WoWWWWoW#', '#WWorrWWW#'.replace('WWorrWWW', 'WWorroWW'), '#WWWWWWWW#', '##########'], ox, oy, { '#': L, 'W': '#FFFFFF', 'o': '#B9BCC4', 'r': '#E5484D' });
+      bmp(['LL', 'BB'], ox - 1, oy + 2, { L: L, B: C.belly }); bmp(['LL', 'BB'], ox + 9, oy + 2, { L: L, B: C.belly });
+    } else if (pose === 'stamp') {
+      bmp(['.r.r.', 'r...r', '.rrr.', 'rrrrr', '.rrr.'], 26, 26, { r: '#E5484D' });
+    } else if (pose === 'sleep') {
+      bmp(['###', '.#.', '###'].map(s => s.replace('.#.', '..#').replace('..#', '.#.')), 25, 3, { '#': '#5B6472' });
+      bmp(['##', '##'], 29, 0, { '#': '#8E929B' });
+    }
+    return (cache[key] = { w: W, h: H, px });
+  }
+
+  function draw(ctx, spr, ox, oy, s, map) {
+    for (let y = 0; y < spr.h; y++) for (let x = 0; x < spr.w; x++) {
+      let c = spr.px[y * spr.w + x]; if (!c) continue;
+      if (map) { c = map(c); if (!c) continue; }
+      ctx.fillStyle = c; ctx.fillRect((ox + x) * s, (oy + y) * s, s, s);
+    }
+  }
+
+  // ---------- pixel icons (12x12): '#' body, 'o' detail ----------
+  const ICONS = {
+    home: ['.....##.....', '....####....', '...######...', '..########..', '.##########.', '############', '.##########.', '.####oo####.', '.####oo####.', '.####oo####.', '.####oo####.', '............'],
+    record: ['...#....#...', '.##########.', '.##########.', '.#oooooooo#.', '.##########.', '.###o##o###.', '.##########.', '.###o##o###.', '.##########.', '.##########.', '............', '............'],
+    my: ['.#........#.', '.##......##.', '.###....###.', '.##########.', '############', '###o####o###', '############', '#####oo#####', '############', '.##########.', '..########..', '............'],
+    paw: ['..##....##..', '.####..####.', '.####..####.', '..##....##..', '............', '....####....', '..########..', '.##########.', '.##########.', '.##########.', '..###..###..', '............'],
+    share: ['.....##.....', '....####....', '...######...', '.....##.....', '.....##.....', '.....##.....', '.....##.....', '............', '.##......##.', '.##########.', '.##########.', '............'],
+    brush: ['.....##.....', '.....##.....', '....####....', '....####....', '..########..', '############', '############', '..########..', '....####....', '....####....', '.....##.....', '.....##.....'],
+    letter: ['............', '############', '#o########o#', '##o######o##', '###o####o###', '####oooo####', '############', '############', '############', '############', '............', '............'],
+    bell: ['.....##.....', '....####....', '...######...', '..########..', '..########..', '..########..', '.##########.', '############', '............', '....####....', '.....##.....', '............']
+  };
+  const ICON_FILL = { home: '#F49A3C', record: '#8FC7B4', my: '#F6A2A6', paw: '#F49A3C', share: '#9DB6E6', brush: '#F2C14E', letter: '#FFF6E6', bell: '#F2C14E' };
+  function drawIcon(ctx, name, s, active, lineColor) {
+    const rows = ICONS[name]; if (!rows) return;
+    const at = (x, y) => (y < 0 || y >= 12 || x < 0 || x >= 12) ? '.' : rows[y][x];
+    const ink = '#2F343D';
+    for (let y = 0; y < 12; y++) for (let x = 0; x < 12; x++) {
+      const k = at(x, y); if (k === '.') continue;
+      const edge = [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => at(x + dx, y + dy) === '.');
+      let c = null;
+      if (active) c = edge ? ink : k === 'o' ? ink : ICON_FILL[name];
+      else if (edge || k === 'o') c = lineColor;
+      if (c) { ctx.fillStyle = c; ctx.fillRect(x * s, y * s, s, s); }
+    }
+  }
+
+  // ---------- LCD sim (shared by 3D device + fullscreen) ----------
+  const N = 48, CELL = 8;
+  const FONT = {
+    '0': ['###', '#.#', '#.#', '#.#', '###'], '1': ['.#.', '##.', '.#.', '.#.', '###'], '2': ['###', '..#', '###', '#..', '###'],
+    '3': ['###', '..#', '.##', '..#', '###'], '4': ['#.#', '#.#', '###', '..#', '..#'], '5': ['###', '#..', '###', '..#', '###'],
+    '6': ['###', '#..', '###', '#.#', '###'], '7': ['###', '..#', '.#.', '.#.', '.#.'], '8': ['###', '#.#', '###', '#.#', '###'],
+    '9': ['###', '#.#', '###', '..#', '###'], 'D': ['##.', '#.#', '#.#', '#.#', '##.'], '+': ['...', '.#.', '###', '.#.', '...']
+  };
+  const LICONS = { feed: ['.....', '#.##.', '#####', '#.##.', '.....'], pet: ['.#.#.', '#####', '#####', '.###.', '..#..'], stat: ['....#', '..#.#', '..#.#', '#.#.#', '#.#.#'] };
+  const HEART3 = ['#.#', '###', '.#.'];
+  const BOWL = ['.#.#..', '######', '#....#', '.####.'], BOWL_E = ['......', '######', '#....#', '.####.'];
+  const BODIES = ['slim', 'bulk', 'normal', 'jjin', 'loaf'];
+
+  class Sim {
+    constructor() { this.menu = 0; this.mode = 'home'; this.anim = null; this.animT = 0; this.mood = 3; }
+    play(a) { this.anim = a; this.animT = performance.now(); this.mode = 'home'; if (a === 'pet') this.mood = Math.min(4, this.mood + 1); }
+    button(i) {
+      if (i === 0) { if (this.mode === 'home' && !this.anim) this.menu = (this.menu + 1) % 3; return null; }
+      if (i === 1) {
+        if (this.mode === 'status') { this.mode = 'home'; return null; }
+        if (this.anim) return null;
+        if (this.menu === 0) { this.play('eat'); return 'feed'; }
+        if (this.menu === 1) { this.play('pet'); return 'pet'; }
+        this.mode = 'status'; return null;
+      }
+      this.mode = 'home'; this.anim = null; return 'back';
+    }
+    draw(ctx, now, o) {
+      const mono = o.lcd === 'mono';
+      const buf = new Array(N * N).fill(null);
+      const put = (x, y, c) => { x |= 0; y |= 0; if (x >= 0 && y >= 0 && x < N && y < N) buf[y * N + x] = c; };
+      const ink = mono ? '#2E3A26' : '#3A2A22', red = mono ? ink : '#E5566A', off = mono ? '#8FA07C' : '#D8CBB4';
+      const bmp = (rows, ox, oy, c, sc) => { sc = sc || 1; rows.forEach((row, y) => [...row].forEach((chr, x) => { if (chr === '#') for (let a = 0; a < sc; a++) for (let b = 0; b < sc; b++) put(ox + x * sc + a, oy + y * sc + b, c); })); };
+      const text = (str, ox, oy, c, sc) => { sc = sc || 1; [...str].forEach((chr, k) => FONT[chr] && bmp(FONT[chr], ox + k * 4 * sc, oy, c, sc)); };
+      const t = now / 1000, streak = String(o.streak || 12), body = o.body || 'normal', coat = o.coat || 'cheese';
+      if (this.anim && now - this.animT > (this.anim === 'eat' ? 2600 : 1800)) this.anim = null;
+      if (this.mode === 'status') {
+        const wT = ('D+' + streak).length * 8 - 2; text('D+' + streak, (N - wT) / 2, 6, ink, 2);
+        for (let k = 0; k < 4; k++) bmp(HEART3, 10 + k * 8, 22, k < this.mood ? red : off, 2);
+        BODIES.forEach((b, k) => { const x = 6 + k * 8, on = b === body; for (let a = 0; a < 6; a++) for (let c = 0; c < 6; c++) if (on || a === 0 || c === 0 || a === 5 || c === 5) put(x + a, 34 + c, on ? (mono ? ink : '#F49A3C') : ink); });
+      } else {
+        bmp(HEART3, 2, 2, red); text('D+' + streak, 7, 1, ink);
+        for (let k = 0; k < 4; k++) bmp(HEART3, N - 18 + k * 4, 2, k < this.mood ? red : off);
+        let expr = 'idle', ox = 8, bob = Math.floor(t / 0.6) % 2;
+        const el = (now - this.animT) / 1000;
+        if (this.anim === 'eat') { expr = Math.floor(el / 0.28) % 2 ? 'eat' : 'idle'; ox = 4; bob = 0; }
+        else if (this.anim === 'pet') { expr = 'happy'; bob = Math.floor(el / 0.2) % 2; }
+        else if ((t % 3.4) < 0.14) expr = 'blink';
+        const spr = make(body, coat, expr);
+        const map = mono ? (c) => { const n = parseInt(c.slice(1), 16), l = (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255; return l < 0.4 ? ink : l < 0.72 ? '#5F7150' : l < 0.9 ? '#91A47E' : null; } : null;
+        for (let y = 0; y < spr.h; y++) for (let x = 0; x < spr.w; x++) { let c = spr.px[y * spr.w + x]; if (!c) continue; if (map) { c = map(c); if (!c) continue; } put(ox + x, 7 + bob + y, c); }
+        if (this.anim === 'eat') bmp(el < 1.6 ? BOWL : BOWL_E, 38, 34, mono ? ink : '#4F8FD6');
+        if (this.anim === 'pet') [[36, 20], [6, 16], [38, 10]].forEach(([x, y], k) => { const p = el * 1.2 - k * 0.3; if (p > 0 && p < 1) bmp(HEART3, x, y - p * 8, red, 2); });
+        ['feed', 'pet', 'stat'].forEach((k, i) => {
+          const x = 8 + i * 13, y = 41, sel = this.menu === i;
+          if (sel) for (let a = -1; a < 6; a++) for (let b = -1; b < 6; b++) put(x + a, y + b, ink);
+          bmp(LICONS[k], x, y, sel ? (mono ? '#B7C7A2' : '#F6F0E1') : ink);
+        });
+      }
+      ctx.fillStyle = mono ? '#B7C7A2' : '#F6F0E1'; ctx.fillRect(0, 0, N * CELL, N * CELL);
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        ctx.fillStyle = buf[y * N + x] || (mono ? '#AEBF98' : '#EEE6D3');
+        ctx.fillRect(x * CELL + 0.5, y * CELL + 0.5, CELL - 1, CELL - 1);
+      }
+    }
+  }
+
+  window.LoafySprites = { make, draw, drawIcon, COATS, COAT_NAMES, TYPES, BODY_NAMES, ICONS, ICON_FILL, Sim, LCD_SIZE: N * CELL };
+
+  class LoafySprite extends HTMLElement {
+    static get observedAttributes() { return ['type', 'coat', 'expr', 'pose', 'scale', 'animate']; }
+    connectedCallback() {
+      if (!this.cv) { this.cv = document.createElement('canvas'); this.cv.style.imageRendering = 'pixelated'; this.cv.style.display = 'block'; this.appendChild(this.cv); }
+      this.style.display = 'inline-block';
+      this.render();
+      if (this.hasAttribute('animate')) this.loop();
+    }
+    disconnectedCallback() { clearTimeout(this.t); }
+    attributeChangedCallback() { if (this.cv) this.render(); }
+    loop() { clearTimeout(this.t); this.frame = (this.frame || 0) + 1; this.render(); this.t = setTimeout(() => this.loop(), this.frame % 6 === 5 ? 140 : 520); }
+    render() {
+      const s = +(this.getAttribute('scale') || 4), anim = this.hasAttribute('animate'), f = this.frame || 0;
+      let expr = this.getAttribute('expr') || 'idle';
+      if (anim && expr === 'idle' && f % 6 === 5) expr = 'blink';
+      const spr = make(this.getAttribute('type') || 'normal', this.getAttribute('coat') || 'cheese', expr, this.getAttribute('pose') || 'sit');
+      this.cv.width = spr.w * s; this.cv.height = (spr.h + 1) * s;
+      const ctx = this.cv.getContext('2d'); ctx.clearRect(0, 0, this.cv.width, this.cv.height);
+      draw(ctx, spr, 0, anim && f % 2 ? 1 : 0, s);
+    }
+  }
+  if (!customElements.get('loafy-sprite')) customElements.define('loafy-sprite', LoafySprite);
+
+  class LoafyIcon extends HTMLElement {
+    static get observedAttributes() { return ['name', 'size', 'active', 'color']; }
+    connectedCallback() {
+      if (!this.cv) { this.cv = document.createElement('canvas'); this.cv.style.imageRendering = 'pixelated'; this.cv.style.display = 'block'; this.appendChild(this.cv); }
+      this.style.display = 'inline-block'; this.style.lineHeight = '0'; this.render();
+    }
+    attributeChangedCallback() { if (this.cv) this.render(); }
+    render() {
+      const size = +(this.getAttribute('size') || 24), s = Math.max(1, Math.round(size / 12)), dpr = 2;
+      const a = this.getAttribute('active'), active = a !== null && a !== 'false';
+      this.cv.width = 12 * s * dpr; this.cv.height = 12 * s * dpr; this.cv.style.width = 12 * s + 'px'; this.cv.style.height = 12 * s + 'px';
+      const ctx = this.cv.getContext('2d'); ctx.clearRect(0, 0, this.cv.width, this.cv.height);
+      drawIcon(ctx, this.getAttribute('name'), s * dpr, active, this.getAttribute('color') || '#8E929B');
+    }
+  }
+  if (!customElements.get('loafy-icon')) customElements.define('loafy-icon', LoafyIcon);
+
+  class LoafyLcd extends HTMLElement {
+    static get observedAttributes() { return ['body', 'coat', 'lcd', 'streak']; }
+    connectedCallback() {
+      if (this.cv) return;
+      this.sim = new Sim();
+      this.cv = document.createElement('canvas'); this.cv.width = this.cv.height = N * CELL;
+      Object.assign(this.cv.style, { width: '100%', height: '100%', display: 'block' });
+      Object.assign(this.style, { display: 'block', width: '100%', height: '100%' });
+      this.appendChild(this.cv);
+      const tick = (now) => { this.raf = requestAnimationFrame(tick); if (now - (this.last || 0) < 80) return; this.last = now; this.draw(now); };
+      this.raf = requestAnimationFrame(tick);
+    }
+    disconnectedCallback() { cancelAnimationFrame(this.raf); this.cv && this.cv.remove(); this.cv = null; }
+    draw(now) { this.sim.draw(this.cv.getContext('2d'), now, { body: this.getAttribute('body'), coat: this.getAttribute('coat'), lcd: this.getAttribute('lcd'), streak: this.getAttribute('streak') }); }
+    play(a) { this.sim.play(a); }
+    button(i) { const r = this.sim.button(i); if (r === 'feed') this.dispatchEvent(new CustomEvent('loafy:device-feed', { bubbles: true })); return r; }
+  }
+  if (!customElements.get('loafy-lcd')) customElements.define('loafy-lcd', LoafyLcd);
+})();

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./loafy-sprites.js"></script>
+<style>
+@font-face{font-family:"Pretendard Variable";src:url("./fonts/PretendardVariable.woff2") format("woff2-variations");font-weight:45 920;font-display:swap}
+body{margin:0;background:#E6E7EB;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em}
+a{color:#1E2228;text-decoration:none}a:hover{color:#111418}
+button,input,textarea{font-family:inherit;letter-spacing:inherit}
+textarea::placeholder,input::placeholder{color:#B0B3BA}
+</style>
+</helmet>
+
+<div style="width:402px;height:874px;padding:12px;background:#111114;border-radius:66px;box-shadow:0 30px 80px rgba(0,0,0,0.22);font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif">
+<div ref="{{ rootRef }}" data-loafy-root="{{ uid }}" style="position:relative;width:402px;height:874px;border-radius:54px;overflow:hidden;background:#FFFFFF;color:#000">
+
+  <sc-if value="{{ is.login }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="01 로그인" style="position:absolute;inset:0;background:#FFFFFF;display:flex;flex-direction:column;padding:54px 0 0">
+      <div style="padding:64px 24px 0;display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:15px;font-weight:700;color:#5B6472;font-style:italic;letter-spacing:0">Loafy</span>
+        <span style="font-size:28px;line-height:38px;font-weight:700;color:#000">매일 한 번 출석하고<br>고양이를 키워요</span>
+        <span style="font-size:16px;line-height:24px;color:rgba(60,60,67,0.6)">출석하면 날렵해지고, 빠지면 식빵이 돼요</span>
+      </div>
+      <div style="flex:1;position:relative;min-height:0">
+        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" fit-scale="0.8" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
+      </div>
+      <div style="padding:0 20px 42px;display:flex;flex-direction:column;gap:10px">
+        <button onClick="{{ nav.obName }}" style="height:56px;border:0;border-radius:16px;background:#000;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
+          <svg width="18" height="20" viewBox="0 0 17 20" fill="#fff"><path d="M14.1 10.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9C3.6 4.8 2 5.8 1.1 7.4c-1.9 3.2-.5 8 1.3 10.6.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.8 3.4-.8s2 .8 3.4.8c1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-3-.1 0-2.9-1.1-3-4.4zM11.5 3c.7-.9 1.2-2 1.1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"></path></svg>
+          Apple로 계속하기
+        </button>
+        <button onClick="{{ nav.obName }}" style="height:56px;border:0;border-radius:16px;background:#FEE500;color:#191919;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
+          <svg width="20" height="18" viewBox="0 0 20 18" fill="#191919"><path d="M10 0C4.5 0 0 3.5 0 7.8c0 2.8 1.9 5.3 4.7 6.6l-1 3.6c-.1.3.3.6.6.4l4.3-2.8c.5.1.9.1 1.4.1 5.5 0 10-3.5 10-7.9S15.5 0 10 0z"></path></svg>
+          카카오로 계속하기
+        </button>
+        <button onClick="{{ nav.obName }}" style="height:44px;border:0;background:transparent;color:rgba(60,60,67,0.6);font-size:15px;font-weight:500;cursor:pointer">다른 방법으로 시작하기</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.ob }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="02 온보딩" style="position:absolute;inset:0;background:#FFFFFF;display:flex;flex-direction:column;padding-top:54px">
+      <div style="height:52px;display:flex;align-items:center;gap:8px;padding:0 20px 0 8px">
+        <button onClick="{{ obBack }}" style="width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+        </button>
+        <div style="flex:1;height:4px;border-radius:2px;background:#ECEDF0;overflow:hidden">
+          <div style="height:4px;border-radius:2px;background:#1E2228;width:{{ obPct }};transition:width 280ms cubic-bezier(0.32,0.72,0,1)"></div>
+        </div>
+        <span style="font-size:13px;font-weight:600;color:rgba(60,60,67,0.6);min-width:28px;text-align:right">{{ obStep }}</span>
+      </div>
+
+      <sc-if value="{{ is.obName }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:36px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:26px;line-height:36px;font-weight:700">고양이 이름을<br>지어주세요</span>
+            <span style="font-size:16px;color:rgba(60,60,67,0.6)">나중에 마이에서 바꿀 수 있어요</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:13px;font-weight:600;color:#1E2228">이름</span>
+            <input value="{{ name }}" onChange="{{ onName }}" maxlength="8" style="border:0;border-bottom:2px solid #1E2228;outline:none;font-size:24px;font-weight:600;padding:6px 0 10px;background:transparent;color:#000">
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is.obGoal }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:28px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:26px;line-height:36px;font-weight:700">{{ name }}{{ jo.eul }} 어떤 모습으로<br>키우고 싶나요?</span>
+            <span style="font-size:16px;color:rgba(60,60,67,0.6)">6일 연속 출석하면 이 모습이 돼요</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ goals }}" as="g" hint-placeholder-count="2">
+              <button onClick="{{ g.pick }}" style="display:flex;align-items:center;gap:16px;padding:14px 20px 14px 14px;border-radius:20px;border:2px solid {{ g.border }};background:{{ g.bg }};cursor:pointer;text-align:left">
+                <div style="width:84px;height:84px;border-radius:16px;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
+                  <x-import component-from-global-scope="loafy-sprite" type="{{ g.key }}" coat="{{ coat }}" scale="2" hint-size="64px,66px"></x-import>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+                  <span style="font-size:19px;font-weight:700;color:#000">{{ g.name }}</span>
+                  <span style="font-size:15px;color:rgba(60,60,67,0.6)">{{ g.desc }}</span>
+                </div>
+                <div style="width:24px;height:24px;border-radius:50%;background:{{ g.dot }};display:flex;align-items:center;justify-content:center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                </div>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is.obCoat }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:24px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:26px;line-height:36px;font-weight:700">털색을 골라주세요</span>
+            <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ coatName }}</span>
+          </div>
+          <div style="height:236px;border-radius:24px;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
+            <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ coat }}" scale="6" animate="" hint-size="192px,198px"></x-import>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px">
+            <sc-for list="{{ coats }}" as="k" hint-placeholder-count="5">
+              <button onClick="{{ k.pick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0 8px;border-radius:16px;border:2px solid {{ k.border }};background:#F4F5F7;cursor:pointer">
+                <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ k.key }}" scale="1.5" hint-size="48px,50px"></x-import>
+                <span style="font-size:13px;font-weight:600;color:#1E2228">{{ k.name }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is.obShell }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:26px;line-height:36px;font-weight:700">다마고치 색을 골라주세요</span>
+          <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ shellName }} · 나중에 마이에서 바꿀 수 있어요</span>
+        </div>
+        <div style="position:relative;height:380px">
+          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" fit-scale="0.8" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,380px"></x-import>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:0 24px">
+          <sc-for list="{{ shells }}" as="s" hint-placeholder-count="6">
+            <button onClick="{{ s.pick }}" title="{{ s.name }}" style="width:48px;height:48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer">
+              <span style="width:38px;height:38px;border-radius:50%;background:{{ s.hex }};box-shadow:{{ s.ring }}"></span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is.obTime }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:28px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:26px;line-height:36px;font-weight:700">언제 출석할까요?</span>
+            <span style="font-size:16px;color:rgba(60,60,67,0.6)">정한 시간에 {{ name }}{{ jo.ga }} 알려드려요</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ alarms }}" as="a" hint-placeholder-count="3">
+              <button onClick="{{ a.pick }}" style="display:flex;align-items:center;gap:14px;height:72px;padding:0 20px;border-radius:18px;border:2px solid {{ a.border }};background:{{ a.bg }};cursor:pointer;text-align:left">
+                <x-import component-from-global-scope="loafy-icon" name="bell" size="24" active="{{ a.on }}" hint-size="24px,24px"></x-import>
+                <span style="flex:1;font-size:18px;font-weight:600;color:#000">{{ a.name }}</span>
+                <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ a.time }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is.obRule }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:24px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:26px;line-height:36px;font-weight:700">{{ name }}{{ jo.eunneun }}<br>출석에 따라 모습이 바뀌어요</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:14px;padding:8px 0">
+                <div style="width:60px;height:60px;border-radius:14px;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
+                  <x-import component-from-global-scope="loafy-sprite" type="{{ r.type }}" coat="{{ coat }}" expr="{{ r.expr }}" pose="{{ r.pose }}" scale="1.5" hint-size="48px,50px"></x-import>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:2px">
+                  <span style="font-size:17px;font-weight:700">{{ r.title }}</span>
+                  <span style="font-size:15px;color:rgba(60,60,67,0.6)">{{ r.desc }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 20px 42px;background:#FFFFFF">
+        <button onClick="{{ obNext }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer;opacity:{{ obOpacity }}" style-active="background:#111418;transform:scale(0.98)">{{ obCta }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.home }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="03 홈" style="position:absolute;inset:0;background:#F2F2F7;padding-top:54px;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:6px 16px 0 20px">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:13px;color:rgba(60,60,67,0.6)">10월 13일 화요일</span>
+          <span style="font-size:34px;line-height:41px;font-weight:700">{{ name }}</span>
+        </div>
+        <div style="display:flex;gap:8px;padding-bottom:2px">
+          <button onClick="{{ nav.share }}" title="공유" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.78);box-shadow:0 8px 24px rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <x-import component-from-global-scope="loafy-icon" name="share" size="24" color="#1E2228" hint-size="24px,24px"></x-import>
+          </button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 20px 0">
+        <span style="height:28px;padding:0 12px;border-radius:999px;background:#FFFFFF;color:#1E2228;box-shadow:0 2px 8px rgba(0,0,0,0.06);font-size:13px;font-weight:700;display:flex;align-items:center;white-space:nowrap">D+{{ streak }} 연속 출석</span>
+        <span style="font-size:13px;color:rgba(60,60,67,0.6);white-space:nowrap">{{ bodyName }} · {{ nextHint }}</span>
+      </div>
+
+      <sc-if value="{{ showMissed }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ nav.letter }}" style="margin:12px 16px 0;padding:12px 14px;border:0;border-radius:18px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.05);display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer">
+          <x-import component-from-global-scope="loafy-icon" name="letter" size="24" active="true" hint-size="24px,24px"></x-import>
+          <div style="flex:1;display:flex;flex-direction:column;gap:1px">
+            <span style="font-size:15px;font-weight:600;color:#000">어제 출석을 못 했어요</span>
+            <span style="font-size:13px;color:rgba(60,60,67,0.6)">사연을 보내면 연속 기록이 이어져요</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4C6CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+        </button>
+      </sc-if>
+
+      <div style="position:relative;flex:1;min-height:0">
+        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
+        <span style="position:absolute;left:0;right:0;bottom:4px;text-align:center;font-size:12px;color:rgba(60,60,67,0.45);pointer-events:none">화면을 누르면 크게 볼 수 있어요</span>
+      </div>
+
+      <div style="padding:12px 16px 112px">
+        <sc-if value="{{ notChecked }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ checkinBtn }}" style="width:100%;height:64px;border:0;border-radius:20px;background:#1E2228;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 8px 24px rgba(30,34,40,0.28)" style-active="background:#111418;transform:scale(0.98)">
+            <x-import component-from-global-scope="loafy-icon" name="paw" size="24" active="true" hint-size="24px,24px"></x-import>
+            <span style="font-size:19px;font-weight:700">오늘 출석하기</span>
+          </button>
+        </sc-if>
+        <sc-if value="{{ checked }}" hint-placeholder-val="{{ false }}">
+          <div style="width:100%;height:64px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E2228" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span style="font-size:17px;font-weight:700;color:#1E2228">오늘 출석 완료</span>
+            <span style="font-size:15px;color:rgba(60,60,67,0.6)">· 내일 또 만나요</span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.lcd }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="04 다마고치 화면" style="position:absolute;inset:0;background:{{ shell }};padding-top:54px;display:flex;flex-direction:column;align-items:center">
+      <span style="margin-top:28px;font-size:20px;font-weight:800;font-style:italic;color:#26262C;letter-spacing:0">Loafy</span>
+      <div style="margin-top:18px;width:362px;height:362px;padding:14px;border-radius:40px;background:#0C0C10;box-shadow:0 12px 32px rgba(0,0,0,0.25)">
+        <div style="width:362px;height:362px;border-radius:12px;overflow:hidden">
+          <x-import component-from-global-scope="loafy-lcd" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" hint-size="362px,362px"></x-import>
+        </div>
+      </div>
+      <div style="margin-top:36px;display:flex;gap:40px;align-items:flex-start">
+        <sc-for list="{{ lcdBtns }}" as="b" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:{{ b.dy }}">
+            <button onClick="{{ b.press }}" style="width:64px;height:64px;border-radius:50%;border:4px solid rgba(0,0,0,0.12);background:#1B1B20;box-shadow:inset 0 -4px 0 rgba(0,0,0,0.4),0 6px 14px rgba(0,0,0,0.2);cursor:pointer" style-active="transform:scale(0.94)"></button>
+            <span style="font-size:13px;font-weight:600;color:rgba(0,0,0,0.55)">{{ b.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <button onClick="{{ nav.home }}" style="position:absolute;left:20px;right:20px;bottom:42px;height:56px;border-radius:999px;border:1px solid rgba(255,255,255,0.6);background:rgba(250,250,250,0.72);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 8px 40px rgba(0,0,0,0.12);font-size:17px;font-weight:600;color:#000;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"></path><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"></path></svg>
+        돌아가기
+      </button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.checkin }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="05 출석 완료" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column;align-items:center">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding-bottom:60px">
+        <div style="width:240px;height:240px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" expr="happy" pose="stamp" scale="5" hint-size="160px,165px"></x-import>
+        </div>
+        <span style="font-size:17px;font-weight:600;color:#5B6472">출석 완료</span>
+        <span style="font-size:56px;line-height:64px;font-weight:800;color:#000;letter-spacing:-0.02em">D+{{ streak }}</span>
+        <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ nextHint }}</span>
+      </div>
+      <div style="width:100%;box-sizing:border-box;padding:0 20px 42px;display:flex;flex-direction:column;gap:8px">
+        <button onClick="{{ nav.share }}" style="height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418;transform:scale(0.98)">공유카드 만들기</button>
+        <button onClick="{{ nav.home }}" style="height:56px;border:0;border-radius:16px;background:#F2F3F5;color:#1E2228;font-size:17px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">확인</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.share }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="06 공유카드" style="position:absolute;inset:0;background:#F2F2F7;padding-top:54px;display:flex;flex-direction:column;align-items:center">
+      <div style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;position:relative">
+        <span style="font-size:17px;font-weight:600">공유카드</span>
+        <button onClick="{{ nav.home }}" style="position:absolute;right:12px;width:44px;height:44px;border:0;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div style="margin-top:16px;width:318px;padding:20px;border-radius:30px;background:#FFFFFF;box-shadow:0 20px 48px rgba(0,0,0,0.14);display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:17px;font-weight:800;font-style:italic;color:#26262C;letter-spacing:0">Loafy</span>
+          <span style="font-size:13px;font-weight:600;color:rgba(0,0,0,0.5)">2026.10.13</span>
+        </div>
+        <div style="position:relative;height:300px;margin:0 -8px">
+          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" still="" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,300px"></x-import>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;padding:0 4px">
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:15px;font-weight:600;color:rgba(0,0,0,0.55)">{{ name }} · {{ bodyName }}</span>
+            <span style="font-size:34px;line-height:40px;font-weight:800;color:#111">D+{{ streak }}</span>
+          </div>
+          <span style="font-size:13px;font-weight:600;color:rgba(0,0,0,0.55);padding-bottom:6px">연속 출석 중</span>
+        </div>
+      </div>
+      <div style="margin-top:32px;display:flex;gap:20px">
+        <sc-for list="{{ shareTargets }}" as="t" hint-placeholder-count="4">
+          <button onClick="{{ t.tap }}" style="width:64px;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;padding:0">
+            <span style="width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E2228" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.d }}"></path></svg>
+            </span>
+            <span style="font-size:12px;font-weight:500;color:#1E2228">{{ t.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.letter }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="07 사연 보내기" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column">
+      <div style="height:52px;display:flex;align-items:center;padding:0 8px">
+        <button onClick="{{ nav.home }}" style="width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+        </button>
+      </div>
+      <div style="padding:12px 24px 0;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:26px;line-height:36px;font-weight:700">어제 왜 못 왔나요?</span>
+            <span style="font-size:15px;line-height:22px;color:rgba(60,60,67,0.6)">사연을 보내면 연속 기록이 이어져요<br>한 달에 2번까지 보낼 수 있어요</span>
+          </div>
+          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" pose="letter" scale="2.5" hint-size="80px,83px"></x-import>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <textarea value="{{ letter }}" onChange="{{ onLetter }}" maxlength="200" placeholder="예) 야근하느라 출석을 깜빡했어요" style="height:180px;resize:none;border:0;outline:none;border-radius:18px;background:#F4F5F7;padding:18px;font-size:17px;line-height:26px;color:#000;box-sizing:border-box"></textarea>
+          <span style="align-self:flex-end;font-size:13px;color:rgba(60,60,67,0.45)">{{ letterLen }}/200</span>
+        </div>
+      </div>
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 20px 42px">
+        <button onClick="{{ sendLetter }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer;opacity:{{ letterOpacity }}" style-active="background:#111418">사연 보내기</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.letterDone }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="08 사연 완료" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding-bottom:60px">
+        <div style="width:220px;height:220px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;margin-bottom:18px">
+          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" expr="happy" scale="4.5" hint-size="144px,149px"></x-import>
+        </div>
+        <span style="font-size:26px;font-weight:700">사연이 도착했어요</span>
+        <span style="font-size:16px;color:rgba(60,60,67,0.6)">연속 기록이 이어졌어요 · D+{{ streak }}</span>
+      </div>
+      <div style="padding:0 20px 42px">
+        <button onClick="{{ nav.home }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer">홈으로</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.edit }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="09 다마고치 꾸미기" style="position:absolute;inset:0;background:#F2F2F7;padding-top:54px;display:flex;flex-direction:column">
+      <div style="height:52px;display:flex;align-items:center;justify-content:center;position:relative">
+        <button onClick="{{ nav.home }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+        </button>
+        <span style="font-size:17px;font-weight:600">다마고치 꾸미기</span>
+      </div>
+      <div style="position:relative;height:380px">
+        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,380px"></x-import>
+      </div>
+      <div style="margin:8px 16px 0;padding:18px 16px;border-radius:22px;background:#fff;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:rgba(60,60,67,0.6)">케이스 · {{ shellName }}</span>
+          <div style="display:flex;justify-content:space-between">
+            <sc-for list="{{ shells }}" as="s" hint-placeholder-count="6">
+              <button onClick="{{ s.pick }}" title="{{ s.name }}" style="width:44px;height:44px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                <span style="width:34px;height:34px;border-radius:50%;background:{{ s.hex }};box-shadow:{{ s.ring }}"></span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:rgba(60,60,67,0.6)">화면</span>
+          <div style="display:flex;height:36px;padding:2px;border-radius:10px;background:rgba(120,120,128,0.12)">
+            <sc-for list="{{ lcdModes }}" as="m" hint-placeholder-count="2">
+              <button onClick="{{ m.pick }}" style="flex:1;border:0;border-radius:8px;background:{{ m.bg }};box-shadow:{{ m.shadow }};font-size:14px;font-weight:600;color:#000;cursor:pointer">{{ m.name }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 20px 42px">
+        <button onClick="{{ saveEdit }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418">저장</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.record }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="10 기록" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column;overflow-y:auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 0 20px">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:14px;font-weight:600;color:#8B95A1">{{ cal.year }}년</span>
+          <span style="font-size:34px;line-height:41px;font-weight:800;color:#191F28">{{ cal.month }}월</span>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button onClick="{{ cal.prev }}" title="이전 달" style="width:40px;height:40px;border:0;border-radius:50%;background:#F2F4F6;color:{{ cal.prevColor }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-active="background:#E5E8EB"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+          <button onClick="{{ cal.next }}" title="다음 달" style="width:40px;height:40px;border:0;border-radius:50%;background:#F2F4F6;color:{{ cal.nextColor }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-active="background:#E5E8EB"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:18px 12px 6px">
+        <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+          <span style="text-align:center;font-size:13px;font-weight:500;color:{{ w.color }}">{{ w.label }}</span>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;padding:0 12px">
+        <sc-for list="{{ weeks }}" as="wk" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));height:54px">
+            <sc-for list="{{ wk.days }}" as="d" hint-placeholder-count="7">
+              <button onClick="{{ d.tap }}" style="border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;opacity:{{ d.op }};cursor:pointer">
+                <span style="width:40px;height:40px;border-radius:50%;background:{{ d.circle }};box-shadow:{{ d.ring }};color:{{ d.color }};font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ d.n }}</span>
+                <span style="width:4px;height:4px;border-radius:50%;background:{{ d.dot }}"></span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;justify-content:center;gap:16px;padding:8px 20px 18px">
+        <sc-for list="{{ legend }}" as="l" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="width:12px;height:12px;border-radius:50%;background:{{ l.bg }};box-shadow:{{ l.ring }}"></span>
+            <span style="font-size:13px;color:#8B95A1">{{ l.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="height:12px;background:#F2F4F6;flex-shrink:0"></div>
+      <div style="padding:22px 20px 0;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:56px;height:56px;border-radius:16px;background:{{ day.tile }};display:flex;align-items:center;justify-content:center">
+            <x-import component-from-global-scope="loafy-sprite" type="{{ day.type }}" coat="{{ coat }}" expr="{{ day.expr }}" pose="{{ day.pose }}" scale="1.5" hint-size="48px,50px"></x-import>
+          </div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:15px;color:#8B95A1">{{ day.date }}</span>
+            <span style="font-size:20px;font-weight:700;color:{{ day.tone }}">{{ day.title }}</span>
+          </div>
+        </div>
+        <sc-if value="{{ day.hasNote }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 18px;border-radius:16px;background:#F9FAFB;font-size:16px;line-height:24px;color:#4E5968">{{ day.note }}</div>
+        </sc-if>
+        <sc-if value="{{ day.hasCta }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ day.cta }}" style="height:56px;border:0;border-radius:16px;background:{{ day.ctaBg }};color:{{ day.ctaColor }};font-size:17px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">{{ day.ctaLabel }}</button>
+        </sc-if>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:22px 20px 0;padding:18px 0;border-radius:18px;background:#F9FAFB">
+        <sc-for list="{{ calStats }}" as="st" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <span style="font-size:13px;color:#8B95A1">{{ st.label }}</span>
+            <span style="font-size:20px;font-weight:700;color:#191F28">{{ st.value }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="height:130px;flex-shrink:0"></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.my }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="11 마이" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column;overflow-y:auto">
+      <div style="height:52px;display:flex;align-items:center;padding:0 20px">
+        <span style="font-size:20px;font-weight:700;color:#191F28">마이</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;padding:12px 20px 24px">
+        <div style="width:72px;height:72px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" scale="1.75" hint-size="56px,58px"></x-import>
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:22px;font-weight:700;color:#191F28">{{ name }}</span>
+          <span style="font-size:15px;color:#8B95A1">{{ bodyName }} · {{ coatName }}</span>
+        </div>
+        <button onClick="{{ nav.edit }}" style="height:36px;padding:0 14px;border:0;border-radius:10px;background:#F2F4F6;color:#4E5968;font-size:14px;font-weight:600;cursor:pointer" style-active="background:#E5E8EB">꾸미기</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0 20px 24px;padding:18px 0;border-radius:18px;background:#F9FAFB">
+        <sc-for list="{{ myStats }}" as="st" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <span style="font-size:13px;color:#8B95A1">{{ st.label }}</span>
+            <span style="font-size:20px;font-weight:700;color:#191F28">{{ st.value }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="height:12px;background:#F2F4F6;flex-shrink:0"></div>
+      <div style="padding:20px 0 8px">
+        <span style="display:block;padding:0 20px 8px;font-size:14px;font-weight:600;color:#8B95A1">설정</span>
+        <sc-for list="{{ myRows }}" as="r" hint-placeholder-count="3">
+          <button onClick="{{ r.tap }}" style="width:100%;height:60px;border:0;background:#fff;display:flex;align-items:center;gap:14px;padding:0 20px;cursor:pointer" style-active="background:#F9FAFB">
+            <span style="width:36px;height:36px;border-radius:12px;background:#F2F4F6;display:flex;align-items:center;justify-content:center">
+              <x-import component-from-global-scope="loafy-icon" name="{{ r.icon }}" size="24" color="#4E5968" hint-size="24px,24px"></x-import>
+            </span>
+            <span style="flex:1;text-align:left;font-size:17px;font-weight:500;color:#191F28">{{ r.label }}</span>
+            <span style="font-size:15px;color:#8B95A1">{{ r.value }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B0B8C1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+          </button>
+        </sc-for>
+      </div>
+      <div style="height:12px;background:#F2F4F6;flex-shrink:0"></div>
+      <div style="padding:12px 0 140px;display:flex;flex-direction:column">
+        <button onClick="{{ nav.login }}" style="height:56px;border:0;background:#fff;padding:0 20px;text-align:left;font-size:16px;color:#8B95A1;cursor:pointer">로그아웃</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.tabs }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:24px;right:24px;bottom:30px;height:64px;border-radius:999px;background:rgba(250,250,250,0.78);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.6);box-shadow:0 8px 40px rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 6px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+        <button onClick="{{ t.tap }}" style="flex:1;height:52px;border:0;border-radius:999px;background:{{ t.bg }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer">
+          <x-import component-from-global-scope="loafy-icon" name="{{ t.icon }}" size="24" active="{{ t.on }}" hint-size="24px,24px"></x-import>
+          <span style="font-size:10px;font-weight:600;color:{{ t.color }}">{{ t.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:50%;bottom:120px;transform:translateX(-50%);padding:12px 18px;border-radius:999px;background:rgba(30,32,38,0.92);color:#fff;font-size:15px;font-weight:500;white-space:nowrap">{{ toast }}</div>
+  </sc-if>
+
+  <div style="position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 34px 0 44px;pointer-events:none">
+    <span style="font-size:17px;font-weight:600;color:#000">9:41</span>
+    <div style="display:flex;gap:6px;align-items:center">
+      <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#000"></rect><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#000"></rect><rect x="10" y="3" width="3" height="9" rx="1" fill="#000"></rect><rect x="15" y="0" width="3" height="12" rx="1" fill="#000"></rect></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0zM3.4 6.8a6.6 6.6 0 0 1 9.2 0l-1.3 1.3a4.8 4.8 0 0 0-6.6 0zM1.2 4.6a9.7 9.7 0 0 1 13.6 0l-1.3 1.3a7.9 7.9 0 0 0-11 0z" fill="#000"></path></svg>
+      <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="rgba(0,0,0,0.4)"></rect><rect x="2" y="2" width="20" height="9" rx="2.5" fill="#000"></rect><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="rgba(0,0,0,0.4)"></path></svg>
+    </div>
+  </div>
+  <div style="position:absolute;left:50%;bottom:8px;width:140px;height:5px;margin-left:-70px;border-radius:3px;background:#000;pointer-events:none"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:426,&quot;height&quot;:898},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;login&quot;,&quot;obName&quot;,&quot;obGoal&quot;,&quot;obCoat&quot;,&quot;obTime&quot;,&quot;obRule&quot;,&quot;home&quot;,&quot;lcd&quot;,&quot;checkin&quot;,&quot;share&quot;,&quot;letter&quot;,&quot;letterDone&quot;,&quot;edit&quot;,&quot;record&quot;,&quot;my&quot;],&quot;default&quot;:&quot;login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;missed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;body&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;slim&quot;,&quot;bulk&quot;,&quot;normal&quot;,&quot;jjin&quot;,&quot;loaf&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;lcd&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;mono&quot;],&quot;default&quot;:&quot;color&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;다마고치&quot;},&quot;shell&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#C9CCD3&quot;,&quot;#F1E4CB&quot;,&quot;#A8DCCB&quot;,&quot;#CFC8EC&quot;],&quot;default&quot;:&quot;#C9CCD3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;다마고치&quot;}}">
+class Component extends DCLogic {
+  state = {
+    screen: this.props.start || 'login', name: '로피', goal: 'slim', coat: this.props.coat || 'cheese', alarm: 'morning',
+    checked: this.props.start === 'checkin', streak: this.props.start === 'checkin' ? 10 : 9,
+    shell: this.props.shell || '#C9CCD3', lcd: this.props.lcd || 'color',
+    missed: this.props.missed ?? true, calY: 2026, calM: 10, selD: 13, recovered: this.props.start === 'letterDone', letter: '', toast: null
+  };
+  uid = 'r' + Math.random().toString(36).slice(2, 9);
+  mine = (e) => { const r = document.querySelector('[data-loafy-root="' + this.uid + '"]'); if (r) this.root = r; return r && r.contains(e.target); };
+  onOpen = (e) => { if (this.mine(e) && this.state.screen === 'home') this.go('lcd'); };
+  onFeed = (e) => { if (this.mine(e)) this.doCheckin(true); };
+  rootRef = (el) => {
+    if (el === this.root) return;
+    this.root = el;
+
+  };
+  componentDidUpdate(prev) {
+    if (prev.start !== this.props.start && this.props.start) this.setState({ screen: this.props.start });
+    if (prev.missed !== this.props.missed) this.setState({ missed: this.props.missed ?? true });
+    if (prev.coat !== this.props.coat && this.props.coat) this.setState({ coat: this.props.coat });
+    if (prev.lcd !== this.props.lcd && this.props.lcd) this.setState({ lcd: this.props.lcd });
+    if (prev.shell !== this.props.shell && this.props.shell) this.setState({ shell: this.props.shell });
+  }
+  componentDidMount() { document.addEventListener('loafy:open-lcd', this.onOpen); document.addEventListener('loafy:device-feed', this.onFeed); }
+  componentWillUnmount() { clearTimeout(this._ct); clearTimeout(this._tt); document.removeEventListener('loafy:open-lcd', this.onOpen); document.removeEventListener('loafy:device-feed', this.onFeed); }
+  go = (s) => { clearTimeout(this._ct); this.setState({ screen: s }); };
+  doCheckin(fromDevice) {
+    if (this.state.checked) return;
+    this.setState(s => ({ checked: true, streak: s.streak + 1 }));
+    if (!fromDevice) { const rt = document.querySelector('[data-loafy-root="' + this.uid + '"]'); const t = rt && rt.querySelector('loafy-tama'); t && t.play && t.play('eat'); }
+    clearTimeout(this._ct); this._ct = setTimeout(() => this.setState({ screen: 'checkin' }), 1700);
+  }
+  showToast(msg) { clearTimeout(this._tt); this.setState({ toast: msg }); this._tt = setTimeout(() => this.setState({ toast: null }), 1600); }
+  renderVals() {
+    const S = this.state, scr = S.screen;
+    const OB = ['obName', 'obGoal', 'obCoat', 'obShell', 'obTime', 'obRule'];
+    const obIdx = OB.indexOf(scr);
+    const josa = (w, a, b) => { const c = w.charCodeAt(w.length - 1); return (c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28) ? a : b; };
+    const name = S.name.trim() || '로피';
+    const BODY = { slim: '날렵', bulk: '벌크', normal: '보통', jjin: '찐빵', loaf: '식빵' };
+    const COATS = [['cheese', '치즈'], ['mackerel', '고등어'], ['tuxedo', '턱시도'], ['cow', '젖소'], ['cream', '크림']];
+    const SHELLS = [['실버', '#C9CCD3'], ['크림', '#F1E4CB'], ['민트', '#A8DCCB'], ['로즈', '#F1B5BE'], ['라벤더', '#CFC8EC'], ['미드나잇', '#3A3F4D']];
+    const body = this.props.body || 'normal';
+    const goalName = BODY[S.goal];
+    const left = 6 - (S.streak % 6);
+    const nextHint = body === 'normal' ? `${goalName}까지 ${left}일` : body === 'jjin' || body === 'loaf' ? '출석하면 다시 보통으로' : `${BODY[body]} 유지 중`;
+    const is = { tabs: ['home', 'record', 'my'].includes(scr), ob: obIdx >= 0 };
+    ['login', 'home', 'lcd', 'checkin', 'share', 'letter', 'letterDone', 'edit', 'record', 'my', ...OB].forEach(k => is[k] = scr === k);
+    const nav = {};
+    ['login', 'obName', 'home', 'lcd', 'checkin', 'share', 'letter', 'edit', 'record', 'my'].forEach(k => nav[k] = () => this.go(k));
+    const obCanNext = obIdx !== 0 || name.length > 0;
+    const sel = (on) => ({ border: on ? '#1E2228' : 'transparent', bg: on ? '#FFFFFF' : '#F4F5F7', dot: on ? '#1E2228' : '#E3E5E9', on: on ? 'true' : 'false' });
+
+    const missedOpen = S.missed && !S.recovered;
+    const JOIN = [2026, 8, 17], TODAY = [2026, 10, 13];
+    const key = (y, m, d) => y * 10000 + m * 100 + d;
+    const kToday = key(...TODAY), kJoin = key(...JOIN);
+    const status = (y, m, d) => {
+      const k = key(y, m, d);
+      if (k < kJoin || k > kToday) return null;
+      if (k === kToday) return S.checked ? 'ok' : 'today';
+      if (k === key(2026, 10, 12)) return S.missed ? (S.recovered ? 'letter' : 'miss') : 'ok';
+      if (k === key(2026, 10, 5)) return 'letter';
+      if (y === 2026 && m === 10) return 'ok';
+      const h = (d * 37 + m * 11) % 23;
+      return h === 0 || h === 7 ? 'miss' : h === 13 ? 'letter' : 'ok';
+    };
+    const cy = S.calY, cm = S.calM;
+    const first = new Date(cy, cm - 1, 1).getDay(), dim = new Date(cy, cm, 0).getDate(), pdim = new Date(cy, cm - 1, 0).getDate();
+    const selK = key(cy, cm, S.selD);
+    const weeks = []; let monthCount = 0, monthLetters = 0, monthMiss = 0;
+    const rows = Math.ceil((first + dim) / 7);
+    for (let w = 0; w < rows; w++) {
+      const days = [];
+      for (let i = 0; i < 7; i++) {
+        const d = w * 7 + i - first + 1, other = d < 1 || d > dim;
+        const n = d < 1 ? pdim + d : d > dim ? d - dim : d;
+        const st = other ? null : status(cy, cm, d);
+        if (st === 'ok') monthCount++; if (st === 'letter') { monthCount++; monthLetters++; } if (st === 'miss') monthMiss++;
+        const k = key(cy, cm, d), isSel = !other && k === selK, isToday = k === kToday;
+        const wk = i === 0 ? '#FF3B30' : i === 6 ? '#007AFF' : '#191F28';
+        const look = st === 'ok' ? { circle: '#1E2228', ring: 'none', color: '#FFFFFF', dot: 'transparent' }
+          : st === 'letter' ? { circle: '#FFF1E0', ring: 'inset 0 0 0 2px #F49A3C', color: '#B35F12', dot: 'transparent' }
+          : st === 'miss' ? { circle: 'transparent', ring: 'inset 0 0 0 1.5px #E5E8EB', color: '#B0B8C1', dot: '#FF3B30' }
+          : isToday ? { circle: 'transparent', ring: 'inset 0 0 0 2px #1E2228', color: '#191F28', dot: 'transparent' }
+          : { circle: 'transparent', ring: 'none', color: (k > kToday || k < kJoin) ? '#B0B8C1' : wk, dot: 'transparent' };
+        if (isSel) look.ring = (look.ring === 'none' ? '' : look.ring + ', ') + '0 0 0 3px #FFFFFF, 0 0 0 5px #B0B8C1';
+        days.push({ n, op: other ? 0.3 : 1, ...look, tap: () => { if (other) { const nm = d < 1 ? cm - 1 : cm + 1; const ny = nm < 1 ? cy - 1 : nm > 12 ? cy + 1 : cy; const mm = ((nm + 11) % 12) + 1; this.setState({ calY: ny, calM: mm, selD: n }); } else this.setState({ selD: d }); } });
+      }
+      weeks.push({ days });
+    }
+    const octCount = (() => { let c = 0; for (let d = 1; d <= 13; d++) { const st = status(2026, 10, d); if (st === 'ok' || st === 'letter') c++; } return c; })();
+    const canPrev = key(cy, cm, 1) > kJoin - (kJoin % 100) + 1 - 1 && !(cy === JOIN[0] && cm === JOIN[1]);
+    const canNext = !(cy === TODAY[0] && cm === TODAY[1]);
+    const moveM = (dlt) => { let m = cm + dlt, y = cy; if (m < 1) { m = 12; y--; } if (m > 12) { m = 1; y++; } const isT = y === TODAY[0] && m === TODAY[1]; this.setState({ calY: y, calM: m, selD: isT ? TODAY[2] : 1 }); };
+    const WD = ['일', '월', '화', '수', '목', '금', '토'];
+    const sd = S.selD, sst = status(cy, cm, sd), sk = key(cy, cm, sd);
+    const dateLabel = `${cm}월 ${sd}일 ${WD[new Date(cy, cm - 1, sd).getDay()]}요일`;
+    const time = `오전 ${7 + (sd % 3)}:${String((sd * 13) % 60).padStart(2, '0')}`;
+    const isYesterday = sk === key(2026, 10, 12);
+    const day = { date: dateLabel, hasNote: false, note: '', hasCta: false, tile: '#F6F0E1', type: body, expr: 'idle', pose: 'sit', tone: '#191F28', ctaBg: '#1E2228', ctaColor: '#FFFFFF' };
+    if (sst === 'ok') Object.assign(day, { title: sk === kToday ? '오늘 출석 완료' : '출석했어요', note: time + ' 출석', hasNote: true, expr: 'happy', pose: 'stamp' });
+    else if (sst === 'letter') Object.assign(day, { title: '사연으로 채웠어요', note: isYesterday && S.letter.trim() ? S.letter : '야근하느라 출석을 깜빡했어요', hasNote: true, pose: 'letter', tone: '#B35F12', tile: '#FFF1E0' });
+    else if (sst === 'miss') Object.assign(day, { title: '결석했어요', tone: '#D70015', tile: '#F2F4F6', type: 'jjin', expr: 'sleep', hasCta: isYesterday, ctaLabel: '사연 보내고 채우기', cta: () => this.go('letter'), ctaBg: '#FFF1E0', ctaColor: '#B35F12' });
+    else if (sst === 'today') Object.assign(day, { title: '아직 출석 전이에요', hasCta: true, ctaLabel: '오늘 출석하러 가기', cta: () => this.go('home'), expr: 'up' });
+    else Object.assign(day, { title: sk < kJoin ? '함께하기 전이에요' : '아직 오지 않은 날이에요', tone: '#B0B8C1', tile: '#F2F4F6', expr: 'sleep' });
+    const cal = { year: cy, month: cm, prev: () => canPrev && moveM(-1), next: () => canNext && moveM(1), prevColor: canPrev ? '#191F28' : '#C9CDD2', nextColor: canNext ? '#191F28' : '#C9CDD2' };
+    const calStats = [{ label: '출석', value: monthCount + '일' }, { label: '사연', value: monthLetters + '번' }, { label: '결석', value: monthMiss + '일' }];
+    const SHARE = [
+      { label: '이미지 저장', d: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3', msg: '이미지를 저장했어요' },
+      { label: '인스타 스토리', d: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zM16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4zM17.5 6.5h.01', msg: '인스타그램을 여는 중이에요' },
+      { label: '카카오톡', d: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z', msg: '카카오톡을 여는 중이에요' },
+      { label: '링크 복사', d: 'M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7', msg: '링크를 복사했어요' }
+    ];
+    const shellName = (SHELLS.find(s => s[1] === S.shell) || ['커스텀'])[0];
+    return {
+      uid: this.uid, is, nav, name, coat: S.coat, body, shell: S.shell, lcd: S.lcd, streak: S.streak,
+      jo: { eul: josa(name, '을', '를'), ga: josa(name, '이', '가'), eunneun: josa(name, '은', '는') },
+      bodyName: BODY[body], nextHint, coatName: (COATS.find(c => c[0] === S.coat) || [0, '치즈'])[1], shellName,
+      onName: (e) => this.setState({ name: e.target.value.slice(0, 8) }),
+      obPct: ((obIdx + 1) / OB.length * 100) + '%', obStep: `${obIdx + 1}/${OB.length}`,
+      obCta: obIdx === OB.length - 1 ? '시작하기' : '다음', obOpacity: obCanNext ? 1 : 0.3,
+      obNext: () => { if (!obCanNext) return; this.go(obIdx === OB.length - 1 ? 'home' : OB[obIdx + 1]); },
+      obBack: () => this.go(obIdx <= 0 ? 'login' : OB[obIdx - 1]),
+      goals: [['slim', '날렵', '살 빼기 · 체력'], ['bulk', '벌크', '근육']].map(([key, n, desc]) => ({ key, name: n, desc, ...sel(S.goal === key), pick: () => this.setState({ goal: key }) })),
+      coats: COATS.map(([key, n]) => ({ key, name: n, border: key === S.coat ? '#1E2228' : 'transparent', pick: () => this.setState({ coat: key }) })),
+      alarms: [['morning', '아침', '오전 8:00'], ['noon', '점심', '오후 12:30'], ['night', '저녁', '오후 9:00']].map(([key, n, time]) => ({ name: n, time, ...sel(S.alarm === key), pick: () => this.setState({ alarm: key }) })),
+      rules: [
+        { type: S.goal, expr: 'happy', pose: 'sit', title: `${goalName} · 6일 연속 출석`, desc: S.goal === 'slim' ? '살 빼기 · 체력' : '근육' },
+        { type: 'normal', expr: 'idle', pose: 'sit', title: '보통 · 시작 모습', desc: '습관만의 종착' },
+        { type: 'jjin', expr: 'idle', pose: 'sit', title: '찐빵 · 3일 결석', desc: '조금씩 동그래져요' },
+        { type: 'loaf', expr: 'sleep', pose: 'sleep', title: '식빵 · 6일 결석', desc: '9일부터 문틀에 껴요' },
+        { type: 'normal', expr: 'idle', pose: 'letter', title: '어제 못 왔다면', desc: '사연을 보내 연속 기록을 지켜요' }
+      ],
+      showMissed: missedOpen, missed: S.missed,
+      checked: S.checked, notChecked: !S.checked,
+      checkinBtn: () => this.doCheckin(false),
+      lcdBtns: [['메뉴', '0px'], ['선택', '18px'], ['취소', '0px']].map(([label, dy], i) => ({ label, dy, press: () => { const rt = document.querySelector('[data-loafy-root="' + this.uid + '"]'); const l = rt && rt.querySelector('loafy-lcd'); l && l.button && l.button(i); } })),
+      shareTargets: SHARE.map(t => ({ ...t, tap: () => this.showToast(t.msg) })),
+      letter: S.letter, letterLen: S.letter.length, letterOpacity: S.letter.trim() ? 1 : 0.3,
+      onLetter: (e) => this.setState({ letter: e.target.value.slice(0, 200) }),
+      sendLetter: () => { if (!S.letter.trim()) return; this.setState({ recovered: true, screen: 'letterDone' }); },
+      shells: SHELLS.map(([n, hex]) => ({ name: n, hex, ring: hex === S.shell ? '0 0 0 2px #fff, 0 0 0 4px #1E2228' : 'inset 0 0 0 1px rgba(0,0,0,0.12)', pick: () => this.setState({ shell: hex }) })),
+      lcdModes: [['color', '컬러'], ['mono', '흑백']].map(([k, n]) => ({ name: n, bg: S.lcd === k ? '#FFFFFF' : 'transparent', shadow: S.lcd === k ? '0 3px 8px rgba(0,0,0,0.12)' : 'none', pick: () => this.setState({ lcd: k }) })),
+      saveEdit: () => { this.go('home'); this.showToast('다마고치를 저장했어요'); },
+      weekdays: ['일', '월', '화', '수', '목', '금', '토'].map((label, i) => ({ label, color: i === 0 ? '#FF3B30' : i === 6 ? '#007AFF' : 'rgba(60,60,67,0.6)' })),
+      weeks, monthCount, cal, day, calStats,
+      legend: [{ label: '출석', bg: '#1E2228', ring: 'none' }, { label: '사연', bg: '#FFF1E0', ring: 'inset 0 0 0 2px #F49A3C' }, { label: '결석', bg: '#FF3B30', ring: 'none' }],
+      todayStatus: S.checked ? '완료' : '아직 안 했어요', todayBox: S.checked ? '#1E2228' : 'transparent',
+      recCheck: () => { if (!S.checked) this.go('home'); },
+      letterStatus: S.recovered ? '보냈어요 · 연속 기록 복구됨' : '아직 안 보냈어요', recoveredStr: S.recovered ? 'true' : 'false',
+      recLetter: () => { if (!S.recovered) this.go('letter'); },
+      myStats: [{ label: '연속 출석', value: 'D+' + S.streak }, { label: '이번 달', value: octCount + '일' }, { label: '사연', value: (S.recovered || S.missed ? 1 : 0) + '/2' }],
+      myRows: [
+        { icon: 'brush', label: '다마고치 꾸미기', value: shellName, tap: () => this.go('edit') },
+        { icon: 'bell', label: '출석 알림', value: { morning: '오전 8:00', noon: '오후 12:30', night: '오후 9:00' }[S.alarm], tap: () => this.showToast('알림 시간 설정은 다음 버전에서') },
+        { icon: 'letter', label: '사연', value: S.recovered || S.missed ? '이번 달 1/2' : '이번 달 0/2', tap: () => this.go('letter') }
+      ],
+      tabs: [['home', 'home', '홈'], ['record', 'record', '기록'], ['my', 'my', '마이']].map(([k, icon, label]) => ({ icon, label, on: scr === k ? 'true' : 'false', bg: scr === k ? 'rgba(120,120,128,0.14)' : 'transparent', color: scr === k ? '#1E2228' : '#8E929B', tap: () => this.go(k) })),
+      hasToast: !!S.toast, toast: S.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

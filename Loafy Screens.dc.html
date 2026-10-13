@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<script src="./loafy-sprites.js"></script>
+<style>
+@font-face{font-family:"Pretendard Variable";src:url("./fonts/PretendardVariable.woff2") format("woff2-variations");font-weight:45 920;font-display:swap}
+body{margin:0;background:#E6E7EB;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em}
+a{color:#1E2228;text-decoration:none}a:hover{color:#2C313A}
+</style>
+</helmet>
+
+<section style="padding:64px 72px 96px;display:flex;flex-direction:column;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:8px;max-width:900px">
+    <span style="font-size:13px;font-weight:700;color:#5B6472;letter-spacing:0.04em">LOAFY MVP · 화면 목록</span>
+    <span style="font-size:36px;font-weight:800;color:#000">전체 화면 11종</span>
+    <span style="font-size:17px;line-height:26px;color:rgba(60,60,67,0.6)">각 폰은 실제로 눌러볼 수 있는 프로토타입이에요. 같은 소스(Loafy App)를 화면별로 띄운 것이라 디자인이 바뀌면 여기도 함께 바뀌어요. 처음부터 흐름대로 보려면 <a href="Loafy App.dc.html" style="font-weight:600">Loafy App</a>을 열어주세요.</span>
+  </div>
+
+  <div id="2a" style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="background:#1E2228;color:#fff;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px">2a</span>
+      <span style="font-size:22px;font-weight:700">로그인 · 온보딩</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px">
+      <sc-for list="{{ flowA }}" as="s" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:8px;align-items:baseline"><span style="font-size:15px;font-weight:700;color:#1E2228">{{ s.no }}</span><span style="font-size:15px;color:rgba(60,60,67,0.6)">{{ s.title }}</span></div>
+          <dc-import name="Loafy App" start="{{ s.key }}" hint-size="426px,898px"></dc-import>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div id="2b" style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="background:#1E2228;color:#fff;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px">2b</span>
+      <span style="font-size:22px;font-weight:700">홈 · 출석 · 공유 · 사연</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px">
+      <sc-for list="{{ flowB }}" as="s" hint-placeholder-count="7">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:8px;align-items:baseline"><span style="font-size:15px;font-weight:700;color:#1E2228">{{ s.no }}</span><span style="font-size:15px;color:rgba(60,60,67,0.6)">{{ s.title }}</span></div>
+          <dc-import name="Loafy App" start="{{ s.key }}" hint-size="426px,898px"></dc-import>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div id="2c" style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="background:#1E2228;color:#fff;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px">2c</span>
+      <span style="font-size:22px;font-weight:700">기록 · 마이 · 꾸미기</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px">
+      <sc-for list="{{ flowC }}" as="s" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:8px;align-items:baseline"><span style="font-size:15px;font-weight:700;color:#1E2228">{{ s.no }}</span><span style="font-size:15px;color:rgba(60,60,67,0.6)">{{ s.title }}</span></div>
+          <dc-import name="Loafy App" start="{{ s.key }}" hint-size="426px,898px"></dc-import>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div id="2d" style="display:flex;flex-direction:column;gap:20px;width:1240px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="background:#1E2228;color:#fff;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px">2d</span>
+      <span style="font-size:22px;font-weight:700">캐릭터 · 32×32 픽셀</span>
+    </div>
+    <div style="background:#fff;border-radius:28px;padding:36px;display:flex;flex-direction:column;gap:40px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:20px;font-weight:700">체형 5단계 · 기본자세(앉기)</span>
+        <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;border-radius:20px;overflow:hidden">
+          <sc-for list="{{ bodies }}" as="b" hint-placeholder-count="5">
+            <div style="background:{{ b.bg }};display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 8px 24px">
+              <x-import component-from-global-scope="loafy-sprite" type="{{ b.type }}" coat="cheese" scale="6" animate="" hint-size="192px,198px"></x-import>
+              <span style="font-size:13px;font-weight:600;color:rgba(60,60,67,0.6);margin-top:8px">{{ b.code }}</span>
+              <span style="font-size:26px;font-weight:800;color:#1C1C1E">{{ b.name }}</span>
+              <span style="font-size:15px;color:rgba(60,60,67,0.6)">{{ b.desc }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:20px;font-weight:700">털색</span>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <sc-for list="{{ coats }}" as="k" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 14px 12px;border-radius:18px;background:#F6F0E1">
+              <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ k.key }}" scale="4" hint-size="128px,132px"></x-import>
+              <span style="font-size:14px;font-weight:600;color:#1E2228">{{ k.name }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:32px 48px">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:20px;font-weight:700">표정</span>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <sc-for list="{{ exprs }}" as="e" hint-placeholder-count="7">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 8px 10px;border-radius:16px;background:#F2F2F7">
+                <x-import component-from-global-scope="loafy-sprite" type="normal" coat="cheese" expr="{{ e.key }}" scale="3" hint-size="96px,99px"></x-import>
+                <span style="font-size:13px;color:rgba(60,60,67,0.6)">{{ e.name }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:20px;font-weight:700">포즈 · 화면 연결</span>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <sc-for list="{{ poses }}" as="p" hint-placeholder-count="4">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px 10px;border-radius:16px;background:#F2F2F7;min-width:112px">
+                <x-import component-from-global-scope="loafy-sprite" type="{{ p.type }}" coat="cheese" expr="{{ p.expr }}" pose="{{ p.pose }}" scale="3" hint-size="96px,99px"></x-import>
+                <span style="font-size:13px;font-weight:600;color:#1E2228">{{ p.name }}</span>
+                <span style="font-size:12px;color:rgba(60,60,67,0.6)">{{ p.use }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="2e" style="display:flex;flex-direction:column;gap:20px;width:1240px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="background:#1E2228;color:#fff;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px">2e</span>
+      <span style="font-size:22px;font-weight:700">픽셀 아이콘 · 12×12</span>
+    </div>
+    <div style="background:#fff;border-radius:28px;padding:36px;display:flex;flex-direction:column;gap:20px">
+      <span style="font-size:15px;color:rgba(60,60,67,0.6)">미선택은 라인, 선택은 채워진 컬러. 24px(2× 픽셀) 기준이고 12의 배수로만 키워요.</span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:12px">
+        <sc-for list="{{ icons }}" as="i" hint-placeholder-count="8">
+          <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:18px;background:#F4F5F7">
+            <div style="display:flex;gap:16px;align-items:center;justify-content:center;height:56px">
+              <x-import component-from-global-scope="loafy-icon" name="{{ i.key }}" size="48" active="false" hint-size="48px,48px"></x-import>
+              <x-import component-from-global-scope="loafy-icon" name="{{ i.key }}" size="48" active="true" hint-size="48px,48px"></x-import>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+              <span style="font-size:14px;font-weight:600;color:#000">{{ i.name }}</span>
+              <span style="font-size:12px;color:rgba(60,60,67,0.6)">{{ i.key }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const s = (arr) => arr.map(([no, key, title]) => ({ no, key, title }));
+    return {
+      flowA: s([['01', 'login', '로그인'], ['02-1', 'obName', '이름'], ['02-2', 'obGoal', '목표 체형'], ['02-3', 'obCoat', '털색'], ['02-4', 'obShell', '다마고치 색'], ['02-5', 'obTime', '출석 알림'], ['02-6', 'obRule', '성장 규칙']]),
+      flowB: s([['03', 'home', '홈 (어제 결석 상태)'], ['04', 'lcd', '다마고치 화면 크게 보기'], ['05', 'checkin', '출석 완료'], ['06', 'share', '공유카드'], ['07', 'letter', '사연 보내기'], ['08', 'letterDone', '사연 완료']]),
+      flowC: s([['10', 'record', '기록 · 캘린더'], ['11', 'my', '마이'], ['09', 'edit', '다마고치 꾸미기']]),
+      bodies: [
+        ['s4', 'slim', '날렵', '6일 연속 · 살 빼기 · 체력', '#DCEEE8'], ['s5', 'bulk', '벌크', '6일 연속 · 근육', '#DCEEE8'],
+        ['s3', 'normal', '보통', '기본 · 습관만의 종착', '#F2F2EF'], ['s2', 'jjin', '찐빵', '3일 결석', '#F3E6E2'], ['s1', 'loaf', '식빵', '6일 결석 · 9일부터 문틀', '#F3E6E2']
+      ].map(([code, type, name, desc, bg]) => ({ code: code + '_front', type, name, desc, bg })),
+      coats: [['cheese', '치즈'], ['mackerel', '고등어'], ['tuxedo', '턱시도'], ['cow', '젖소 (흰 바탕 검은 무늬)'], ['cream', '크림']].map(([key, name]) => ({ key, name })),
+      exprs: [['idle', '기본'], ['blink', '깜빡'], ['eat', '냠냠'], ['happy', '뿌듯'], ['surprise', '놀람'], ['up', '올려다봄'], ['sleep', '졸림']].map(([key, name]) => ({ key, name })),
+      poses: [
+        { type: 'normal', expr: 'happy', pose: 'stamp', name: '도장', use: '출석 완료' },
+        { type: 'normal', expr: 'idle', pose: 'letter', name: '편지', use: '사연 보내기' },
+        { type: 'loaf', expr: 'sleep', pose: 'sleep', name: '자기', use: '식빵 · 결석' },
+        { type: 'normal', expr: 'happy', pose: 'sit', name: '앉기', use: '공유카드 · 기본' }
+      ],
+      icons: [['home', '홈'], ['record', '기록'], ['my', '마이'], ['paw', '출석'], ['share', '공유'], ['brush', '꾸미기'], ['letter', '사연'], ['bell', '알림']].map(([key, name]) => ({ key, name }))
+    };
+  }
+}
+</script>
+</body>
+</html>
