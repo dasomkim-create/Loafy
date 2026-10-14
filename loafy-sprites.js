@@ -4,17 +4,20 @@
     mackerel: { base: '#9AA2AC', light: '#C3C9D0', shade: '#7A838E', stripe: '#565F6B', belly: '#F0F2F4', bellyShade: '#D1D6DB', line: '#2A2E36', ear: '#F2A7B0' },
     tuxedo:   { base: '#3C3D47', light: '#5A5C6A', shade: '#2A2B33', stripe: '#3C3D47', belly: '#FAFAF6', bellyShade: '#D9D9D2', line: '#141419', ear: '#E99AA4' },
     cow:      { base: '#FAFAF7', light: '#FFFFFF', shade: '#DCDCD6', stripe: '#FAFAF7', belly: '#FFFFFF', bellyShade: '#E4E4DE', line: '#1E1E24', ear: '#F2A2AC', patch: '#2A2A31', patchShade: '#18181C', patchLight: '#40404A' },
+    blue:     { base: '#8F9BAE', light: '#AEB8C8', shade: '#727E92', stripe: '#8F9BAE', belly: '#A9B3C3', bellyShade: '#8C97AA', line: '#2A303C', ear: '#E6A3AE' },
+    choco:    { base: '#8A5A3C', light: '#A6744F', shade: '#6C442C', stripe: '#5A3622', belly: '#F3E6D8', bellyShade: '#DCC6AE', line: '#2E1B10', ear: '#E9A0A4' },
     cream:    { base: '#EFD8B0', light: '#FAEBD0', shade: '#D8BA8A', stripe: '#CFA972', belly: '#FFF8EC', bellyShade: '#EEDDC2', line: '#6A4A2A', ear: '#F4A9AE' }
   };
-  const COAT_NAMES = { cheese: '치즈', mackerel: '고등어', tuxedo: '턱시도', cow: '젖소', cream: '크림' };
+  const COAT_NAMES = { cheese: '치즈', mackerel: '고등어', tuxedo: '턱시도', cow: '얼룩이', cream: '크림', blue: '러시안블루', choco: '초코' };
   const TYPES = {
     slim:   { head: { x: 16, y: 10.6, rx: 7.2, ry: 6.3 }, chest: { x: 16, y: 20, rx: 4.7, ry: 6.4 }, haunch: { x: 16, y: 26, rx: 6.8, ry: 4.8 }, fp: { dx: 1.9, rx: 1.8, ry: 1.4 }, bp: { dx: 5.6, rx: 2, ry: 1.3 }, legs: 3.6 },
     bulk:   { head: { x: 16, y: 10.2, rx: 7.6, ry: 6.4 }, chest: { x: 16, y: 19.6, rx: 9.8, ry: 6.2 }, haunch: { x: 16, y: 25.4, rx: 9.2, ry: 5.4 }, arms: { dx: 8.4, y: 23.4, rx: 3.7, ry: 6.8 }, fp: { dx: 8.2, rx: 3, ry: 1.6 }, legs: 0 },
     normal: { head: { x: 16, y: 10.6, rx: 8.4, ry: 6.9 }, chest: { x: 16, y: 19.8, rx: 6, ry: 6.2 }, haunch: { x: 16, y: 25.3, rx: 8.8, ry: 5.5 }, fp: { dx: 2.4, rx: 2.2, ry: 1.5 }, bp: { dx: 7.4, rx: 2.3, ry: 1.4 }, legs: 4.4 },
+    fit:    { head: { x: 16, y: 10.4, rx: 7.5, ry: 6.3 }, chest: { x: 16, y: 19.8, rx: 7.4, ry: 6.3 }, haunch: { x: 16, y: 25.6, rx: 8.2, ry: 5.1 }, fp: { dx: 2.3, rx: 2.1, ry: 1.5 }, bp: { dx: 6.8, rx: 2.2, ry: 1.3 }, legs: 4 },
     jjin:   { head: { x: 16, y: 11.2, rx: 8.8, ry: 7 }, chest: { x: 16, y: 20.4, rx: 8.8, ry: 7 }, haunch: { x: 16, y: 25, rx: 11.4, ry: 5.9 }, fp: { dx: 3, rx: 2.4, ry: 1.5 }, bp: { dx: 9.2, rx: 2.4, ry: 1.4 }, legs: 5 },
     loaf:   { head: { x: 16, y: 12.4, rx: 9, ry: 7 }, chest: null, haunch: { x: 16, y: 22.6, rx: 13.6, ry: 8.3 }, fp: { dx: 3.4, rx: 2.4, ry: 1.3 }, bp: { dx: 10.2, rx: 2.3, ry: 1.2 }, legs: 0 }
   };
-  const BODY_NAMES = { slim: '날렵', bulk: '벌크', normal: '보통', jjin: '찐빵', loaf: '식빵' };
+  const BODY_NAMES = { slim: '날렵', bulk: '벌크', normal: '보통', fit: '탄탄', jjin: '찐빵', loaf: '식빵' };
   const W = 32, H = 32;
   const inE = (px, py, e) => ((px - e.x) / e.rx) ** 2 + ((py - e.y) / e.ry) ** 2 <= 1;
   const inSE = (px, py, e, p) => Math.abs((px - e.x) / e.rx) ** p + Math.abs((py - e.y) / e.ry) ** p <= 1;
@@ -143,17 +146,21 @@
     home: ['.....##.....', '....####....', '...######...', '..########..', '.##########.', '############', '.##########.', '.####oo####.', '.####oo####.', '.####oo####.', '.####oo####.', '............'],
     record: ['...#....#...', '.##########.', '.##########.', '.#oooooooo#.', '.##########.', '.###o##o###.', '.##########.', '.###o##o###.', '.##########.', '.##########.', '............', '............'],
     my: ['.#........#.', '.##......##.', '.###....###.', '.##########.', '############', '###o####o###', '############', '#####oo#####', '############', '.##########.', '..########..', '............'],
-    paw: ['..##....##..', '.####..####.', '.####..####.', '..##....##..', '............', '....####....', '..########..', '.##########.', '.##########.', '.##########.', '..###..###..', '............'],
+    paw: ['.....##.....', '.##.####.##.', '####.##.####', '.##......##.', '............', '....####....', '..########..', '.##########.', '.##########.', '.##########.', '..###..###..', '............'],
     share: ['.....##.....', '....####....', '...######...', '.....##.....', '.....##.....', '.....##.....', '.....##.....', '............', '.##......##.', '.##########.', '.##########.', '............'],
     brush: ['.....##.....', '.....##.....', '....####....', '....####....', '..########..', '############', '############', '..########..', '....####....', '....####....', '.....##.....', '.....##.....'],
     letter: ['............', '############', '#o########o#', '##o######o##', '###o####o###', '####oooo####', '############', '############', '############', '############', '............', '............'],
+    shop: ['............', '....####....', '...##..##...', '...#....#...', '.##########.', '.##########.', '.##o####o##.', '.##########.', '.##########.', '.##########.', '.##########.', '............'],
+    cookie: ['...######...', '..########..', '.##o#oo#o##.', '.##########.', '##o######o##', '####oooo####', '###oooooo###', '###oooooo###', '.###oooo###.', '.##########.', '..########..', '...######...'],
     bell: ['.....##.....', '....####....', '...######...', '..########..', '..########..', '..########..', '.##########.', '############', '............', '....####....', '.....##.....', '............']
   };
-  const ICON_FILL = { home: '#F49A3C', record: '#8FC7B4', my: '#F6A2A6', paw: '#F49A3C', share: '#9DB6E6', brush: '#F2C14E', letter: '#FFF6E6', bell: '#F2C14E' };
+  ICONS.pawpink = ICONS.paw; ICONS.letterblue = ICONS.letter;
+  const ICON_INK = { cookie: '#C9566D', pawpink: '#D24E66', letterblue: '#1B64DA' };
+  const ICON_FILL = { pawpink: '#FF8FA0', letterblue: '#FFFFFF',  home: '#F49A3C', record: '#8FC7B4', my: '#F6A2A6', paw: '#F49A3C', share: '#9DB6E6', brush: '#F2C14E', letter: '#FFF6E6', bell: '#F2C14E', shop: '#C9B6F0', cookie: '#FFC2CD' };
   function drawIcon(ctx, name, s, active, lineColor) {
     const rows = ICONS[name]; if (!rows) return;
     const at = (x, y) => (y < 0 || y >= 12 || x < 0 || x >= 12) ? '.' : rows[y][x];
-    const ink = '#2F343D';
+    const ink = ICON_INK[name] || '#2F343D';
     for (let y = 0; y < 12; y++) for (let x = 0; x < 12; x++) {
       const k = at(x, y); if (k === '.') continue;
       const edge = [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => at(x + dx, y + dy) === '.');
@@ -291,4 +298,70 @@
     button(i) { const r = this.sim.button(i); if (r === 'feed') this.dispatchEvent(new CustomEvent('loafy:device-feed', { bubbles: true })); return r; }
   }
   if (!customElements.get('loafy-lcd')) customElements.define('loafy-lcd', LoafyLcd);
+
+  // ---------- logo (from uploads/Loafy.svg, 46x22 units) ----------
+  const LOGO = [[0,0,2,2,0],[2,2,2,10,0],[2,12,2,2,0],[4,14,2,2,0],[6,14,2,2,0],[8,10,2,2,0],[8,8,2,2,0],[20,12,2,2,0],[22,14,2,2,0],[26,0,2,2,0],[28,2,2,2,0],[24,2,2,2,0],[24,4,2,4,0],[24,8,2,4,0],[28,8,2,6,0],[30,14,2,2,0],[32,14,2,2,0],[32,10,2,4,0],[32,16,2,4,0],[30,20,2,2,0],[28,18,2,2,0],[32,8,2,2,0],[38,7,2,2,1],[39,10,4,4,1],[42,7,2,2,1],[36,10,2,2,1],[44,10,2,2,1],[26,6,2,2,0],[24,12,2,2,0],[24,14,2,2,0],[10,6,2,2,0],[18,10,2,2,0],[18,14,2,2,0],[10,14,2,2,0],[8,12,2,2,0],[12,8,2,2,0],[20,8,2,2,0],[20,6,2,2,0],[18,4,2,2,0],[16,6,2,2,0],[20,10,2,2,0],[16,12,2,2,0],[12,10,2,4,0],[14,14,2,2,0]];
+  class LoafyLogo extends HTMLElement {
+    static get observedAttributes() { return ['scale', 'replay']; }
+    connectedCallback() { if (!this.cv) { this.cv = document.createElement('canvas'); this.cv.style.display = 'block'; this.appendChild(this.cv); } this.style.display = 'inline-block'; this.style.lineHeight = '0'; this.start(); }
+    disconnectedCallback() { cancelAnimationFrame(this.raf); }
+    attributeChangedCallback() { if (this.cv) this.start(); }
+    start() {
+      const s = +(this.getAttribute('scale') || 4), dpr = 2, W = 46 * s, H = 22 * s;
+      this.cv.width = W * dpr; this.cv.height = H * dpr; this.cv.style.width = W + 'px'; this.cv.style.height = H + 'px';
+      const blocks = [];
+      LOGO.forEach(([x, y, w, h, c]) => { if (c) return blocks.push({ x, y, w, h, c }); for (let yy = y; yy < y + h; yy += 2) for (let xx = x; xx < x + w; xx += 2) blocks.push({ x: xx, y: yy, w: 2, h: 2, c }); });
+      let seed = 11; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+      blocks.forEach(b => { b.t = b.c ? 1000 + (b.y < 9 ? 160 : 0) + Math.abs(b.x - 40) * 14 : b.x * 15 + rnd() * 240; b.d = b.c ? 380 : 260; });
+      const still = this.hasAttribute('still'), t0 = performance.now(), ctx = this.cv.getContext('2d');
+      const back = (p) => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); };
+      cancelAnimationFrame(this.raf);
+      const frame = (now) => {
+        const t = still ? 1e9 : now - t0; let done = true;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+        blocks.forEach(b => {
+          const p = Math.max(0, Math.min(1, (t - b.t) / b.d)); if (p < 1) done = false; if (p <= 0) return;
+          const k = p >= 1 ? 1 : back(p), cx = (b.x + b.w / 2) * s, cy = (b.y + b.h / 2) * s, ww = b.w * s * k, hh = b.h * s * k;
+          ctx.globalAlpha = Math.min(1, p * 2.5); ctx.fillStyle = b.c ? '#FF7474' : '#111114';
+          ctx.fillRect(cx - ww / 2, cy - hh / 2 - (1 - p) * s * 2, ww, hh);
+        });
+        ctx.globalAlpha = 1; if (!done) this.raf = requestAnimationFrame(frame); else if (!still) this.dispatchEvent(new CustomEvent('loafy:logo-done', { bubbles: true }));
+      };
+      this.raf = requestAnimationFrame(frame);
+    }
+  }
+  if (!customElements.get('loafy-logo')) customElements.define('loafy-logo', LoafyLogo);
+  window.LoafySprites.LOGO = LOGO;
+
+  // ---------- paw-print screen transition ----------
+  class LoafyPaws extends HTMLElement {
+    static get observedAttributes() { return ['run']; }
+    connectedCallback() { Object.assign(this.style, { display: 'block', position: 'absolute', inset: '0', pointerEvents: 'none', overflow: 'hidden' }); if (this.parentElement) this.parentElement.style.pointerEvents = 'none'; this._ready = true; }
+    attributeChangedCallback(n, o, v) { if (this._ready && v && v !== '0' && v !== o) this.play(); }
+    img() { if (LoafyPaws._img) return LoafyPaws._img; const c = document.createElement('canvas'); c.width = c.height = 48; drawIcon(c.getContext('2d'), 'pawpink', 4, true, '#000'); return (LoafyPaws._img = c.toDataURL()); }
+    play() {
+      const W = this.clientWidth || 400, H = this.clientHeight || 800, src = this.img();
+      const layer = document.createElement('div'); Object.assign(layer.style, { position: 'absolute', inset: '0' }); this.appendChild(layer);
+      const wash = document.createElement('div'); Object.assign(wash.style, { position: 'absolute', inset: '0', background: '#FFF6F4', opacity: '0' }); layer.appendChild(wash);
+      wash.animate([{ opacity: 0 }, { opacity: 0.96, offset: 0.42 }, { opacity: 0.96, offset: 0.56 }, { opacity: 0 }], { duration: 1300, easing: 'ease-in-out', fill: 'forwards' });
+      const G = 56, sz = 40, cols = Math.ceil(W / G) + 1, rows = Math.ceil(H / G) + 1;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const x = c * G + (r % 2 ? G / 2 : 0) - G / 2 + (Math.random() - 0.5) * 14, y = H - r * G - G / 2 + (Math.random() - 0.5) * 14;
+          const rot = (Math.random() - 0.5) * 36, op = 0.38 + Math.random() * 0.3;
+          const el = document.createElement('img'); el.src = src;
+          Object.assign(el.style, { position: 'absolute', left: (x - sz / 2) + 'px', top: (y - sz / 2) + 'px', width: sz + 'px', height: sz + 'px', imageRendering: 'pixelated', opacity: '0' });
+          layer.appendChild(el);
+          el.animate([
+            { opacity: 0, transform: 'translateY(24px) rotate(' + rot + 'deg) scale(0.3)' },
+            { opacity: op, transform: 'translateY(-2px) rotate(' + rot + 'deg) scale(1.12)', offset: 0.6 },
+            { opacity: op, transform: 'translateY(0) rotate(' + rot + 'deg) scale(1)' }
+          ], { duration: 320, delay: r * 42 + Math.random() * 90, easing: 'cubic-bezier(.34,1.56,.64,1)', fill: 'forwards' });
+        }
+      }
+      const fade = layer.animate([{ opacity: 1 }, { opacity: 1, offset: 0.62 }, { opacity: 0 }], { duration: 1600, easing: 'ease-out', fill: 'forwards' });
+      fade.onfinish = () => layer.remove();
+    }
+  }
+  if (!customElements.get('loafy-paws')) customElements.define('loafy-paws', LoafyPaws);
 })();

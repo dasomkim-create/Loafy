@@ -5,7 +5,7 @@
   const zSurf = (x, y) => { const R = Rf(y / H); if (R <= Math.abs(x)) return 0; return D * R * Math.pow(1 - Math.pow(Math.abs(x) / R, PX), 1 / PX); };
 
   class LoafyTama extends HTMLElement {
-    static get observedAttributes() { return ['color', 'body', 'coat', 'lcd', 'streak']; }
+    static get observedAttributes() { return ['color', 'body', 'coat', 'lcd', 'streak', 'fit-scale', 'fitscale', 'strap', 'pattern']; }
     connectedCallback() {
       if (this._init) return; this._init = true;
       Object.assign(this.style, { display: 'block', position: 'relative', width: '100%', height: '100%', touchAction: 'none', userSelect: 'none' });
@@ -22,11 +22,37 @@
     }
     attributeChangedCallback(n, o, v) {
       if (n === 'color' && this.shell) this.setShell(v);
+      if (n === 'strap' && this.chain) this.setStrap(v);
+      if (n === 'pattern' && this.shell) this.setShell(this.getAttribute('color'));
+      if ((n === 'fit-scale' || n === 'fitscale') && this._fit && this.cam) { this._fit(this.cam.aspect); this.cam.updateProjectionMatrix(); }
+      this._dirty = true;
+    }
+    patternTex(base, kind) {
+      const T = this.T, cv = document.createElement('canvas'); cv.width = cv.height = 1024; const x = cv.getContext('2d');
+      x.fillStyle = '#' + base.getHexString(T.SRGBColorSpace); x.fillRect(0, 0, 1024, 1024);
+      const hsl = {}; base.getHSL(hsl);
+      const pc = new T.Color().setHSL(hsl.h, Math.min(1, hsl.s * 1.1), hsl.l > 0.55 ? hsl.l - 0.2 : Math.min(0.95, hsl.l + 0.28));
+      x.fillStyle = '#' + pc.getHexString(T.SRGBColorSpace);
+      const st = 112;
+      if (kind === 'dots') for (let j = 0; j < 11; j++) for (let i = 0; i < 11; i++) { x.beginPath(); x.arc(i * st + (j % 2) * st / 2, j * st, 20, 0, 7); x.fill(); }
+      if (kind === 'hearts') for (let j = 0; j < 11; j++) for (let i = 0; i < 11; i++) { const cx = i * st + (j % 2) * st / 2, cy = j * st, s = 30; x.beginPath(); x.moveTo(cx, cy + s * 0.55); x.bezierCurveTo(cx - s * 1.2, cy - s * 0.2, cx - s * 0.55, cy - s * 1.05, cx, cy - s * 0.4); x.bezierCurveTo(cx + s * 0.55, cy - s * 1.05, cx + s * 1.2, cy - s * 0.2, cx, cy + s * 0.55); x.fill(); }
+      if (kind === 'stripes') for (let i = 0; i < 18; i++) x.fillRect(0, i * 60, 1024, 24);
+      const tex = new T.CanvasTexture(cv); tex.colorSpace = T.SRGBColorSpace; tex.anisotropy = 4; return tex;
+    }
+    snapshot() { if (!this.renderer || !this.scene) return null; this.renderer.render(this.scene, this.cam); return this.renderer.domElement.toDataURL('image/png'); }
+    setStrap(v) {
+      const on = !!v && v !== 'none';
+      this.chain.visible = on; this.loop.visible = on; if (this.root) this.root.position.x = on ? -0.22 : 0;
+      if (on) this.metal.color.setHex({ silver: 0xd6d6d8, gold: 0xe3c16f, rose: 0xe8b4a0 }[v] || 0xd6d6d8);
       this._dirty = true;
     }
     setShell(v) {
       const c = new this.T.Color(v || '#C9CCD3');
-      this.shell.color.copy(c);
+      const pat = this.getAttribute('pattern');
+      if (this._ptex) { this._ptex.dispose(); this._ptex = null; }
+      if (pat && pat !== 'none') { this._ptex = this.patternTex(c, pat); this.shell.map = this._ptex; this.shell.color.set(0xffffff); }
+      else { this.shell.map = null; this.shell.color.copy(c); }
+      this.shell.needsUpdate = true; this._dirty = true;
       const hsl = {}; c.getHSL(hsl);
       this.ringMat.color.setHSL(hsl.h, hsl.s * 0.8, Math.max(0, hsl.l - 0.18));
     }
@@ -55,8 +81,8 @@
       r.outputColorSpace = T.SRGBColorSpace; r.toneMapping = T.ACESFilmicToneMapping; r.toneMappingExposure = 1.05;
       Object.assign(r.domElement.style, { width: '100%', height: '100%', display: 'block', cursor: 'grab' });
       this.appendChild(r.domElement);
-      const scene = new T.Scene();
-      const cam = this.cam = new T.PerspectiveCamera(30, w / h, 0.1, 100); const fit = (asp) => { const t = Math.tan(15 * Math.PI / 180); const k = +(this.getAttribute('fit-scale') || 1); cam.position.set(0, -0.16, Math.max(1.62 / t, 1.5 / (t * asp)) / k); }; fit(w / h); this._fit = fit;
+      const scene = this.scene = new T.Scene();
+      const cam = this.cam = new T.PerspectiveCamera(30, w / h, 0.1, 100); const fit = (asp) => { const t = Math.tan(15 * Math.PI / 180); const k = +(this.getAttribute('fitscale') || this.getAttribute('fit-scale') || 1); cam.position.set(0, -0.16, Math.max(1.62 / t, 1.5 / (t * asp)) / k); }; fit(w / h); this._fit = fit;
 
       const es = new T.Scene();
       es.add(new T.Mesh(new T.BoxGeometry(20, 20, 20), new T.MeshBasicMaterial({ color: 0x55575d, side: T.BackSide })));
@@ -79,7 +105,8 @@
         }
       }
       for (let j = 0; j < V; j++) for (let i = 0; i < U; i++) { const a = j * (U + 1) + i, b = a + U + 1; idx.push(a, b, a + 1, b, b + 1, a + 1); }
-      const g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+      const uv = []; for (let q = 0; q < pos.length; q += 3) uv.push(0.5 + pos[q] / 2.6, 0.5 + pos[q + 1] / 2.6);
+      const g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setIndex(idx); g.computeVertexNormals();
       this.shell = new T.MeshPhysicalMaterial({ color: 0xc9ccd3, roughness: 0.32, metalness: 0.15, clearcoat: 0.8, clearcoatRoughness: 0.18 });
       this.ringMat = new T.MeshStandardMaterial({ color: 0x8a8d94, roughness: 0.5 });
       egg.add(new T.Mesh(g, this.shell));
@@ -103,7 +130,7 @@
 
       // logo
       const lc = document.createElement('canvas'); lc.width = 512; lc.height = 128; const lx = lc.getContext('2d');
-      lx.fillStyle = '#26262c'; lx.font = 'italic 900 92px -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif'; lx.textAlign = 'center'; lx.textBaseline = 'middle'; lx.fillText('Loafy', 256, 68);
+      { const LG = (window.LoafySprites && window.LoafySprites.LOGO) || [], ls = 5.4, ox = (512 - 46 * ls) / 2, oy = (128 - 22 * ls) / 2; LG.forEach(([x, y, w, h, c]) => { lx.fillStyle = c ? '#FF7474' : '#26262c'; lx.fillRect(ox + x * ls, oy + y * ls, w * ls + 0.5, h * ls + 0.5); }); }
       const lt = new T.CanvasTexture(lc); lt.colorSpace = T.SRGBColorSpace;
       conform(0.56, 0.14, 0, 1.0, 0.004, new T.MeshStandardMaterial({ map: lt, transparent: true, roughness: 0.5 }));
 
@@ -123,9 +150,9 @@
       });
 
       // keychain
-      const metal = new T.MeshStandardMaterial({ color: 0xd6d6d8, metalness: 1, roughness: 0.22 });
+      const metal = this.metal = new T.MeshStandardMaterial({ color: 0xd6d6d8, metalness: 1, roughness: 0.22 });
       const bail = new T.Vector3(0.5, 1.1, -0.02);
-      const loop = new T.Mesh(new T.TorusGeometry(0.075, 0.018, 12, 32), metal); loop.position.copy(bail); loop.rotation.y = Math.PI / 2.4; egg.add(loop);
+      const loop = this.loop = new T.Mesh(new T.TorusGeometry(0.075, 0.018, 12, 32), metal); loop.position.copy(bail); loop.rotation.y = Math.PI / 2.4; egg.add(loop);
       const chain = this.chain = new T.Group(); chain.position.copy(bail); egg.add(chain);
       const ball = new T.SphereGeometry(0.026, 12, 10);
       const rx = 0.42, ry = 0.95, phi0 = (128 * Math.PI) / 180, cxy = [-rx * Math.cos(phi0), -ry * Math.sin(phi0)];
@@ -134,6 +161,7 @@
         const m = new T.Mesh(ball, metal); m.position.set(cxy[0] + rx * Math.cos(ph), cxy[1] + ry * Math.sin(ph), -0.04 * Math.sin(ph * 2)); chain.add(m);
       }
       const clasp = new T.Mesh(new T.CylinderGeometry(0.034, 0.034, 0.14, 16), metal); clasp.position.set(cxy[0] + rx * Math.cos(phi0 - Math.PI * 1.1), cxy[1] + ry * Math.sin(phi0 - Math.PI * 1.1), 0); clasp.rotation.z = 0.6; chain.add(clasp);
+      this.setStrap(this.getAttribute('strap'));
 
       // contact shadow
       const sc = document.createElement('canvas'); sc.width = sc.height = 128; const sx = sc.getContext('2d');

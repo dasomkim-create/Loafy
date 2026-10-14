@@ -15,38 +15,50 @@ body{margin:0;background:#E6E7EB;font-family:"Pretendard Variable",Pretendard,-a
 a{color:#1E2228;text-decoration:none}a:hover{color:#111418}
 button,input,textarea{font-family:inherit;letter-spacing:inherit}
 textarea::placeholder,input::placeholder{color:#B0B3BA}
+[data-wheel]::-webkit-scrollbar{display:none}
+@keyframes lfIn{from{opacity:0;transform:translateY(10px) scale(0.992)}to{opacity:1;transform:none}}
+@keyframes lfFade{from{opacity:0}to{opacity:1}}
+@keyframes lfSheet{from{transform:translateY(calc(100% + 16px))}to{transform:translateY(0)}}
+@keyframes lfToast{from{opacity:0;transform:translate(-50%,14px) scale(0.94)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes lfPop{0%{opacity:0;transform:scale(0.6)}60%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
 </style>
 </helmet>
 
-<div style="width:402px;height:874px;padding:12px;background:#111114;border-radius:66px;box-shadow:0 30px 80px rgba(0,0,0,0.22);font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif">
-<div ref="{{ rootRef }}" data-loafy-root="{{ uid }}" style="position:relative;width:402px;height:874px;border-radius:54px;overflow:hidden;background:#FFFFFF;color:#000">
+<div style="box-sizing:content-box;margin:0 auto;width:{{ fr.ow }};max-width:480px;height:{{ fr.oh }};padding:{{ fr.op }};background:{{ fr.obg }};border-radius:{{ fr.or }};box-shadow:{{ fr.osh }};font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif">
+<div ref="{{ rootRef }}" data-loafy-root="{{ uid }}" style="position:relative;width:{{ fr.iw }};height:{{ fr.ih }};border-radius:{{ fr.ir }};overflow:hidden;background:#FFFFFF;color:#000">
+
+  <sc-if value="{{ is.splash }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="00 스플래시" onClick="{{ skipSplash }}" style="position:absolute;inset:0;background:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      <x-import component-from-global-scope="loafy-logo" scale="5" hint-size="230px,110px"></x-import>
+    </div>
+  </sc-if>
 
   <sc-if value="{{ is.login }}" hint-placeholder-val="{{ true }}">
-    <div data-screen-label="01 로그인" style="position:absolute;inset:0;background:#FFFFFF;display:flex;flex-direction:column;padding:54px 0 0">
+    <div data-screen-label="01 로그인" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;display:flex;flex-direction:column;padding-top:{{ fr.top }}">
       <div style="padding:64px 24px 0;display:flex;flex-direction:column;gap:10px">
-        <span style="font-size:15px;font-weight:700;color:#5B6472;font-style:italic;letter-spacing:0">Loafy</span>
+        <div style="align-self:flex-start"><x-import component-from-global-scope="loafy-logo" scale="1.5" still="" hint-size="69px,33px"></x-import></div>
         <span style="font-size:28px;line-height:38px;font-weight:700;color:#000">매일 한 번 출석하고<br>고양이를 키워요</span>
         <span style="font-size:16px;line-height:24px;color:rgba(60,60,67,0.6)">출석하면 날렵해지고, 빠지면 식빵이 돼요</span>
       </div>
       <div style="flex:1;position:relative;min-height:0">
-        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" fit-scale="0.8" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
+        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" fit-scale="0.62" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
       </div>
       <div style="padding:0 20px 42px;display:flex;flex-direction:column;gap:10px">
-        <button onClick="{{ nav.obName }}" style="height:56px;border:0;border-radius:16px;background:#000;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
-          <svg width="18" height="20" viewBox="0 0 17 20" fill="#fff"><path d="M14.1 10.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9C3.6 4.8 2 5.8 1.1 7.4c-1.9 3.2-.5 8 1.3 10.6.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.8 3.4-.8s2 .8 3.4.8c1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-3-.1 0-2.9-1.1-3-4.4zM11.5 3c.7-.9 1.2-2 1.1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"></path></svg>
+        <button onClick="{{ nav.obAgree }}" style="height:56px;border:0;border-radius:16px;background:#000;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
+          <svg width="18" height="20" viewBox="0 0 17 20" fill="#fff"><path d="M14.1 10.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.700-2-1.600-.2-3.100.9-3.900.9-.8 0-2-.9-3.4-.9C3.6 4.8 2 5.8 1.1 7.4c-1.9 3.2-.5 8 1.3 10.6.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.8 3.4-.8s2 .8 3.4.8c1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-3-.1 0-2.900-1.100-3-4.400zM11.5 3c.7-.9 1.2-2 1.1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"></path></svg>
           Apple로 계속하기
         </button>
-        <button onClick="{{ nav.obName }}" style="height:56px;border:0;border-radius:16px;background:#FEE500;color:#191919;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
+        <button onClick="{{ nav.obAgree }}" style="height:56px;border:0;border-radius:16px;background:#FEE500;color:#191919;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
           <svg width="20" height="18" viewBox="0 0 20 18" fill="#191919"><path d="M10 0C4.5 0 0 3.5 0 7.8c0 2.8 1.9 5.3 4.7 6.6l-1 3.6c-.1.3.3.6.6.4l4.3-2.8c.5.1.9.1 1.4.1 5.5 0 10-3.5 10-7.9S15.5 0 10 0z"></path></svg>
           카카오로 계속하기
         </button>
-        <button onClick="{{ nav.obName }}" style="height:44px;border:0;background:transparent;color:rgba(60,60,67,0.6);font-size:15px;font-weight:500;cursor:pointer">다른 방법으로 시작하기</button>
+        <button onClick="{{ nav.obAgree }}" style="height:44px;border:0;background:transparent;color:rgba(60,60,67,0.6);font-size:15px;font-weight:500;cursor:pointer">다른 방법으로 시작하기</button>
       </div>
     </div>
   </sc-if>
 
   <sc-if value="{{ is.ob }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="02 온보딩" style="position:absolute;inset:0;background:#FFFFFF;display:flex;flex-direction:column;padding-top:54px">
+    <div data-screen-label="02 온보딩" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;display:flex;flex-direction:column;padding-top:{{ fr.top }}">
       <div style="height:52px;display:flex;align-items:center;gap:8px;padding:0 20px 0 8px">
         <button onClick="{{ obBack }}" style="width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
@@ -54,40 +66,98 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         <div style="flex:1;height:4px;border-radius:2px;background:#ECEDF0;overflow:hidden">
           <div style="height:4px;border-radius:2px;background:#1E2228;width:{{ obPct }};transition:width 280ms cubic-bezier(0.32,0.72,0,1)"></div>
         </div>
-        <span style="font-size:13px;font-weight:600;color:rgba(60,60,67,0.6);min-width:28px;text-align:right">{{ obStep }}</span>
+        <sc-if value="{{ is.obGym }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ skipGym }}" style="height:44px;padding:0 4px;border:0;background:transparent;font-size:15px;font-weight:600;color:#6B7684;cursor:pointer">건너뛰기</button>
+        </sc-if>
+        <sc-if value="{{ notGym }}" hint-placeholder-val="{{ true }}">
+          <span style="font-size:13px;font-weight:600;color:rgba(60,60,67,0.6);min-width:28px;text-align:right">{{ obStep }}</span>
+        </sc-if>
       </div>
 
+      <sc-if value="{{ is.obAgree }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:32px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:26px;line-height:36px;font-weight:700">로피를 시작하려면<br>동의가 필요해요</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button onClick="{{ agreeAll.tap }}" style="display:flex;align-items:center;gap:14px;height:64px;padding:0 18px;border:0;border-radius:18px;background:#F4F5F7;cursor:pointer;text-align:left">
+              <span style="width:26px;height:26px;border-radius:50%;background:{{ agreeAll.dot }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              </span>
+              <span style="flex:1;font-size:18px;font-weight:700;color:#000">전체 동의하기</span>
+            </button>
+            <div style="display:flex;flex-direction:column;padding:4px 0">
+              <sc-for list="{{ agreeItems }}" as="a" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:4px;padding-left:18px">
+                  <button onClick="{{ a.tap }}" style="flex:1;min-width:0;height:52px;border:0;background:transparent;padding:0;display:flex;align-items:center;gap:14px;cursor:pointer;text-align:left">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{ a.check }}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M20 6 9 17l-5-5"></path></svg>
+                    <span style="flex:1;min-width:0;font-size:16px;color:#333D4B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-weight:600;color:{{ a.tagColor }}">{{ a.tag }}</span> {{ a.label }}</span>
+                  </button>
+                  <button onClick="{{ a.view }}" title="보기" style="width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B0B8C1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+                  </button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is.obProfile }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:36px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:26px;line-height:36px;font-weight:700">기본 정보를 알려주세요</span>
+            <span style="font-size:16px;color:rgba(60,60,67,0.6)">출석 통계와 알림에만 사용해요</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:13px;font-weight:600;color:#1E2228">성별</span>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+              <sc-for list="{{ genders }}" as="g" hint-placeholder-count="3">
+                <button onClick="{{ g.pick }}" style="height:52px;border-radius:14px;border:2px solid {{ g.border }};background:{{ g.bg }};font-size:16px;font-weight:600;color:#000;cursor:pointer">{{ g.name }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:13px;font-weight:600;color:#1E2228">생년월일</span>
+            <input value="{{ birthFmt }}" onChange="{{ onBirth }}" inputmode="numeric" placeholder="YYYY.MM.DD" style="border:0;border-bottom:2px solid {{ birthLine }};outline:none;font-size:24px;font-weight:600;padding:6px 0 10px;background:transparent;color:#000">
+            <sc-if value="{{ birthBad }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:13px;color:#D70015">생년월일을 다시 확인해주세요</span>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
       <sc-if value="{{ is.obName }}" hint-placeholder-val="{{ false }}">
-        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:36px">
+        <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:36px">
           <div style="display:flex;flex-direction:column;gap:8px">
             <span style="font-size:26px;line-height:36px;font-weight:700">고양이 이름을<br>지어주세요</span>
-            <span style="font-size:16px;color:rgba(60,60,67,0.6)">나중에 마이에서 바꿀 수 있어요</span>
+            <span style="font-size:16px;color:rgba(60,60,67,0.6)">나중에 샵에서 바꿀 수 있어요</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px">
             <span style="font-size:13px;font-weight:600;color:#1E2228">이름</span>
-            <input value="{{ name }}" onChange="{{ onName }}" maxlength="8" style="border:0;border-bottom:2px solid #1E2228;outline:none;font-size:24px;font-weight:600;padding:6px 0 10px;background:transparent;color:#000">
+            <input value="{{ nameRaw }}" onChange="{{ onName }}" maxlength="8" placeholder="로피" style="border:0;border-bottom:2px solid #1E2228;outline:none;font-size:24px;font-weight:600;padding:6px 0 10px;background:transparent;color:#000">
           </div>
         </div>
       </sc-if>
 
       <sc-if value="{{ is.obGoal }}" hint-placeholder-val="{{ false }}">
-        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:28px">
+        <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:28px">
           <div style="display:flex;flex-direction:column;gap:8px">
             <span style="font-size:26px;line-height:36px;font-weight:700">{{ name }}{{ jo.eul }} 어떤 모습으로<br>키우고 싶나요?</span>
             <span style="font-size:16px;color:rgba(60,60,67,0.6)">6일 연속 출석하면 이 모습이 돼요</span>
           </div>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <sc-for list="{{ goals }}" as="g" hint-placeholder-count="2">
-              <button onClick="{{ g.pick }}" style="display:flex;align-items:center;gap:16px;padding:14px 20px 14px 14px;border-radius:20px;border:2px solid {{ g.border }};background:{{ g.bg }};cursor:pointer;text-align:left">
-                <div style="width:84px;height:84px;border-radius:16px;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
-                  <x-import component-from-global-scope="loafy-sprite" type="{{ g.key }}" coat="{{ coat }}" scale="2" hint-size="64px,66px"></x-import>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+            <sc-for list="{{ goals }}" as="g" hint-placeholder-count="4">
+              <button onClick="{{ g.pick }}" style="position:relative;display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:10px 10px 14px;border-radius:20px;border:2px solid {{ g.border }};background:{{ g.bg }};cursor:pointer;text-align:left;transition:border-color 180ms,background 180ms" style-active="transform:scale(0.98)">
+                <div style="height:96px;border-radius:14px;background:{{ catBg }};display:flex;align-items:center;justify-content:center">
+                  <x-import component-from-global-scope="loafy-sprite" type="{{ g.key }}" coat="{{ coat }}" scale="2.5" hint-size="80px,83px"></x-import>
                 </div>
-                <div style="flex:1;display:flex;flex-direction:column;gap:4px">
-                  <span style="font-size:19px;font-weight:700;color:#000">{{ g.name }}</span>
-                  <span style="font-size:15px;color:rgba(60,60,67,0.6)">{{ g.desc }}</span>
+                <div style="display:flex;flex-direction:column;gap:2px;padding:0 4px">
+                  <span style="font-size:17px;font-weight:700;color:#000">{{ g.name }}</span>
+                  <span style="font-size:13px;color:rgba(60,60,67,0.6)">{{ g.desc }}</span>
                 </div>
-                <div style="width:24px;height:24px;border-radius:50%;background:{{ g.dot }};display:flex;align-items:center;justify-content:center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                <div style="position:absolute;top:16px;right:16px;width:22px;height:22px;border-radius:50%;background:{{ g.dot }};display:flex;align-items:center;justify-content:center">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
                 </div>
               </button>
             </sc-for>
@@ -95,13 +165,34 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         </div>
       </sc-if>
 
+      <sc-if value="{{ is.obGym }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:32px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:26px;line-height:36px;font-weight:700">어디로 출석하나요?</span>
+            <span style="font-size:16px;color:rgba(60,60,67,0.6)">다니는 곳을 적어두면 출석 기록에 함께 남아요</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:13px;font-weight:600;color:#1E2228">헬스장 이름</span>
+            <input value="{{ gym }}" onChange="{{ onGym }}" maxlength="30" placeholder="예) 스포애니 강남점" style="border:0;border-bottom:2px solid #1E2228;outline:none;font-size:22px;font-weight:600;padding:6px 0 10px;background:transparent;color:#000">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:13px;font-weight:600;color:#8B95A1">헬스장이 아니라면</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ gymChips }}" as="g" hint-placeholder-count="4">
+                <button onClick="{{ g.pick }}" style="height:40px;padding:0 14px;border:0;border-radius:999px;background:{{ g.bg }};color:{{ g.color }};font-size:15px;font-weight:600;cursor:pointer">{{ g.name }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
       <sc-if value="{{ is.obCoat }}" hint-placeholder-val="{{ false }}">
-        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:24px">
+        <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:24px">
           <div style="display:flex;flex-direction:column;gap:8px">
             <span style="font-size:26px;line-height:36px;font-weight:700">털색을 골라주세요</span>
             <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ coatName }}</span>
           </div>
-          <div style="height:236px;border-radius:24px;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
+          <div style="height:236px;border-radius:24px;background:{{ catBg }};transition:background 280ms;display:flex;align-items:center;justify-content:center">
             <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ coat }}" scale="6" animate="" hint-size="192px,198px"></x-import>
           </div>
           <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px">
@@ -116,12 +207,12 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
       </sc-if>
 
       <sc-if value="{{ is.obShell }}" hint-placeholder-val="{{ false }}">
-        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:8px">
-          <span style="font-size:26px;line-height:36px;font-weight:700">다마고치 색을 골라주세요</span>
-          <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ shellName }} · 나중에 마이에서 바꿀 수 있어요</span>
+        <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:26px;line-height:36px;font-weight:700">빵틀 색을 골라주세요</span>
+          <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ shellName }} · 나중에 샵에서 바꿀 수 있어요</span>
         </div>
         <div style="position:relative;height:380px">
-          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" fit-scale="0.8" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,380px"></x-import>
+          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" fit-scale="0.62" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,380px"></x-import>
         </div>
         <div style="display:flex;justify-content:space-between;padding:0 24px">
           <sc-for list="{{ shells }}" as="s" hint-placeholder-count="6">
@@ -133,25 +224,68 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
       </sc-if>
 
       <sc-if value="{{ is.obTime }}" hint-placeholder-val="{{ false }}">
-        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:28px">
+        <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:28px">
           <div style="display:flex;flex-direction:column;gap:8px">
             <span style="font-size:26px;line-height:36px;font-weight:700">언제 출석할까요?</span>
             <span style="font-size:16px;color:rgba(60,60,67,0.6)">정한 시간에 {{ name }}{{ jo.ga }} 알려드려요</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:10px">
-            <sc-for list="{{ alarms }}" as="a" hint-placeholder-count="3">
-              <button onClick="{{ a.pick }}" style="display:flex;align-items:center;gap:14px;height:72px;padding:0 20px;border-radius:18px;border:2px solid {{ a.border }};background:{{ a.bg }};cursor:pointer;text-align:left">
-                <x-import component-from-global-scope="loafy-icon" name="bell" size="24" active="{{ a.on }}" hint-size="24px,24px"></x-import>
-                <span style="flex:1;font-size:18px;font-weight:600;color:#000">{{ a.name }}</span>
-                <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ a.time }}</span>
-              </button>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;font-weight:600;color:#1E2228">출석 횟수</span>
+            <span style="font-size:13px;font-weight:600;color:#8B95A1">{{ freqName }}</span>
+          </div>
+          <div style="display:flex;height:40px;padding:3px;border-radius:12px;background:#F2F4F6">
+            <sc-for list="{{ schedModes }}" as="m" hint-placeholder-count="2">
+              <button onClick="{{ m.pick }}" style="flex:1;border:0;border-radius:9px;background:{{ m.bg }};box-shadow:{{ m.shadow }};font-size:15px;font-weight:600;color:#191F28;cursor:pointer">{{ m.name }}</button>
             </sc-for>
+          </div>
+          <sc-if value="{{ schedCount }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+              <sc-for list="{{ freqs }}" as="f" hint-placeholder-count="7">
+                <button onClick="{{ f.pick }}" style="height:44px;border-radius:12px;border:2px solid {{ f.border }};background:{{ f.bg }};font-size:15px;font-weight:600;color:#000;cursor:pointer">{{ f.name }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ schedDays }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;gap:6px">
+                <sc-for list="{{ dayPresets }}" as="p" hint-placeholder-count="3">
+                  <button onClick="{{ p.pick }}" style="height:32px;padding:0 14px;border:0;border-radius:999px;background:{{ p.bg }};color:{{ p.color }};font-size:14px;font-weight:600;cursor:pointer">{{ p.name }}</button>
+                </sc-for>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <sc-for list="{{ dayToggles }}" as="d" hint-placeholder-count="7">
+                  <button onClick="{{ d.tap }}" style="width:44px;height:44px;border-radius:50%;border:0;background:{{ d.bg }};color:{{ d.color }};font-size:15px;font-weight:700;cursor:pointer">{{ d.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:13px;font-weight:600;color:#1E2228">알림 시간</span>
+              <div style="display:flex;gap:6px">
+                <sc-for list="{{ presets }}" as="p" hint-placeholder-count="3">
+                  <button onClick="{{ p.pick }}" style="height:30px;padding:0 12px;border:0;border-radius:999px;background:{{ p.bg }};color:{{ p.color }};font-size:13px;font-weight:600;cursor:pointer">{{ p.name }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="position:relative;height:200px;display:flex;gap:4px;padding:0 24px">
+              <div style="position:absolute;left:0;right:0;top:80px;height:40px;border-radius:12px;background:#F4F5F7"></div>
+              <sc-for list="{{ wheel }}" as="c" hint-placeholder-count="3">
+                <div data-wheel="" ref="{{ c.ref }}" onScroll="{{ c.onScroll }}" style="position:relative;flex:1;height:200px;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;padding:80px 0;box-sizing:border-box;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 40%,#000 60%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 40%,#000 60%,transparent)">
+                  <sc-for list="{{ c.items }}" as="it" hint-placeholder-count="3">
+                    <div onClick="{{ it.tap }}" style="height:40px;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:{{ it.weight }};color:{{ it.color }};cursor:pointer;font-variant-numeric:tabular-nums">{{ it.label }}</div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
           </div>
         </div>
       </sc-if>
 
       <sc-if value="{{ is.obRule }}" hint-placeholder-val="{{ false }}">
-        <div style="padding:20px 24px 0;display:flex;flex-direction:column;gap:24px">
+        <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:24px">
           <div style="display:flex;flex-direction:column;gap:8px">
             <span style="font-size:26px;line-height:36px;font-weight:700">{{ name }}{{ jo.eunneun }}<br>출석에 따라 모습이 바뀌어요</span>
           </div>
@@ -178,25 +312,34 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
   </sc-if>
 
   <sc-if value="{{ is.home }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="03 홈" style="position:absolute;inset:0;background:#F2F2F7;padding-top:54px;display:flex;flex-direction:column">
+    <div data-screen-label="03 홈" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#F2F2F7;padding-top:{{ fr.top }};display:flex;flex-direction:column">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:6px 16px 0 20px">
         <div style="display:flex;flex-direction:column;gap:2px">
           <span style="font-size:13px;color:rgba(60,60,67,0.6)">10월 13일 화요일</span>
           <span style="font-size:34px;line-height:41px;font-weight:700">{{ name }}</span>
         </div>
         <div style="display:flex;gap:8px;padding-bottom:2px">
-          <button onClick="{{ nav.share }}" title="공유" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.78);box-shadow:0 8px 24px rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <button onClick="{{ nav.share }}" title="공유" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.78);box-shadow:0 2px 6px rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center;cursor:pointer">
             <x-import component-from-global-scope="loafy-icon" name="share" size="24" color="#1E2228" hint-size="24px,24px"></x-import>
           </button>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;padding:10px 20px 0">
-        <span style="height:28px;padding:0 12px;border-radius:999px;background:#FFFFFF;color:#1E2228;box-shadow:0 2px 8px rgba(0,0,0,0.06);font-size:13px;font-weight:700;display:flex;align-items:center;white-space:nowrap">D+{{ streak }} 연속 출석</span>
+        <span style="height:28px;padding:0 12px;border-radius:999px;background:#FFFFFF;color:#1E2228;box-shadow:0 1px 3px rgba(0,0,0,0.05);font-size:13px;font-weight:700;display:flex;align-items:center;white-space:nowrap">D+{{ streak }} 연속 출석</span>
         <span style="font-size:13px;color:rgba(60,60,67,0.6);white-space:nowrap">{{ bodyName }} · {{ nextHint }}</span>
       </div>
+      <sc-if value="{{ showAds }}" hint-placeholder-val="{{ true }}">
+        <div data-ad-slot="banner-320x50" style="margin:12px 16px 0;height:56px;border-radius:14px;background:#FFFFFF;border:1px dashed #C9CDD2;display:flex;align-items:center;gap:10px;padding:0 14px;box-sizing:border-box;flex-shrink:0">
+          <span style="height:20px;padding:0 6px;border-radius:5px;background:#E5E8EB;color:#6B7684;font-size:11px;font-weight:700;display:flex;align-items:center">AD</span>
+          <span style="flex:1;font-size:14px;color:#8B95A1">광고 배너 영역</span>
+          <span style="font-size:12px;color:#B0B8C1">320×50</span>
+          <button onClick="{{ goNoads }}" style="height:28px;padding:0 10px;border:0;border-radius:999px;background:#F2F4F6;color:#4E5968;font-size:12px;font-weight:600;cursor:pointer">광고 제거</button>
+        </div>
+      </sc-if>
 
+      <div style="height:74px;flex-shrink:0;display:flex;flex-direction:column">
       <sc-if value="{{ showMissed }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ nav.letter }}" style="margin:12px 16px 0;padding:12px 14px;border:0;border-radius:18px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.05);display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer">
+        <button onClick="{{ nav.letter }}" style="margin:12px 16px 0;padding:12px 14px;border:0;border-radius:18px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.04);display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer">
           <x-import component-from-global-scope="loafy-icon" name="letter" size="24" active="true" hint-size="24px,24px"></x-import>
           <div style="flex:1;display:flex;flex-direction:column;gap:1px">
             <span style="font-size:15px;font-weight:600;color:#000">어제 출석을 못 했어요</span>
@@ -205,15 +348,16 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4C6CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
         </button>
       </sc-if>
+      </div>
 
       <div style="position:relative;flex:1;min-height:0">
-        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
+        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
         <span style="position:absolute;left:0;right:0;bottom:4px;text-align:center;font-size:12px;color:rgba(60,60,67,0.45);pointer-events:none">화면을 누르면 크게 볼 수 있어요</span>
       </div>
 
       <div style="padding:12px 16px 112px">
         <sc-if value="{{ notChecked }}" hint-placeholder-val="{{ true }}">
-          <button onClick="{{ checkinBtn }}" style="width:100%;height:64px;border:0;border-radius:20px;background:#1E2228;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 8px 24px rgba(30,34,40,0.28)" style-active="background:#111418;transform:scale(0.98)">
+          <button onClick="{{ checkinBtn }}" style="width:100%;height:64px;border:0;border-radius:20px;background:#1E2228;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 3px 10px rgba(30,34,40,0.14)" style-active="background:#111418;transform:scale(0.98)">
             <x-import component-from-global-scope="loafy-icon" name="paw" size="24" active="true" hint-size="24px,24px"></x-import>
             <span style="font-size:19px;font-weight:700">오늘 출석하기</span>
           </button>
@@ -230,32 +374,56 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
   </sc-if>
 
   <sc-if value="{{ is.lcd }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="04 다마고치 화면" style="position:absolute;inset:0;background:{{ shell }};padding-top:54px;display:flex;flex-direction:column;align-items:center">
-      <span style="margin-top:28px;font-size:20px;font-weight:800;font-style:italic;color:#26262C;letter-spacing:0">Loafy</span>
-      <div style="margin-top:18px;width:362px;height:362px;padding:14px;border-radius:40px;background:#0C0C10;box-shadow:0 12px 32px rgba(0,0,0,0.25)">
-        <div style="width:362px;height:362px;border-radius:12px;overflow:hidden">
-          <x-import component-from-global-scope="loafy-lcd" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" hint-size="362px,362px"></x-import>
+    <div data-screen-label="04 빵틀 화면" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:{{ shell }};padding-top:{{ fr.top }};display:flex;flex-direction:column;align-items:center;overflow-y:auto">
+      <div style="width:100%;height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative">
+        <button onClick="{{ nav.home }}" title="돌아가기" style="position:absolute;left:12px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.6);background:rgba(250,250,250,0.72);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 2px 6px rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+        <x-import component-from-global-scope="loafy-logo" scale="1.6" still="" hint-size="74px,35px"></x-import>
+      </div>
+      <div style="margin-top:8px;flex-shrink:0;padding:14px;border-radius:44px;background:linear-gradient(160deg,#2A2A31 0%,#0B0B0E 70%);box-shadow:0 16px 36px rgba(0,0,0,0.28),0 2px 0 rgba(255,255,255,0.35),inset 0 1px 0 rgba(255,255,255,0.14),inset 0 -3px 8px rgba(0,0,0,0.6)">
+        <div style="width:300px;height:300px;border-radius:30px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.06)">
+          <x-import component-from-global-scope="loafy-lcd" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" hint-size="300px,300px"></x-import>
         </div>
       </div>
-      <div style="margin-top:36px;display:flex;gap:40px;align-items:flex-start">
+      <div style="margin-top:24px;flex-shrink:0;display:flex;gap:32px;align-items:flex-start">
         <sc-for list="{{ lcdBtns }}" as="b" hint-placeholder-count="3">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:{{ b.dy }}">
-            <button onClick="{{ b.press }}" style="width:64px;height:64px;border-radius:50%;border:4px solid rgba(0,0,0,0.12);background:#1B1B20;box-shadow:inset 0 -4px 0 rgba(0,0,0,0.4),0 6px 14px rgba(0,0,0,0.2);cursor:pointer" style-active="transform:scale(0.94)"></button>
-            <span style="font-size:13px;font-weight:600;color:rgba(0,0,0,0.55)">{{ b.label }}</span>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:{{ b.dy }}">
+            <span style="width:76px;height:76px;border-radius:50%;background:rgba(0,0,0,0.10);box-shadow:inset 0 3px 6px rgba(0,0,0,0.30),0 1px 0 rgba(255,255,255,0.55);display:flex;align-items:center;justify-content:center">
+              <button onClick="{{ b.press }}" style="width:60px;height:60px;border-radius:50%;border:0;background:radial-gradient(circle at 38% 30%,#5A5A63 0%,#2B2B32 45%,#141418 100%);box-shadow:0 4px 0 #08080A,0 5px 8px rgba(0,0,0,0.18),inset 0 2px 1px rgba(255,255,255,0.22),inset 0 -3px 4px rgba(0,0,0,0.5);transform:translateY(-3px);transition:transform 90ms,box-shadow 90ms;cursor:pointer" style-active="transform:translateY(1px);box-shadow:0 1px 0 #08080A,0 2px 4px rgba(0,0,0,0.3),inset 0 2px 1px rgba(255,255,255,0.12),inset 0 -2px 3px rgba(0,0,0,0.5)"></button>
+            </span>
+            <span style="font-size:13px;font-weight:700;color:rgba(0,0,0,0.55)">{{ b.label }}</span>
           </div>
         </sc-for>
       </div>
-      <button onClick="{{ nav.home }}" style="position:absolute;left:20px;right:20px;bottom:42px;height:56px;border-radius:999px;border:1px solid rgba(255,255,255,0.6);background:rgba(250,250,250,0.72);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 8px 40px rgba(0,0,0,0.12);font-size:17px;font-weight:600;color:#000;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"></path><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"></path></svg>
-        돌아가기
-      </button>
+      <div style="margin:20px 20px 32px;flex-shrink:0;width:calc(100% - 40px);max-width:380px;box-sizing:border-box;padding:22px 22px 24px;border-radius:26px;background:rgba(255,255,255,0.82);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.6);box-shadow:0 1px 4px rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:14px;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
+            <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" scale="1.25" hint-size="40px,41px"></x-import>
+          </div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:17px;font-weight:700;color:#191F28">{{ name }}의 상태</span>
+            <span style="font-size:13px;color:#6B7684">{{ bodyName }} · {{ coatName }}</span>
+          </div>
+          <span style="font-size:20px;font-weight:800;color:#191F28">D+{{ streak }}</span>
+        </div>
+        <sc-for list="{{ lcdStats }}" as="s" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-size:14px;font-weight:600;color:#4E5968">{{ s.label }}</span>
+              <span style="font-size:13px;color:#6B7684">{{ s.value }}</span>
+            </div>
+            <div style="height:6px;border-radius:3px;background:rgba(0,0,0,0.08);overflow:hidden">
+              <div style="height:6px;border-radius:3px;width:{{ s.pct }};background:{{ s.fill }}"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
     </div>
   </sc-if>
 
   <sc-if value="{{ is.checkin }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="05 출석 완료" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column;align-items:center">
+    <div data-screen-label="05 출석 완료" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;align-items:center">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding-bottom:60px">
-        <div style="width:240px;height:240px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+        <div style="animation:lfPop 520ms 120ms cubic-bezier(0.34,1.56,0.64,1) both;width:240px;height:240px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
           <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" expr="happy" pose="stamp" scale="5" hint-size="160px,165px"></x-import>
         </div>
         <span style="font-size:17px;font-weight:600;color:#5B6472">출석 완료</span>
@@ -270,7 +438,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
   </sc-if>
 
   <sc-if value="{{ is.share }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="06 공유카드" style="position:absolute;inset:0;background:#F2F2F7;padding-top:54px;display:flex;flex-direction:column;align-items:center">
+    <div data-screen-label="06 공유카드" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#F2F2F7;padding-top:{{ fr.top }};display:flex;flex-direction:column;align-items:center">
       <div style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;position:relative">
         <span style="font-size:17px;font-weight:600">공유카드</span>
         <button onClick="{{ nav.home }}" style="position:absolute;right:12px;width:44px;height:44px;border:0;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
@@ -279,11 +447,11 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
       </div>
       <div style="margin-top:16px;width:318px;padding:20px;border-radius:30px;background:#FFFFFF;box-shadow:0 20px 48px rgba(0,0,0,0.14);display:flex;flex-direction:column;gap:16px">
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <span style="font-size:17px;font-weight:800;font-style:italic;color:#26262C;letter-spacing:0">Loafy</span>
+          <x-import component-from-global-scope="loafy-logo" scale="1.2" still="" hint-size="55px,26px"></x-import>
           <span style="font-size:13px;font-weight:600;color:rgba(0,0,0,0.5)">2026.10.13</span>
         </div>
         <div style="position:relative;height:300px;margin:0 -8px">
-          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" still="" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,300px"></x-import>
+          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" still="" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,300px"></x-import>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:flex-end;padding:0 4px">
           <div style="display:flex;flex-direction:column;gap:2px">
@@ -296,7 +464,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
       <div style="margin-top:32px;display:flex;gap:20px">
         <sc-for list="{{ shareTargets }}" as="t" hint-placeholder-count="4">
           <button onClick="{{ t.tap }}" style="width:64px;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;padding:0">
-            <span style="width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center">
+            <span style="width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E2228" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.d }}"></path></svg>
             </span>
             <span style="font-size:12px;font-weight:500;color:#1E2228">{{ t.label }}</span>
@@ -307,17 +475,17 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
   </sc-if>
 
   <sc-if value="{{ is.letter }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="07 사연 보내기" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column">
+    <div data-screen-label="07 사연 보내기" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
       <div style="height:52px;display:flex;align-items:center;padding:0 8px">
-        <button onClick="{{ nav.home }}" style="width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
+        <button onClick="{{ letterBack }}" style="width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
         </button>
       </div>
       <div style="padding:12px 24px 0;display:flex;flex-direction:column;gap:24px">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
           <div style="display:flex;flex-direction:column;gap:8px">
-            <span style="font-size:26px;line-height:36px;font-weight:700">어제 왜 못 왔나요?</span>
-            <span style="font-size:15px;line-height:22px;color:rgba(60,60,67,0.6)">사연을 보내면 연속 기록이 이어져요<br>한 달에 2번까지 보낼 수 있어요</span>
+            <span style="font-size:26px;line-height:36px;font-weight:700">{{ letterTitle }}</span>
+            <span style="font-size:15px;line-height:22px;color:rgba(60,60,67,0.6)">{{ letterSub1 }}<br>{{ letterSub2 }}</span>
           </div>
           <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" pose="letter" scale="2.5" hint-size="80px,83px"></x-import>
         </div>
@@ -327,13 +495,43 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         </div>
       </div>
       <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 20px 42px">
-        <button onClick="{{ sendLetter }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer;opacity:{{ letterOpacity }}" style-active="background:#111418">사연 보내기</button>
+        <button onClick="{{ sendLetter }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer;opacity:{{ letterOpacity }}" style-active="background:#111418">{{ letterCta }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.letters }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="14 사연 내역" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;overflow-y:auto">
+      <div style="height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative">
+        <button onClick="{{ nav.my }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+        <span style="font-size:17px;font-weight:600">사연 내역</span>
+      </div>
+      <div style="padding:12px 20px 0;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:22px;font-weight:700;color:#191F28">이번 달 {{ letterUsed }}/2번 보냈어요</span>
+        <span style="font-size:14px;color:#8B95A1">보낸 사연은 언제든 고칠 수 있어요</span>
+      </div>
+      <div style="padding:20px 20px 40px;display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ letterList }}" as="l" hint-placeholder-count="2">
+          <div style="padding:16px 18px;border-radius:18px;background:#F9FAFB;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="width:8px;height:8px;border-radius:50%;background:#3182F6"></span>
+                <span style="font-size:14px;font-weight:600;color:#1B64DA">{{ l.date }}</span>
+              </div>
+              <button onClick="{{ l.edit }}" style="height:32px;padding:0 12px;border:0;border-radius:10px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E5E8EB;color:#4E5968;font-size:13px;font-weight:600;cursor:pointer">수정</button>
+            </div>
+            <span style="font-size:16px;line-height:24px;color:#333D4B">{{ l.text }}</span>
+          </div>
+        </sc-for>
+        <sc-if value="{{ noLetters }}" hint-placeholder-val="{{ false }}">
+          <span style="padding:40px 0;text-align:center;font-size:15px;color:#8B95A1">아직 보낸 사연이 없어요</span>
+        </sc-if>
       </div>
     </div>
   </sc-if>
 
   <sc-if value="{{ is.letterDone }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="08 사연 완료" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column">
+    <div data-screen-label="08 사연 완료" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding-bottom:60px">
         <div style="width:220px;height:220px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;margin-bottom:18px">
           <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" expr="happy" scale="4.5" hint-size="144px,149px"></x-import>
@@ -347,80 +545,233 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
     </div>
   </sc-if>
 
-  <sc-if value="{{ is.edit }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="09 다마고치 꾸미기" style="position:absolute;inset:0;background:#F2F2F7;padding-top:54px;display:flex;flex-direction:column">
-      <div style="height:52px;display:flex;align-items:center;justify-content:center;position:relative">
-        <button onClick="{{ nav.home }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+  <sc-if value="{{ is.shop }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="09 샵" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
+      <div style="height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 20px">
+        <span style="font-size:20px;font-weight:700;color:#191F28">샵</span>
+        <button onClick="{{ openCookies }}" style="height:36px;padding:0 12px 0 6px;border:0;border-radius:999px;background:#FFEEF1;display:flex;align-items:center;gap:6px;cursor:pointer">
+          <x-import component-from-global-scope="loafy-icon" name="cookie" size="24" active="true" hint-size="24px,24px"></x-import>
+          <span style="font-size:15px;font-weight:700;color:#191F28;font-variant-numeric:tabular-nums">{{ cookies }}</span>
+          <span style="font-size:13px;font-weight:600;color:#C24D63">충전</span>
         </button>
-        <span style="font-size:17px;font-weight:600">다마고치 꾸미기</span>
       </div>
-      <div style="position:relative;height:380px">
-        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,380px"></x-import>
+      <div style="display:flex;gap:8px;padding:4px 20px 14px">
+        <sc-for list="{{ shopFilters }}" as="f" hint-placeholder-count="3">
+          <button onClick="{{ f.pick }}" style="height:36px;padding:0 16px;border:0;border-radius:999px;background:{{ f.bg }};color:{{ f.color }};font-size:15px;font-weight:600;cursor:pointer">{{ f.name }}</button>
+        </sc-for>
       </div>
-      <div style="margin:8px 16px 0;padding:18px 16px;border-radius:22px;background:#fff;display:flex;flex-direction:column;gap:18px">
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <span style="font-size:13px;font-weight:600;color:rgba(60,60,67,0.6)">케이스 · {{ shellName }}</span>
-          <div style="display:flex;justify-content:space-between">
-            <sc-for list="{{ shells }}" as="s" hint-placeholder-count="6">
-              <button onClick="{{ s.pick }}" title="{{ s.name }}" style="width:44px;height:44px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer">
-                <span style="width:34px;height:34px;border-radius:50%;background:{{ s.hex }};box-shadow:{{ s.ring }}"></span>
-              </button>
-            </sc-for>
-          </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:0 20px">
+        <sc-if value="{{ noadsCard.show }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ noadsCard.tap }}" style="width:100%;margin-bottom:20px;padding:16px;border:0;border-radius:20px;background:#1E2228;display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer" style-active="transform:scale(0.98)">
+            <span style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,0.12);color:#FFFFFF;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;text-decoration:line-through">AD</span>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+              <span style="font-size:16px;font-weight:700;color:#FFFFFF">광고 제거권</span>
+              <span style="font-size:13px;color:rgba(255,255,255,0.72)">홈·기록·마이의 배너를 없애요</span>
+            </div>
+            <span style="height:28px;padding:0 10px 0 7px;border-radius:999px;background:#FFEEF1;color:#191F28;font-size:13px;font-weight:700;display:flex;align-items:center;gap:4px"><x-import component-from-global-scope="loafy-icon" name="cookie" size="12" active="true" hint-size="12px,12px"></x-import><span>{{ noadsCard.price }}</span></span>
+          </button>
+        </sc-if>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px">
+          <sc-for list="{{ shopItems }}" as="it" hint-placeholder-count="6">
+            <button onClick="{{ it.tap }}" style="border:0;padding:0;background:transparent;display:flex;flex-direction:column;gap:10px;text-align:left;cursor:pointer" style-active="transform:scale(0.98)">
+              <div style="width:100%;height:136px;border-radius:20px;background:{{ it.tile }};display:flex;align-items:center;justify-content:center">
+                <sc-if value="{{ it.isStrap }}" hint-placeholder-val="{{ false }}">
+                  <span style="width:64px;height:64px;border-radius:50%;box-sizing:border-box;border:9px dotted {{ it.hex }}"></span>
+                </sc-if>
+                <sc-if value="{{ it.isShell }}" hint-placeholder-val="{{ false }}">
+                  <span style="width:64px;height:64px;border-radius:50%;background:{{ it.hex }};box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span>
+                </sc-if>
+                <sc-if value="{{ it.isCoat }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ it.val }}" scale="3" hint-size="96px,99px"></x-import>
+                </sc-if>
+                <sc-if value="{{ it.isPattern }}" hint-placeholder-val="{{ false }}">
+                  <span style="width:64px;height:64px;border-radius:50%;background:{{ it.swatch }};box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span>
+                </sc-if>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;padding:0 4px">
+                <span style="font-size:15px;font-weight:600;color:#191F28">{{ it.name }}</span>
+                <span style="align-self:flex-start;height:28px;padding:0 10px 0 7px;border-radius:999px;background:{{ it.priceBg }};color:{{ it.priceColor }};font-size:13px;font-weight:700;display:flex;align-items:center;gap:4px">
+                  <sc-if value="{{ it.notOwned }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="loafy-icon" name="cookie" size="12" active="true" hint-size="12px,12px"></x-import></sc-if>
+                  <span>{{ it.priceLabel }}</span>
+                </span>
+              </div>
+            </button>
+          </sc-for>
         </div>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <span style="font-size:13px;font-weight:600;color:rgba(60,60,67,0.6)">화면</span>
-          <div style="display:flex;height:36px;padding:2px;border-radius:10px;background:rgba(120,120,128,0.12)">
-            <sc-for list="{{ lcdModes }}" as="m" hint-placeholder-count="2">
-              <button onClick="{{ m.pick }}" style="flex:1;border:0;border-radius:8px;background:{{ m.bg }};box-shadow:{{ m.shadow }};font-size:14px;font-weight:600;color:#000;cursor:pointer">{{ m.name }}</button>
-            </sc-for>
-          </div>
-        </div>
+        <div style="height:130px"></div>
       </div>
-      <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 20px 42px">
-        <button onClick="{{ saveEdit }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418">저장</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.deco }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="13 꾸미기" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
+      <div style="height:52px;display:flex;align-items:center;justify-content:center;position:relative">
+        <button onClick="{{ nav.my }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+        <span style="font-size:17px;font-weight:600">꾸미기</span>
+      </div>
+      <div style="display:flex;padding:0 20px;border-bottom:1px solid #F2F4F6">
+        <sc-for list="{{ shopTabs }}" as="t" hint-placeholder-count="2">
+          <button onClick="{{ t.tap }}" style="flex:1;height:48px;border:0;background:transparent;box-shadow:{{ t.line }};font-size:16px;font-weight:700;color:{{ t.color }};cursor:pointer">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto">
+        <sc-if value="{{ shopDevice }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column">
+            <div style="position:relative;height:300px;background:#F2F2F7">
+              <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,300px"></x-import>
+            </div>
+            <div style="padding:24px 20px 0;display:flex;flex-direction:column;gap:28px">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline">
+                  <span style="font-size:17px;font-weight:700;color:#191F28">케이스</span>
+                  <span style="font-size:14px;color:#8B95A1">{{ shellName }}</span>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px 10px">
+                  <sc-for list="{{ shells }}" as="s" hint-placeholder-count="6">
+                    <button onClick="{{ s.pick }}" title="{{ s.name }}" style="width:48px;height:48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                      <span style="width:38px;height:38px;border-radius:50%;background:{{ s.hex }};box-shadow:{{ s.ring }}"></span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline">
+                  <span style="font-size:17px;font-weight:700;color:#191F28">무늬</span>
+                  <button onClick="{{ goShopDevice }}" style="border:0;background:transparent;padding:0;font-size:14px;font-weight:600;color:#4E5968;cursor:pointer">샵에서 더 보기 ›</button>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ patterns }}" as="p" hint-placeholder-count="2">
+                    <button onClick="{{ p.pick }}" style="height:44px;padding:0 14px 0 8px;border-radius:999px;border:2px solid {{ p.ring }};background:#F4F5F7;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#191F28;cursor:pointer">
+                      <span style="width:26px;height:26px;border-radius:50%;background:{{ p.swatch }};box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span>
+                      {{ p.name }}
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline">
+                  <span style="font-size:17px;font-weight:700;color:#191F28">액세서리</span>
+                  <button onClick="{{ goShopDevice }}" style="border:0;background:transparent;padding:0;font-size:14px;font-weight:600;color:#4E5968;cursor:pointer">샵에서 더 보기 ›</button>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ straps }}" as="s" hint-placeholder-count="2">
+                    <button onClick="{{ s.pick }}" style="height:44px;padding:0 14px 0 10px;border-radius:999px;border:2px solid {{ s.ring }};background:#F4F5F7;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#191F28;cursor:pointer">
+                      <span style="width:20px;height:20px;border-radius:50%;box-sizing:border-box;border:4px dotted {{ s.hex }}"></span>
+                      {{ s.name }}
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <span style="font-size:17px;font-weight:700;color:#191F28">화면</span>
+                <div style="display:flex;height:40px;padding:3px;border-radius:12px;background:#F2F4F6">
+                  <sc-for list="{{ lcdModes }}" as="m" hint-placeholder-count="2">
+                    <button onClick="{{ m.pick }}" style="flex:1;border:0;border-radius:9px;background:{{ m.bg }};box-shadow:{{ m.shadow }};font-size:15px;font-weight:600;color:#191F28;cursor:pointer">{{ m.name }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ shopCat }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column">
+            <div style="height:260px;background:{{ catBg }};transition:background 280ms;display:flex;align-items:center;justify-content:center">
+              <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" scale="6" animate="" hint-size="192px,198px"></x-import>
+            </div>
+            <div style="padding:24px 20px 0;display:flex;flex-direction:column;gap:28px">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <span style="font-size:17px;font-weight:700;color:#191F28">이름</span>
+                <input value="{{ nameRaw }}" onChange="{{ onName }}" maxlength="8" placeholder="로피" style="height:52px;border:0;outline:none;border-radius:14px;background:#F2F4F6;padding:0 16px;font-size:17px;font-weight:600;color:#191F28">
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline">
+                  <span style="font-size:17px;font-weight:700;color:#191F28">털색 · {{ coatName }}</span>
+                  <button onClick="{{ goShopCat }}" style="border:0;background:transparent;padding:0;font-size:14px;font-weight:600;color:#4E5968;cursor:pointer">샵에서 더 보기 ›</button>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px">
+                  <sc-for list="{{ coats }}" as="k" hint-placeholder-count="5">
+                    <button onClick="{{ k.pick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0 8px;border-radius:16px;border:2px solid {{ k.border }};background:#F4F5F7;cursor:pointer">
+                      <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ k.key }}" scale="1.5" hint-size="48px,50px"></x-import>
+                      <span style="font-size:13px;font-weight:600;color:#1E2228">{{ k.name }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <span style="font-size:17px;font-weight:700;color:#191F28">목표 체형</span>
+                <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+                  <sc-for list="{{ goals }}" as="g" hint-placeholder-count="2">
+                    <button onClick="{{ g.pick }}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:16px;border:2px solid {{ g.border }};background:#F4F5F7;cursor:pointer;text-align:left">
+                      <x-import component-from-global-scope="loafy-sprite" type="{{ g.key }}" coat="{{ coat }}" scale="1.5" hint-size="48px,50px"></x-import>
+                      <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                        <span style="font-size:16px;font-weight:700;color:#191F28">{{ g.name }}</span>
+                        <span style="font-size:13px;color:#8B95A1">{{ g.desc }}</span>
+                      </div>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <div style="height:48px"></div>
       </div>
     </div>
   </sc-if>
 
   <sc-if value="{{ is.record }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="10 기록" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column;overflow-y:auto">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 0 20px">
-        <div style="display:flex;flex-direction:column;gap:2px">
-          <span style="font-size:14px;font-weight:600;color:#8B95A1">{{ cal.year }}년</span>
-          <span style="font-size:34px;line-height:41px;font-weight:800;color:#191F28">{{ cal.month }}월</span>
-        </div>
-        <div style="display:flex;gap:8px">
-          <button onClick="{{ cal.prev }}" title="이전 달" style="width:40px;height:40px;border:0;border-radius:50%;background:#F2F4F6;color:{{ cal.prevColor }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-active="background:#E5E8EB"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
-          <button onClick="{{ cal.next }}" title="다음 달" style="width:40px;height:40px;border:0;border-radius:50%;background:#F2F4F6;color:{{ cal.nextColor }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-active="background:#E5E8EB"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
-        </div>
+    <div data-screen-label="10 기록" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;overflow-y:auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px 0 12px">
+        <button onClick="{{ cal.openSheet }}" style="height:48px;border:0;background:transparent;padding:0 8px;border-radius:12px;display:flex;align-items:center;gap:4px;cursor:pointer" style-active="background:#F2F4F6">
+          <span style="font-size:24px;font-weight:800;color:#191F28">{{ cal.year }}년 {{ cal.month }}월</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#191F28" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <sc-if value="{{ cal.notCurrent }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ cal.toToday }}" style="height:32px;padding:0 12px;border:0;border-radius:999px;background:#F2F4F6;color:#4E5968;font-size:14px;font-weight:600;cursor:pointer">오늘</button>
+        </sc-if>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:18px 12px 6px">
-        <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
-          <span style="text-align:center;font-size:13px;font-weight:500;color:{{ w.color }}">{{ w.label }}</span>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:12px 20px 0;padding:14px 0;border-radius:16px;background:#F9FAFB">
+        <sc-for list="{{ calStats }}" as="st" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+            <span style="font-size:13px;color:#8B95A1">{{ st.label }}</span>
+            <span style="font-size:18px;font-weight:700;color:{{ st.color }}">{{ st.value }}</span>
+          </div>
         </sc-for>
       </div>
-      <div style="display:flex;flex-direction:column;padding:0 12px">
+      <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:20px 12px 4px">
+        <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+          <span style="text-align:center;font-size:13px;font-weight:600;color:{{ w.color }}">{{ w.label }}</span>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;padding:0 12px">
         <sc-for list="{{ weeks }}" as="wk" hint-placeholder-count="5">
-          <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));height:54px">
+          <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px">
             <sc-for list="{{ wk.days }}" as="d" hint-placeholder-count="7">
-              <button onClick="{{ d.tap }}" style="border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;opacity:{{ d.op }};cursor:pointer">
-                <span style="width:40px;height:40px;border-radius:50%;background:{{ d.circle }};box-shadow:{{ d.ring }};color:{{ d.color }};font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ d.n }}</span>
-                <span style="width:4px;height:4px;border-radius:50%;background:{{ d.dot }}"></span>
+              <button onClick="{{ d.tap }}" style="position:relative;height:66px;border:0;border-radius:18px;background:{{ d.cell }};padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:background 180ms;visibility:{{ d.vis }};cursor:pointer">
+                <span style="width:40px;height:40px;border-radius:50%;background:{{ d.circle }};box-shadow:{{ d.ring }};color:{{ d.color }};font-size:15px;font-weight:{{ d.weight }};display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums"><sc-if value="{{ d.paw }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="loafy-icon" name="{{ d.icon }}" size="24" active="true" hint-size="24px,24px"></x-import></sc-if><sc-if value="{{ d.num }}" hint-placeholder-val="{{ true }}"><span>{{ d.n }}</span></sc-if></span>
+                <span style="position:absolute;left:0;right:0;bottom:2px;height:12px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;line-height:12px;color:#8B95A1">{{ d.small }}</span><span style="width:4px;height:4px;border-radius:50%;background:{{ d.dot }};display:{{ d.dotDisp }}"></span></span>
               </button>
             </sc-for>
           </div>
         </sc-for>
       </div>
-      <div style="display:flex;justify-content:center;gap:16px;padding:8px 20px 18px">
+      <div style="display:flex;justify-content:center;gap:18px;padding:10px 20px 20px">
         <sc-for list="{{ legend }}" as="l" hint-placeholder-count="3">
           <div style="display:flex;align-items:center;gap:6px">
-            <span style="width:12px;height:12px;border-radius:50%;background:{{ l.bg }};box-shadow:{{ l.ring }}"></span>
+            <sc-if value="{{ l.hasIcon }}" hint-placeholder-val="{{ false }}"><span style="width:22px;height:22px;border-radius:50%;background:{{ l.bg }};display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="loafy-icon" name="{{ l.icon }}" size="12" active="true" hint-size="12px,12px"></x-import></span></sc-if>
+            <sc-if value="{{ l.noIcon }}" hint-placeholder-val="{{ true }}"><span style="width:6px;height:6px;border-radius:50%;background:{{ l.bg }}"></span></sc-if>
             <span style="font-size:13px;color:#8B95A1">{{ l.label }}</span>
           </div>
         </sc-for>
       </div>
+      <sc-if value="{{ showAds }}" hint-placeholder-val="{{ true }}">
+        <div data-ad-slot="banner-320x50" style="margin:0 20px 20px;height:56px;border-radius:14px;background:#F9FAFB;border:1px dashed #C9CDD2;display:flex;align-items:center;gap:10px;padding:0 14px;box-sizing:border-box;flex-shrink:0">
+          <span style="height:20px;padding:0 6px;border-radius:5px;background:#E5E8EB;color:#6B7684;font-size:11px;font-weight:700;display:flex;align-items:center">AD</span>
+          <span style="flex:1;font-size:14px;color:#8B95A1">광고 배너 영역</span>
+          <span style="font-size:12px;color:#B0B8C1">320×50</span>
+          <button onClick="{{ goNoads }}" style="height:28px;padding:0 10px;border:0;border-radius:999px;background:#F2F4F6;color:#4E5968;font-size:12px;font-weight:600;cursor:pointer">광고 제거</button>
+        </div>
+      </sc-if>
       <div style="height:12px;background:#F2F4F6;flex-shrink:0"></div>
       <div style="padding:22px 20px 0;display:flex;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:center;gap:14px">
@@ -439,20 +790,12 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           <button onClick="{{ day.cta }}" style="height:56px;border:0;border-radius:16px;background:{{ day.ctaBg }};color:{{ day.ctaColor }};font-size:17px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">{{ day.ctaLabel }}</button>
         </sc-if>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:22px 20px 0;padding:18px 0;border-radius:18px;background:#F9FAFB">
-        <sc-for list="{{ calStats }}" as="st" hint-placeholder-count="3">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
-            <span style="font-size:13px;color:#8B95A1">{{ st.label }}</span>
-            <span style="font-size:20px;font-weight:700;color:#191F28">{{ st.value }}</span>
-          </div>
-        </sc-for>
-      </div>
       <div style="height:130px;flex-shrink:0"></div>
     </div>
   </sc-if>
 
   <sc-if value="{{ is.my }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="11 마이" style="position:absolute;inset:0;background:#FFFFFF;padding-top:54px;display:flex;flex-direction:column;overflow-y:auto">
+    <div data-screen-label="11 마이" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;overflow-y:auto">
       <div style="height:52px;display:flex;align-items:center;padding:0 20px">
         <span style="font-size:20px;font-weight:700;color:#191F28">마이</span>
       </div>
@@ -464,7 +807,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           <span style="font-size:22px;font-weight:700;color:#191F28">{{ name }}</span>
           <span style="font-size:15px;color:#8B95A1">{{ bodyName }} · {{ coatName }}</span>
         </div>
-        <button onClick="{{ nav.edit }}" style="height:36px;padding:0 14px;border:0;border-radius:10px;background:#F2F4F6;color:#4E5968;font-size:14px;font-weight:600;cursor:pointer" style-active="background:#E5E8EB">꾸미기</button>
+        <button onClick="{{ nav.decoCat }}" style="height:36px;padding:0 14px;border:0;border-radius:10px;background:#F2F4F6;color:#4E5968;font-size:14px;font-weight:600;cursor:pointer" style-active="background:#E5E8EB">고양이 변경</button>
       </div>
       <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0 20px 24px;padding:18px 0;border-radius:18px;background:#F9FAFB">
         <sc-for list="{{ myStats }}" as="st" hint-placeholder-count="3">
@@ -474,13 +817,21 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           </div>
         </sc-for>
       </div>
+      <sc-if value="{{ showAds }}" hint-placeholder-val="{{ true }}">
+        <div data-ad-slot="banner-320x50" style="margin:0 20px 24px;height:56px;border-radius:14px;background:#F9FAFB;border:1px dashed #C9CDD2;display:flex;align-items:center;gap:10px;padding:0 14px;box-sizing:border-box;flex-shrink:0">
+          <span style="height:20px;padding:0 6px;border-radius:5px;background:#E5E8EB;color:#6B7684;font-size:11px;font-weight:700;display:flex;align-items:center">AD</span>
+          <span style="flex:1;font-size:14px;color:#8B95A1">광고 배너 영역</span>
+          <span style="font-size:12px;color:#B0B8C1">320×50</span>
+          <button onClick="{{ goNoads }}" style="height:28px;padding:0 10px;border:0;border-radius:999px;background:#F2F4F6;color:#4E5968;font-size:12px;font-weight:600;cursor:pointer">광고 제거</button>
+        </div>
+      </sc-if>
       <div style="height:12px;background:#F2F4F6;flex-shrink:0"></div>
       <div style="padding:20px 0 8px">
         <span style="display:block;padding:0 20px 8px;font-size:14px;font-weight:600;color:#8B95A1">설정</span>
-        <sc-for list="{{ myRows }}" as="r" hint-placeholder-count="3">
+        <sc-for list="{{ myRows }}" as="r" hint-placeholder-count="4">
           <button onClick="{{ r.tap }}" style="width:100%;height:60px;border:0;background:#fff;display:flex;align-items:center;gap:14px;padding:0 20px;cursor:pointer" style-active="background:#F9FAFB">
-            <span style="width:36px;height:36px;border-radius:12px;background:#F2F4F6;display:flex;align-items:center;justify-content:center">
-              <x-import component-from-global-scope="loafy-icon" name="{{ r.icon }}" size="24" color="#4E5968" hint-size="24px,24px"></x-import>
+            <span style="width:36px;height:36px;border-radius:12px;background:{{ r.tint }};display:flex;align-items:center;justify-content:center">
+              <x-import component-from-global-scope="loafy-icon" name="{{ r.icon }}" size="24" active="true" hint-size="24px,24px"></x-import>
             </span>
             <span style="flex:1;text-align:left;font-size:17px;font-weight:500;color:#191F28">{{ r.label }}</span>
             <span style="font-size:15px;color:#8B95A1">{{ r.value }}</span>
@@ -495,9 +846,77 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
     </div>
   </sc-if>
 
+  <sc-if value="{{ is.alarm }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="12 출석 알림" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
+      <div style="height:52px;display:flex;align-items:center;justify-content:center;position:relative">
+        <button onClick="{{ nav.my }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+        </button>
+        <span style="font-size:17px;font-weight:600">출석 알림</span>
+      </div>
+      <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:28px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;font-weight:600;color:#1E2228">출석 횟수</span>
+            <span style="font-size:13px;font-weight:600;color:#8B95A1">{{ freqName }}</span>
+          </div>
+          <div style="display:flex;height:40px;padding:3px;border-radius:12px;background:#F2F4F6">
+            <sc-for list="{{ schedModes }}" as="m" hint-placeholder-count="2">
+              <button onClick="{{ m.pick }}" style="flex:1;border:0;border-radius:9px;background:{{ m.bg }};box-shadow:{{ m.shadow }};font-size:15px;font-weight:600;color:#191F28;cursor:pointer">{{ m.name }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ schedCount }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+              <sc-for list="{{ freqs }}" as="f" hint-placeholder-count="7">
+                <button onClick="{{ f.pick }}" style="height:44px;border-radius:12px;border:2px solid {{ f.border }};background:{{ f.bg }};font-size:15px;font-weight:600;color:#000;cursor:pointer">{{ f.name }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ schedDays }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;gap:6px">
+                <sc-for list="{{ dayPresets }}" as="p" hint-placeholder-count="3">
+                  <button onClick="{{ p.pick }}" style="height:32px;padding:0 14px;border:0;border-radius:999px;background:{{ p.bg }};color:{{ p.color }};font-size:14px;font-weight:600;cursor:pointer">{{ p.name }}</button>
+                </sc-for>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <sc-for list="{{ dayToggles }}" as="d" hint-placeholder-count="7">
+                  <button onClick="{{ d.tap }}" style="width:44px;height:44px;border-radius:50%;border:0;background:{{ d.bg }};color:{{ d.color }};font-size:15px;font-weight:700;cursor:pointer">{{ d.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;font-weight:600;color:#1E2228">알림 시간</span>
+            <div style="display:flex;gap:6px">
+              <sc-for list="{{ presets }}" as="p" hint-placeholder-count="3">
+                <button onClick="{{ p.pick }}" style="height:30px;padding:0 12px;border:0;border-radius:999px;background:{{ p.bg }};color:{{ p.color }};font-size:13px;font-weight:600;cursor:pointer">{{ p.name }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="position:relative;height:200px;display:flex;gap:4px;padding:0 24px">
+            <div style="position:absolute;left:0;right:0;top:80px;height:40px;border-radius:12px;background:#F4F5F7"></div>
+            <sc-for list="{{ wheel }}" as="c" hint-placeholder-count="3">
+              <div data-wheel="" ref="{{ c.ref }}" onScroll="{{ c.onScroll }}" style="position:relative;flex:1;height:200px;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;padding:80px 0;box-sizing:border-box;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 40%,#000 60%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 40%,#000 60%,transparent)">
+                <sc-for list="{{ c.items }}" as="it" hint-placeholder-count="3">
+                  <div onClick="{{ it.tap }}" style="height:40px;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:{{ it.weight }};color:{{ it.color }};cursor:pointer;font-variant-numeric:tabular-nums">{{ it.label }}</div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 20px 42px">
+        <button onClick="{{ saveAlarm }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418;transform:scale(0.98)">저장</button>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ is.tabs }}" hint-placeholder-val="{{ false }}">
-    <div style="position:absolute;left:24px;right:24px;bottom:30px;height:64px;border-radius:999px;background:rgba(250,250,250,0.78);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.6);box-shadow:0 8px 40px rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 6px">
-      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+    <div style="position:absolute;left:20px;right:20px;bottom:30px;height:64px;border-radius:999px;background:rgba(250,250,250,0.78);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.6);box-shadow:0 4px 16px rgba(0,0,0,0.07);display:flex;align-items:center;justify-content:space-between;padding:0 6px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
         <button onClick="{{ t.tap }}" style="flex:1;height:52px;border:0;border-radius:999px;background:{{ t.bg }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer">
           <x-import component-from-global-scope="loafy-icon" name="{{ t.icon }}" size="24" active="{{ t.on }}" hint-size="24px,24px"></x-import>
           <span style="font-size:10px;font-weight:600;color:{{ t.color }}">{{ t.label }}</span>
@@ -506,76 +925,280 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
     </div>
   </sc-if>
 
-  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
-    <div style="position:absolute;left:50%;bottom:120px;transform:translateX(-50%);padding:12px 18px;border-radius:999px;background:rgba(30,32,38,0.92);color:#fff;font-size:15px;font-weight:500;white-space:nowrap">{{ toast }}</div>
+  <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ cal.closeSheet }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.36);animation:lfFade 240ms ease-out both;display:flex;flex-direction:column;justify-content:flex-end">
+      <div onClick="{{ stop }}" style="background:#FFFFFF;margin:0 10px 10px;border-radius:28px;box-shadow:0 8px 32px rgba(0,0,0,0.12);animation:lfSheet 440ms cubic-bezier(0.32,0.72,0,1) both;padding:10px 20px 24px;display:flex;flex-direction:column;gap:18px">
+        <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:#D1D6DB"></span>
+        <span style="font-size:20px;font-weight:700;color:#191F28">날짜 선택</span>
+        <div style="position:relative;height:200px;display:flex;gap:4px;padding:0 40px">
+          <div style="position:absolute;left:0;right:0;top:80px;height:40px;border-radius:12px;background:#F4F5F7"></div>
+          <sc-for list="{{ calWheel }}" as="c" hint-placeholder-count="2">
+            <div data-wheel="" ref="{{ c.ref }}" onScroll="{{ c.onScroll }}" style="position:relative;flex:1;height:200px;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;padding:80px 0;box-sizing:border-box;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 40%,#000 60%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 40%,#000 60%,transparent)">
+              <sc-for list="{{ c.items }}" as="it" hint-placeholder-count="3">
+                <div onClick="{{ it.tap }}" style="height:40px;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:{{ it.weight }};color:{{ it.color }};cursor:pointer;font-variant-numeric:tabular-nums">{{ it.label }}</div>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+        <button onClick="{{ cal.confirm }}" style="height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418;transform:scale(0.98)">확인</button>
+      </div>
+    </div>
   </sc-if>
 
-  <div style="position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 34px 0 44px;pointer-events:none">
-    <span style="font-size:17px;font-weight:600;color:#000">9:41</span>
-    <div style="display:flex;gap:6px;align-items:center">
-      <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#000"></rect><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#000"></rect><rect x="10" y="3" width="3" height="9" rx="1" fill="#000"></rect><rect x="15" y="0" width="3" height="12" rx="1" fill="#000"></rect></svg>
-      <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0zM3.4 6.8a6.6 6.6 0 0 1 9.2 0l-1.3 1.3a4.8 4.8 0 0 0-6.6 0zM1.2 4.6a9.7 9.7 0 0 1 13.6 0l-1.3 1.3a7.9 7.9 0 0 0-11 0z" fill="#000"></path></svg>
-      <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="rgba(0,0,0,0.4)"></rect><rect x="2" y="2" width="20" height="9" rx="2.5" fill="#000"></rect><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="rgba(0,0,0,0.4)"></path></svg>
+  <sc-if value="{{ buyOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ buy.close }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.36);animation:lfFade 240ms ease-out both;display:flex;flex-direction:column;justify-content:flex-end">
+      <div onClick="{{ stop }}" style="background:#FFFFFF;margin:0 10px 10px;border-radius:28px;box-shadow:0 8px 32px rgba(0,0,0,0.12);animation:lfSheet 440ms cubic-bezier(0.32,0.72,0,1) both;padding:10px 20px 24px;display:flex;flex-direction:column;gap:18px">
+        <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:#D1D6DB"></span>
+        <div style="position:relative;height:240px;border-radius:20px;background:{{ buy.tile }};display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <sc-if value="{{ buy.isDevice }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" fit-scale="0.8" color="{{ buy.pShell }}" strap="{{ buy.pStrap }}" pattern="{{ buy.pPattern }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,240px"></x-import>
+          </sc-if>
+          <sc-if value="{{ buy.isCoat }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ buy.val }}" scale="5" animate="" hint-size="160px,165px"></x-import>
+          </sc-if>
+          <sc-if value="{{ buy.isNoads }}" hint-placeholder-val="{{ false }}">
+            <span style="width:112px;height:112px;border-radius:28px;background:#FFFFFF;box-shadow:0 8px 24px rgba(0,0,0,0.08);color:#8B95A1;font-size:34px;font-weight:800;display:flex;align-items:center;justify-content:center;text-decoration:line-through">AD</span>
+          </sc-if>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:22px;font-weight:700;color:#191F28">{{ buy.name }}</span>
+          <span style="font-size:15px;color:#8B95A1">{{ buy.desc }}</span>
+        </div>
+        <sc-if value="{{ buy.notOwned }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <button onClick="{{ buy.purchase }}" style="height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer;opacity:{{ buy.op }}" style-active="background:#111418;transform:scale(0.98)">{{ buy.cta }}</button>
+            <div style="display:flex;align-items:center;justify-content:center;gap:4px"><x-import component-from-global-scope="loafy-icon" name="cookie" size="12" active="true" hint-size="12px,12px"></x-import><span style="font-size:13px;color:#8B95A1">보유 쿠키 {{ buy.balance }}개</span></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ buy.owned }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+            <button onClick="{{ buy.close }}" style="height:56px;border:0;border-radius:16px;background:#F2F3F5;color:#1E2228;font-size:17px;font-weight:600;cursor:pointer">닫기</button>
+            <button onClick="{{ buy.equip }}" style="height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer">{{ buy.equipLabel }}</button>
+          </div>
+        </sc-if>
+      </div>
     </div>
+  </sc-if>
+
+  <sc-if value="{{ cookieOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeCookies }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.36);animation:lfFade 240ms ease-out both;display:flex;flex-direction:column;justify-content:flex-end">
+      <div onClick="{{ stop }}" style="background:#FFFFFF;margin:0 10px 10px;border-radius:28px;box-shadow:0 8px 32px rgba(0,0,0,0.12);animation:lfSheet 440ms cubic-bezier(0.32,0.72,0,1) both;padding:10px 20px 24px;display:flex;flex-direction:column;gap:16px">
+        <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:#D1D6DB"></span>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:20px;font-weight:700;color:#191F28">발자국 쿠키</span>
+            <span style="font-size:14px;color:#8B95A1">쿠키로 샵의 아이템을 살 수 있어요</span>
+          </div>
+          <div style="height:36px;padding:0 12px 0 6px;border-radius:999px;background:#FFEEF1;display:flex;align-items:center;gap:6px">
+            <x-import component-from-global-scope="loafy-icon" name="cookie" size="24" active="true" hint-size="24px,24px"></x-import>
+            <span style="font-size:15px;font-weight:700;color:#191F28;font-variant-numeric:tabular-nums">{{ cookies }}</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ packs }}" as="p" hint-placeholder-count="3">
+            <div style="height:68px;display:flex;align-items:center;gap:12px;box-shadow:inset 0 -1px 0 #F2F4F6">
+              <span style="width:44px;height:44px;border-radius:14px;background:#FFEEF1;display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="loafy-icon" name="cookie" size="24" active="true" hint-size="24px,24px"></x-import></span>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:16px;font-weight:700;color:#191F28">쿠키 {{ p.n }}개</span>
+                <span style="font-size:13px;font-weight:600;color:#1B64DA">{{ p.bonus }}</span>
+              </div>
+              <button onClick="{{ p.buy }}" style="height:36px;padding:0 14px;border:0;border-radius:999px;background:#1E2228;color:#FFFFFF;font-size:14px;font-weight:600;cursor:pointer;opacity:{{ p.op }}" style-active="transform:scale(0.96)">{{ p.cta }}</button>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:12px;color:#B0B8C1">테스트 결제예요 · 실제로 결제되지 않아요</span>
+          <button onClick="{{ restore }}" style="height:32px;padding:0;border:0;background:transparent;font-size:13px;font-weight:600;color:#8B95A1;cursor:pointer">구매 복원</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:50%;bottom:120px;transform:translateX(-50%);animation:lfToast 300ms cubic-bezier(0.32,0.72,0,1) both;padding:{{ toastPad }};border-radius:999px;background:rgba(30,32,38,0.94);color:#fff;font-size:15px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(0,0,0,0.18)">
+      <span>{{ toast }}</span>
+      <sc-if value="{{ hasToastAction }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toastAction }}" style="height:32px;padding:0 12px;border:0;border-radius:999px;background:rgba(255,255,255,0.16);color:#FFFFFF;font-size:14px;font-weight:700;cursor:pointer">{{ toastActionLabel }}</button>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <div style="position:absolute;inset:0;pointer-events:none;z-index:60">
+    <x-import component-from-global-scope="loafy-paws" run="{{ pawRun }}" style="position:absolute;inset:0;pointer-events:none" hint-size="100%,100%"></x-import>
   </div>
-  <div style="position:absolute;left:50%;bottom:8px;width:140px;height:5px;margin-left:-70px;border-radius:3px;background:#000;pointer-events:none"></div>
+
+  <sc-if value="{{ fr.phone }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 34px 0 44px;pointer-events:none">
+      <span style="font-size:17px;font-weight:600;color:#000">9:41</span>
+      <div style="display:flex;gap:6px;align-items:center">
+        <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#000"></rect><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#000"></rect><rect x="10" y="3" width="3" height="9" rx="1" fill="#000"></rect><rect x="15" y="0" width="3" height="12" rx="1" fill="#000"></rect></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0zM3.4 6.8a6.6 6.6 0 0 1 9.2 0l-1.3 1.3a4.8 4.8 0 0 0-6.6 0zM1.2 4.6a9.7 9.7 0 0 1 13.6 0l-1.3 1.3a7.9 7.9 0 0 0-11 0z" fill="#000"></path></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="rgba(0,0,0,0.4)"></rect><rect x="2" y="2" width="20" height="9" rx="2.5" fill="#000"></rect><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="rgba(0,0,0,0.4)"></path></svg>
+      </div>
+    </div>
+    <div style="position:absolute;left:50%;bottom:8px;width:140px;height:5px;margin-left:-70px;border-radius:3px;background:#000;pointer-events:none"></div>
+  </sc-if>
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:426,&quot;height&quot;:898},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;login&quot;,&quot;obName&quot;,&quot;obGoal&quot;,&quot;obCoat&quot;,&quot;obTime&quot;,&quot;obRule&quot;,&quot;home&quot;,&quot;lcd&quot;,&quot;checkin&quot;,&quot;share&quot;,&quot;letter&quot;,&quot;letterDone&quot;,&quot;edit&quot;,&quot;record&quot;,&quot;my&quot;],&quot;default&quot;:&quot;login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;missed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;body&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;slim&quot;,&quot;bulk&quot;,&quot;normal&quot;,&quot;jjin&quot;,&quot;loaf&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;lcd&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;mono&quot;],&quot;default&quot;:&quot;color&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;다마고치&quot;},&quot;shell&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#C9CCD3&quot;,&quot;#F1E4CB&quot;,&quot;#A8DCCB&quot;,&quot;#CFC8EC&quot;],&quot;default&quot;:&quot;#C9CCD3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;다마고치&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;frame&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;web&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;web&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;webHeight&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;login&quot;,&quot;obAgree&quot;,&quot;obProfile&quot;,&quot;obName&quot;,&quot;obGoal&quot;,&quot;obGym&quot;,&quot;obCoat&quot;,&quot;obShell&quot;,&quot;obTime&quot;,&quot;obRule&quot;,&quot;home&quot;,&quot;lcd&quot;,&quot;checkin&quot;,&quot;share&quot;,&quot;letter&quot;,&quot;letterDone&quot;,&quot;shop&quot;,&quot;shopBuy&quot;,&quot;deco&quot;,&quot;decoCat&quot;,&quot;record&quot;,&quot;my&quot;,&quot;alarm&quot;,&quot;letters&quot;],&quot;default&quot;:&quot;splash&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;missed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;body&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;slim&quot;,&quot;bulk&quot;,&quot;fit&quot;,&quot;normal&quot;,&quot;jjin&quot;,&quot;loaf&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;lcd&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;mono&quot;],&quot;default&quot;:&quot;color&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;shell&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#C9CCD3&quot;,&quot;#F1E4CB&quot;,&quot;#A8DCCB&quot;,&quot;#CFC8EC&quot;],&quot;default&quot;:&quot;#C9CCD3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;ads&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;}}">
 class Component extends DCLogic {
   state = {
-    screen: this.props.start || 'login', name: '로피', goal: 'slim', coat: this.props.coat || 'cheese', alarm: 'morning',
+    screen: ['edit', 'deco', 'decoCat'].includes(this.props.start) ? 'deco' : this.props.start === 'shopBuy' ? 'shop' : (this.props.start || 'splash'), pawRun: 0, shopTab: this.props.start === 'decoCat' ? 'cat' : 'device',
+    owned: ['deco', 'decoCat'].includes(this.props.start) ? ['chain-silver', 'coat-blue'] : [], strap: 'none', schedMode: 'count', days: [false, true, true, true, true, true, false], shopFilter: 'all', buy: this.props.start === 'shopBuy' ? 'chain-gold' : null, buying: false,
+    gym: '', cookies: 50, cookieSheet: false, paying: null, pattern: 'none', editId: null, toastAct: null,
+    letters: [{ id: 1005, date: '10월 5일 월요일', text: '야근하느라 출석을 깜빡했어요' }],
+    name: '로피', goal: 'slim', coat: this.props.coat || 'cheese',
+    agree: { terms: false, privacy: false, age: false, mkt: false }, gender: null, birth: '',
+    freq: 5, ap: 0, hr: 8, mi: 0,
     checked: this.props.start === 'checkin', streak: this.props.start === 'checkin' ? 10 : 9,
     shell: this.props.shell || '#C9CCD3', lcd: this.props.lcd || 'color',
-    missed: this.props.missed ?? true, calY: 2026, calM: 10, selD: 13, recovered: this.props.start === 'letterDone', letter: '', toast: null
+    missed: this.props.missed ?? true, calY: 2026, calM: 10, selD: 13, sheet: false, recovered: this.props.start === 'letterDone', letter: '', toast: null
   };
   uid = 'r' + Math.random().toString(36).slice(2, 9);
+  wheels = {};
   mine = (e) => { const r = document.querySelector('[data-loafy-root="' + this.uid + '"]'); if (r) this.root = r; return r && r.contains(e.target); };
   onOpen = (e) => { if (this.mine(e) && this.state.screen === 'home') this.go('lcd'); };
   onFeed = (e) => { if (this.mine(e)) this.doCheckin(true); };
-  rootRef = (el) => {
-    if (el === this.root) return;
-    this.root = el;
-
-  };
+  rootRef = (el) => { if (el && el !== this.root) this.root = el; };
   componentDidUpdate(prev) {
-    if (prev.start !== this.props.start && this.props.start) this.setState({ screen: this.props.start });
+    if (prev.start !== this.props.start && this.props.start) this.go(this.props.start);
     if (prev.missed !== this.props.missed) this.setState({ missed: this.props.missed ?? true });
     if (prev.coat !== this.props.coat && this.props.coat) this.setState({ coat: this.props.coat });
     if (prev.lcd !== this.props.lcd && this.props.lcd) this.setState({ lcd: this.props.lcd });
     if (prev.shell !== this.props.shell && this.props.shell) this.setState({ shell: this.props.shell });
   }
-  componentDidMount() { document.addEventListener('loafy:open-lcd', this.onOpen); document.addEventListener('loafy:device-feed', this.onFeed); }
-  componentWillUnmount() { clearTimeout(this._ct); clearTimeout(this._tt); document.removeEventListener('loafy:open-lcd', this.onOpen); document.removeEventListener('loafy:device-feed', this.onFeed); }
-  go = (s) => { clearTimeout(this._ct); this.setState({ screen: s }); };
+  pawGo = (s) => { this.setState(st => ({ pawRun: st.pawRun + 1 })); clearTimeout(this._pg); this._pg = setTimeout(() => this.go(s), 560); };
+  armSplash() { clearTimeout(this._sp); this._sp = setTimeout(() => { if (this.state.screen === 'splash') this.pawGo('login'); }, 6000); }
+  onLogoDone = (e) => { if (this.mine(e) && this.state.screen === 'splash') { clearTimeout(this._sp); this._sp = setTimeout(() => this.state.screen === 'splash' && this.pawGo('login'), 700); } };
+  componentDidMount() { document.addEventListener('loafy:logo-done', this.onLogoDone); if (this.state.screen === 'splash') this.armSplash(); document.addEventListener('loafy:open-lcd', this.onOpen); document.addEventListener('loafy:device-feed', this.onFeed); }
+  componentWillUnmount() { document.removeEventListener('loafy:logo-done', this.onLogoDone); clearTimeout(this._sp); clearTimeout(this._pg); clearTimeout(this._pt); clearTimeout(this._bt); clearTimeout(this._ct); clearTimeout(this._tt); document.removeEventListener('loafy:open-lcd', this.onOpen); document.removeEventListener('loafy:device-feed', this.onFeed); }
+  go = (s) => {
+    clearTimeout(this._ct);
+    if (s === 'decoCat') return this.setState({ screen: 'deco', shopTab: 'cat', sheet: false, buy: null });
+    if (s === 'decoDevice' || s === 'edit' || s === 'deco') return this.setState({ screen: 'deco', shopTab: 'device', sheet: false, buy: null });
+    if (s === 'splash') this.armSplash();
+    if (s === 'letter') return this.setState({ screen: 'letter', editId: null, sheet: false, buy: null });
+    if (s === 'shopBuy') return this.setState({ screen: 'shop', buy: 'chain-gold', buying: false, sheet: false });
+    this.setState({ screen: s, sheet: false, buy: null });
+  };
   doCheckin(fromDevice) {
     if (this.state.checked) return;
     this.setState(s => ({ checked: true, streak: s.streak + 1 }));
     if (!fromDevice) { const rt = document.querySelector('[data-loafy-root="' + this.uid + '"]'); const t = rt && rt.querySelector('loafy-tama'); t && t.play && t.play('eat'); }
-    clearTimeout(this._ct); this._ct = setTimeout(() => this.setState({ screen: 'checkin' }), 1700);
+    clearTimeout(this._ct); this._ct = setTimeout(() => this.pawGo('checkin'), 1500);
   }
-  showToast(msg) { clearTimeout(this._tt); this.setState({ toast: msg }); this._tt = setTimeout(() => this.setState({ toast: null }), 1600); }
+  showToast(msg, action) { clearTimeout(this._tt); this.setState({ toast: msg, toastAct: action || null }); this._tt = setTimeout(() => this.setState({ toast: null, toastAct: null }), action ? 3200 : 1600); }
+  saveImage = async () => {
+    const rt = document.querySelector('[data-loafy-root="' + this.uid + '"]');
+    const tama = rt && rt.querySelector('loafy-tama');
+    const shot = tama && tama.snapshot ? tama.snapshot() : null;
+    try { await document.fonts.ready; } catch (e) {}
+    const W = 1080, H = 1350, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+    const F = '"Pretendard Variable", Pretendard, -apple-system, sans-serif';
+    x.fillStyle = '#F2F2F7'; x.fillRect(0, 0, W, H);
+    x.shadowColor = 'rgba(0,0,0,0.12)'; x.shadowBlur = 60; x.shadowOffsetY = 24;
+    x.fillStyle = '#FFFFFF'; x.beginPath(); x.roundRect(90, 110, 900, 1130, 80); x.fill();
+    x.shadowColor = 'transparent';
+    x.textBaseline = 'alphabetic'; ((window.LoafySprites && window.LoafySprites.LOGO) || []).forEach(([lx, ly, lw, lh, lc]) => { x.fillStyle = lc ? '#FF7474' : '#26262C'; x.fillRect(150 + lx * 2.6, 162 + ly * 2.6, lw * 2.6, lh * 2.6); });
+    x.textAlign = 'right'; x.fillStyle = 'rgba(0,0,0,0.5)'; x.font = '600 36px ' + F; x.fillText('2026.10.13', 930, 212); x.textAlign = 'left';
+    if (shot) { const img = new Image(); await new Promise(r => { img.onload = r; img.onerror = r; img.src = shot; }); if (img.width) { const bw = 840, bh = 780, k = Math.min(bw / img.width, bh / img.height), dw = img.width * k, dh = img.height * k; x.drawImage(img, 120 + (bw - dw) / 2, 250 + (bh - dh) / 2, dw, dh); } }
+    const S = this.state, BODY = { slim: '날렵', bulk: '벌크', normal: '보통', jjin: '찐빵', loaf: '식빵' };
+    x.fillStyle = 'rgba(0,0,0,0.55)'; x.font = '600 40px ' + F; x.fillText((S.name.trim() || '로피') + ' · ' + BODY[this.props.body || 'normal'], 150, 1100);
+    x.fillStyle = '#111111'; x.font = '800 104px ' + F; x.fillText('D+' + S.streak, 146, 1198);
+    x.textAlign = 'right'; x.fillStyle = 'rgba(0,0,0,0.55)'; x.font = '600 36px ' + F; x.fillText('연속 출석 중', 930, 1190);
+    c.toBlob((b) => { if (!b) return this.showToast('저장하지 못했어요'); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'loafy-D' + S.streak + '.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 3000); this.showToast('이미지를 저장했어요'); }, 'image/png');
+  };
+  setTime(ap, hr, mi) {
+    this.setState({ ap, hr, mi });
+    const tgt = { ap, hr: hr - 1, mi };
+    Object.keys(tgt).forEach(k => { const el = this.wheels[k]; if (el && el.isConnected) el.scrollTo({ top: tgt[k] * 40, behavior: 'smooth' }); });
+  }
   renderVals() {
     const S = this.state, scr = S.screen;
-    const OB = ['obName', 'obGoal', 'obCoat', 'obShell', 'obTime', 'obRule'];
+    const web = (this.props.frame || 'web') === 'web';
+    const fr = web
+      ? { phone: false, ow: '100%', oh: this.props.webHeight || '100dvh', op: '0', obg: '#FFFFFF', or: '0', osh: '0 0 0 1px rgba(0,0,0,0.04), 0 24px 64px rgba(0,0,0,0.08)', iw: '100%', ih: '100%', ir: '0', top: '12px' }
+      : { phone: true, ow: '402px', oh: '874px', op: '12px', obg: '#111114', or: '66px', osh: '0 30px 80px rgba(0,0,0,0.22)', iw: '402px', ih: '874px', ir: '54px', top: '54px' };
+    const OB = ['obAgree', 'obProfile', 'obName', 'obGoal', 'obGym', 'obCoat', 'obShell', 'obTime', 'obRule'];
     const obIdx = OB.indexOf(scr);
     const josa = (w, a, b) => { const c = w.charCodeAt(w.length - 1); return (c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28) ? a : b; };
     const name = S.name.trim() || '로피';
-    const BODY = { slim: '날렵', bulk: '벌크', normal: '보통', jjin: '찐빵', loaf: '식빵' };
-    const COATS = [['cheese', '치즈'], ['mackerel', '고등어'], ['tuxedo', '턱시도'], ['cow', '젖소'], ['cream', '크림']];
+    const BODY = { slim: '날렵', bulk: '벌크', normal: '보통', fit: '탄탄', jjin: '찐빵', loaf: '식빵' };
+    const COATS = [['cheese', '치즈'], ['mackerel', '고등어'], ['tuxedo', '턱시도'], ['cow', '얼룩이'], ['cream', '크림']];
     const SHELLS = [['실버', '#C9CCD3'], ['크림', '#F1E4CB'], ['민트', '#A8DCCB'], ['로즈', '#F1B5BE'], ['라벤더', '#CFC8EC'], ['미드나잇', '#3A3F4D']];
+    const ITEMS = [
+      { id: 'chain-silver', cat: 'device', kind: 'strap', val: 'silver', hex: '#BFC3CA', name: '실버 체인', desc: '빵틀 위에 다는 볼 체인', price: 120 },
+      { id: 'chain-gold', cat: 'device', kind: 'strap', val: 'gold', hex: '#D9B356', name: '골드 체인', desc: '반짝이는 금색 볼 체인', price: 190 },
+      { id: 'chain-rose', cat: 'device', kind: 'strap', val: 'rose', hex: '#E0A792', name: '로즈골드 체인', desc: '은은한 분홍빛 볼 체인', price: 190 },
+      { id: 'pat-dots', cat: 'device', kind: 'pattern', val: 'dots', name: '점박이 무늬', desc: '빵틀에 동글동글 점박이', price: 150 },
+      { id: 'pat-hearts', cat: 'device', kind: 'pattern', val: 'hearts', name: '하트 무늬', desc: '빵틀 가득 작은 하트', price: 150 },
+      { id: 'pat-stripes', cat: 'device', kind: 'pattern', val: 'stripes', name: '줄무늬', desc: '가로로 지나가는 줄무늬', price: 150 },
+      { id: 'shell-cherry', cat: 'device', kind: 'shell', val: '#EE7D8A', hex: '#EE7D8A', name: '체리 케이스', desc: '진한 체리색 빵틀', price: 120 },
+      { id: 'shell-sky', cat: 'device', kind: 'shell', val: '#A9CFF2', hex: '#A9CFF2', name: '스카이 케이스', desc: '맑은 하늘색 빵틀', price: 120 },
+      { id: 'shell-lemon', cat: 'device', kind: 'shell', val: '#F2DF85', hex: '#F2DF85', name: '레몬 케이스', desc: '상큼한 레몬색 빵틀', price: 120 },
+      { id: 'coat-blue', cat: 'cat', kind: 'coat', val: 'blue', name: '러시안블루', desc: '푸른 회색 털', price: 250 },
+      { id: 'coat-choco', cat: 'cat', kind: 'coat', val: 'choco', name: '초코', desc: '진한 갈색 줄무늬 털', price: 250 },
+      { id: 'noads', cat: 'etc', kind: 'noads', val: 'noads', name: '광고 제거권', desc: '홈·기록·마이의 광고 배너가 사라져요', price: 500 }
+    ];
+    const swatch = (k, base) => {
+      const h = (base || '#C9CCD3').replace('#', ''); const lum = parseInt(h.slice(0, 2), 16) * 0.299 + parseInt(h.slice(2, 4), 16) * 0.587 + parseInt(h.slice(4, 6), 16) * 0.114;
+      const pc = lum > 150 ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.55)';
+      if (k === 'dots') return 'radial-gradient(circle, ' + pc + ' 28%, transparent 31%) 0 0/12px 12px, ' + base;
+      if (k === 'stripes') return 'repeating-linear-gradient(0deg, ' + pc + ' 0 3px, transparent 3px 8px), ' + base;
+      if (k === 'hearts') { const fl = lum > 150 ? "fill='black' fill-opacity='0.2'" : "fill='white' fill-opacity='0.6'"; return 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27%3E%3Cpath d=%27M8 13C2 9 3 3.5 8 6C13 3.5 14 9 8 13Z%27 ' + fl.replace(/'/g, '%27') + '/%3E%3C/svg%3E") 0 0/16px 16px, ' + base; }
+      return base;
+    };
+    const isEq = (bi) => bi.kind === 'strap' ? S.strap === bi.val : bi.kind === 'shell' ? S.shell === bi.val : bi.kind === 'pattern' ? S.pattern === bi.val : S.coat === bi.val;
+    const equipItem = (bi) => { const p = bi.kind === 'strap' ? { strap: bi.val } : bi.kind === 'shell' ? { shell: bi.val } : bi.kind === 'pattern' ? { pattern: bi.val } : { coat: bi.val }; this.setState({ ...p, buy: null }); this.showToast('적용했어요', { label: '꾸미기에서 보기', fn: () => this.go(bi.kind === 'coat' ? 'decoCat' : 'decoDevice') }); };
+    const own = (id) => S.owned.includes(id);
+    const ALLCOATS = [...COATS, ...ITEMS.filter(i => i.kind === 'coat').map(i => [i.val, i.name])];
+    const myCoats = [...COATS, ...ITEMS.filter(i => i.kind === 'coat' && own(i.id)).map(i => [i.val, i.name])];
+    const ALLSHELLS = [...SHELLS, ...ITEMS.filter(i => i.kind === 'shell').map(i => [i.name.replace(' 케이스', ''), i.val])];
+    const myShells = [...SHELLS, ...ITEMS.filter(i => i.kind === 'shell' && own(i.id)).map(i => [i.name.replace(' 케이스', ''), i.val])];
     const body = this.props.body || 'normal';
-    const goalName = BODY[S.goal];
+    const goalName = ({ slim: '날렵', fit: '탄탄', bulk: '벌크', normal: '건강' })[S.goal];
     const left = 6 - (S.streak % 6);
-    const nextHint = body === 'normal' ? `${goalName}까지 ${left}일` : body === 'jjin' || body === 'loaf' ? '출석하면 다시 보통으로' : `${BODY[body]} 유지 중`;
-    const is = { tabs: ['home', 'record', 'my'].includes(scr), ob: obIdx >= 0 };
-    ['login', 'home', 'lcd', 'checkin', 'share', 'letter', 'letterDone', 'edit', 'record', 'my', ...OB].forEach(k => is[k] = scr === k);
+    const nextHint = body === 'normal' ? (S.goal === 'normal' ? '건강 유지 중' : `${goalName}까지 ${left}일`) : body === 'jjin' || body === 'loaf' ? '출석하면 다시 보통으로' : `${BODY[body]} 유지 중`;
+    const is = { tabs: ['home', 'record', 'shop', 'my'].includes(scr), ob: obIdx >= 0 };
+    ['splash', 'login', 'home', 'lcd', 'checkin', 'share', 'letter', 'letterDone', 'letters', 'shop', 'deco', 'record', 'my', 'alarm', ...OB].forEach(k => is[k] = scr === k);
     const nav = {};
-    ['login', 'obName', 'home', 'lcd', 'checkin', 'share', 'letter', 'edit', 'record', 'my'].forEach(k => nav[k] = () => this.go(k));
-    const obCanNext = obIdx !== 0 || name.length > 0;
+    ['login', 'obAgree', 'home', 'lcd', 'checkin', 'share', 'letter', 'shop', 'decoDevice', 'decoCat', 'record', 'my', 'alarm', 'letters'].forEach(k => nav[k] = () => this.go(k));
     const sel = (on) => ({ border: on ? '#1E2228' : 'transparent', bg: on ? '#FFFFFF' : '#F4F5F7', dot: on ? '#1E2228' : '#E3E5E9', on: on ? 'true' : 'false' });
 
+    // agree + profile
+    const AG = [['terms', '[필수]', '서비스 이용약관 동의', true], ['privacy', '[필수]', '개인정보 수집·이용 동의', true], ['age', '[필수]', '만 14세 이상이에요', true], ['mkt', '[선택]', '마케팅 정보 수신 동의', false]];
+    const allOn = AG.every(([k]) => S.agree[k]);
+    const reqOk = AG.filter(a => a[3]).every(([k]) => S.agree[k]);
+    const bd = S.birth;
+    const fmt = (d) => d.slice(0, 4) + (d.length > 4 ? '.' + d.slice(4, 6) : '') + (d.length > 6 ? '.' + d.slice(6) : '');
+    const by = +bd.slice(0, 4), bm = +bd.slice(4, 6), bdd = +bd.slice(6, 8);
+    const birthOk = bd.length === 8 && by >= 1900 && by <= 2026 && bm >= 1 && bm <= 12 && bdd >= 1 && bdd <= new Date(by, bm, 0).getDate();
+    const birthBad = bd.length === 8 && !birthOk;
+    const obCanNext = scr === 'obAgree' ? reqOk : scr === 'obProfile' ? (!!S.gender && birthOk) : scr === 'obName' ? name.length > 0 : scr === 'obTime' ? (S.schedMode === 'count' || S.days.some(Boolean)) : true;
+
+    // schedule
+    const FREQ = [1, 2, 3, 4, 5, 6, 7].map(n => [n, n === 7 ? '매일' : '주 ' + n + '회']);
+    const WDN = ['일', '월', '화', '수', '목', '금', '토'];
+    const DPRE = [['평일', [0, 1, 1, 1, 1, 1, 0]], ['주말', [1, 0, 0, 0, 0, 0, 1]], ['매일', [1, 1, 1, 1, 1, 1, 1]]];
+    const dPre = DPRE.find(p => p[1].map(Boolean).join() === S.days.join());
+    const picked = WDN.filter((_, i) => S.days[i]);
+    const freqName = S.schedMode === 'count' ? FREQ[S.freq - 1][1] : dPre ? (dPre[0] === '매일' ? '매일' : dPre[0] + '만') : picked.length ? picked.join('·') : '요일을 골라주세요';
+    const mm = String(S.mi * 5).padStart(2, '0');
+    const timeLabel = `${S.ap ? '오후' : '오전'} ${S.hr}:${mm}`;
+    const PRE = [['아침', 0, 8, 0], ['점심', 1, 12, 6], ['저녁', 1, 9, 0]];
+    const mkCol = (key, labels, idx, setIdx) => ({
+      ref: (el) => { if (!el) return; this.wheels[key] = el; if (!el._init) { el._init = 1; el.scrollTop = idx * 40; } },
+      onScroll: (e) => { const el = e.currentTarget; const i = Math.max(0, Math.min(labels.length - 1, Math.round(el.scrollTop / 40))); if (i !== idx) setIdx(i); },
+      items: labels.map((label, i) => ({ label, weight: i === idx ? 700 : 500, color: i === idx ? '#191F28' : '#B0B8C1', tap: (e) => { const el = e.currentTarget.parentElement; el && el.scrollTo({ top: i * 40, behavior: 'smooth' }); } }))
+    });
+    const wheel = [
+      mkCol('ap', ['오전', '오후'], S.ap, (i) => this.setState({ ap: i })),
+      mkCol('hr', Array.from({ length: 12 }, (_, i) => String(i + 1)), S.hr - 1, (i) => this.setState({ hr: i + 1 })),
+      mkCol('mi', Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, '0')), S.mi, (i) => this.setState({ mi: i }))
+    ];
+
+    // calendar
     const missedOpen = S.missed && !S.recovered;
     const JOIN = [2026, 8, 17], TODAY = [2026, 10, 13];
     const key = (y, m, d) => y * 10000 + m * 100 + d;
@@ -591,7 +1214,7 @@ class Component extends DCLogic {
       return h === 0 || h === 7 ? 'miss' : h === 13 ? 'letter' : 'ok';
     };
     const cy = S.calY, cm = S.calM;
-    const first = new Date(cy, cm - 1, 1).getDay(), dim = new Date(cy, cm, 0).getDate(), pdim = new Date(cy, cm - 1, 0).getDate();
+    const first = new Date(cy, cm - 1, 1).getDay(), dim = new Date(cy, cm, 0).getDate();
     const selK = key(cy, cm, S.selD);
     const weeks = []; let monthCount = 0, monthLetters = 0, monthMiss = 0;
     const rows = Math.ceil((first + dim) / 7);
@@ -599,59 +1222,120 @@ class Component extends DCLogic {
       const days = [];
       for (let i = 0; i < 7; i++) {
         const d = w * 7 + i - first + 1, other = d < 1 || d > dim;
-        const n = d < 1 ? pdim + d : d > dim ? d - dim : d;
         const st = other ? null : status(cy, cm, d);
         if (st === 'ok') monthCount++; if (st === 'letter') { monthCount++; monthLetters++; } if (st === 'miss') monthMiss++;
         const k = key(cy, cm, d), isSel = !other && k === selK, isToday = k === kToday;
-        const wk = i === 0 ? '#FF3B30' : i === 6 ? '#007AFF' : '#191F28';
-        const look = st === 'ok' ? { circle: '#1E2228', ring: 'none', color: '#FFFFFF', dot: 'transparent' }
-          : st === 'letter' ? { circle: '#FFF1E0', ring: 'inset 0 0 0 2px #F49A3C', color: '#B35F12', dot: 'transparent' }
-          : st === 'miss' ? { circle: 'transparent', ring: 'inset 0 0 0 1.5px #E5E8EB', color: '#B0B8C1', dot: '#FF3B30' }
-          : isToday ? { circle: 'transparent', ring: 'inset 0 0 0 2px #1E2228', color: '#191F28', dot: 'transparent' }
-          : { circle: 'transparent', ring: 'none', color: (k > kToday || k < kJoin) ? '#B0B8C1' : wk, dot: 'transparent' };
-        if (isSel) look.ring = (look.ring === 'none' ? '' : look.ring + ', ') + '0 0 0 3px #FFFFFF, 0 0 0 5px #B0B8C1';
-        days.push({ n, op: other ? 0.3 : 1, ...look, tap: () => { if (other) { const nm = d < 1 ? cm - 1 : cm + 1; const ny = nm < 1 ? cy - 1 : nm > 12 ? cy + 1 : cy; const mm = ((nm + 11) % 12) + 1; this.setState({ calY: ny, calM: mm, selD: n }); } else this.setState({ selD: d }); } });
+        const wk = i === 0 ? '#F04452' : i === 6 ? '#3182F6' : '#191F28';
+        const look = st === 'ok' ? { circle: '#EEF0F3', ring: 'none', color: '#191F28', dot: 'transparent', weight: 700 }
+          : st === 'letter' ? { circle: '#DCEBFF', ring: 'none', color: '#1B64DA', dot: 'transparent', weight: 700 }
+          : st === 'miss' ? { circle: 'transparent', ring: 'none', color: '#B0B8C1', dot: '#F04452', weight: 500 }
+          : isToday ? { circle: 'transparent', ring: 'inset 0 0 0 2px #1E2228', color: '#191F28', dot: 'transparent', weight: 700 }
+          : { circle: 'transparent', ring: 'none', color: (k > kToday || k < kJoin) ? '#C9CDD2' : wk, dot: 'transparent', weight: 500 };
+        days.push({ n: other ? '' : d, vis: other ? 'hidden' : 'visible', cell: isSel ? '#F2F4F6' : 'transparent', ...look, paw: st === 'ok' || st === 'letter', icon: st === 'letter' ? 'letterblue' : 'pawpink', num: st !== 'ok' && st !== 'letter', small: st === 'ok' || st === 'letter' ? String(d) : '', dotDisp: st === 'ok' || st === 'letter' ? 'none' : 'block', tap: () => { if (!other) this.setState({ selD: d }); } });
       }
       weeks.push({ days });
     }
     const octCount = (() => { let c = 0; for (let d = 1; d <= 13; d++) { const st = status(2026, 10, d); if (st === 'ok' || st === 'letter') c++; } return c; })();
-    const canPrev = key(cy, cm, 1) > kJoin - (kJoin % 100) + 1 - 1 && !(cy === JOIN[0] && cm === JOIN[1]);
-    const canNext = !(cy === TODAY[0] && cm === TODAY[1]);
-    const moveM = (dlt) => { let m = cm + dlt, y = cy; if (m < 1) { m = 12; y--; } if (m > 12) { m = 1; y++; } const isT = y === TODAY[0] && m === TODAY[1]; this.setState({ calY: y, calM: m, selD: isT ? TODAY[2] : 1 }); };
+    const inRange = (y, m) => key(y, m, 1) >= key(JOIN[0], JOIN[1], 1) && key(y, m, 1) <= key(TODAY[0], TODAY[1], 1);
+    const pickM = (y, m) => { const isT = y === TODAY[0] && m === TODAY[1]; this.setState({ calY: y, calM: m, selD: isT ? TODAY[2] : (y === JOIN[0] && m === JOIN[1] ? JOIN[2] : 1), sheet: false }); };
+    const sheetYears = [];
+    for (let y = JOIN[0]; y <= TODAY[0]; y++) sheetYears.push({ year: y, months: Array.from({ length: 12 }, (_, i) => { const m = i + 1, ok = inRange(y, m), cur = y === cy && m === cm; return { label: m + '월', bg: cur ? '#1E2228' : ok ? '#F2F4F6' : '#FAFAFB', color: cur ? '#FFFFFF' : ok ? '#191F28' : '#D1D6DB', cursor: ok ? 'pointer' : 'default', tap: () => ok && pickM(y, m) }; }) });
+    const yrs = []; for (let y = JOIN[0]; y <= TODAY[0]; y++) yrs.push(y);
+    const mlist = (y) => Array.from({ length: 12 }, (_, i) => i + 1).filter(m => inRange(y, m));
+    const wY = S.wY || cy, wMs = mlist(wY), wM = wMs.includes(S.wM) ? S.wM : wMs[wMs.length - 1];
+    const calWheel = [
+      mkCol('cy', yrs.map(y => y + '년'), yrs.indexOf(wY), (i) => this.setState({ wY: yrs[i] })),
+      mkCol('cm', wMs.map(m => m + '월'), wMs.indexOf(wM), (i) => this.setState({ wM: wMs[i] }))
+    ];
     const WD = ['일', '월', '화', '수', '목', '금', '토'];
     const sd = S.selD, sst = status(cy, cm, sd), sk = key(cy, cm, sd);
     const dateLabel = `${cm}월 ${sd}일 ${WD[new Date(cy, cm - 1, sd).getDay()]}요일`;
     const time = `오전 ${7 + (sd % 3)}:${String((sd * 13) % 60).padStart(2, '0')}`;
     const isYesterday = sk === key(2026, 10, 12);
     const day = { date: dateLabel, hasNote: false, note: '', hasCta: false, tile: '#F6F0E1', type: body, expr: 'idle', pose: 'sit', tone: '#191F28', ctaBg: '#1E2228', ctaColor: '#FFFFFF' };
-    if (sst === 'ok') Object.assign(day, { title: sk === kToday ? '오늘 출석 완료' : '출석했어요', note: time + ' 출석', hasNote: true, expr: 'happy', pose: 'stamp' });
-    else if (sst === 'letter') Object.assign(day, { title: '사연으로 채웠어요', note: isYesterday && S.letter.trim() ? S.letter : '야근하느라 출석을 깜빡했어요', hasNote: true, pose: 'letter', tone: '#B35F12', tile: '#FFF1E0' });
-    else if (sst === 'miss') Object.assign(day, { title: '결석했어요', tone: '#D70015', tile: '#F2F4F6', type: 'jjin', expr: 'sleep', hasCta: isYesterday, ctaLabel: '사연 보내고 채우기', cta: () => this.go('letter'), ctaBg: '#FFF1E0', ctaColor: '#B35F12' });
+    if (sst === 'ok') Object.assign(day, { title: sk === kToday ? '오늘 출석 완료' : '출석했어요', note: time + (S.gym.trim() ? ' · ' + S.gym.trim() : '') + ' 출석', hasNote: true, expr: 'happy', pose: 'stamp' });
+    else if (sst === 'letter') Object.assign(day, { title: '사연으로 채웠어요', note: (S.letters.find(l => l.id === cm * 100 + sd) || { text: '야근하느라 출석을 깜빡했어요' }).text, hasNote: true, pose: 'letter', tone: '#1B64DA', tile: '#EAF2FF' });
+    else if (sst === 'miss') Object.assign(day, { title: '결석했어요', tone: '#D70015', tile: '#F2F4F6', type: 'jjin', expr: 'sleep', hasCta: isYesterday, ctaLabel: '사연 보내고 채우기', cta: () => this.go('letter'), ctaBg: '#EAF2FF', ctaColor: '#1B64DA' });
     else if (sst === 'today') Object.assign(day, { title: '아직 출석 전이에요', hasCta: true, ctaLabel: '오늘 출석하러 가기', cta: () => this.go('home'), expr: 'up' });
     else Object.assign(day, { title: sk < kJoin ? '함께하기 전이에요' : '아직 오지 않은 날이에요', tone: '#B0B8C1', tile: '#F2F4F6', expr: 'sleep' });
-    const cal = { year: cy, month: cm, prev: () => canPrev && moveM(-1), next: () => canNext && moveM(1), prevColor: canPrev ? '#191F28' : '#C9CDD2', nextColor: canNext ? '#191F28' : '#C9CDD2' };
-    const calStats = [{ label: '출석', value: monthCount + '일' }, { label: '사연', value: monthLetters + '번' }, { label: '결석', value: monthMiss + '일' }];
+    const cal = {
+      year: cy, month: cm, notCurrent: !(cy === TODAY[0] && cm === TODAY[1]),
+      openSheet: () => this.setState({ sheet: true, wY: cy, wM: cm }), confirm: () => pickM(wY, wM), closeSheet: () => this.setState({ sheet: false }), toToday: () => pickM(TODAY[0], TODAY[1])
+    };
+    const calStats = [{ label: '출석', value: monthCount + '일', color: '#191F28' }, { label: '사연', value: monthLetters + '번', color: '#1B64DA' }, { label: '결석', value: monthMiss + '일', color: monthMiss ? '#D70015' : '#191F28' }];
     const SHARE = [
       { label: '이미지 저장', d: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3', msg: '이미지를 저장했어요' },
       { label: '인스타 스토리', d: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zM16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4zM17.5 6.5h.01', msg: '인스타그램을 여는 중이에요' },
       { label: '카카오톡', d: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z', msg: '카카오톡을 여는 중이에요' },
       { label: '링크 복사', d: 'M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7', msg: '링크를 복사했어요' }
     ];
-    const shellName = (SHELLS.find(s => s[1] === S.shell) || ['커스텀'])[0];
+    const shellName = (ALLSHELLS.find(s => s[1] === S.shell) || ['커스텀'])[0];
+    const coatName = (ALLCOATS.find(c => c[0] === S.coat) || [0, '치즈'])[1];
     return {
-      uid: this.uid, is, nav, name, coat: S.coat, body, shell: S.shell, lcd: S.lcd, streak: S.streak,
+      uid: this.uid, fr, is, nav, name, nameRaw: S.name, coat: S.coat, body, shell: S.shell, lcd: S.lcd, streak: S.streak,
       jo: { eul: josa(name, '을', '를'), ga: josa(name, '이', '가'), eunneun: josa(name, '은', '는') },
-      bodyName: BODY[body], nextHint, coatName: (COATS.find(c => c[0] === S.coat) || [0, '치즈'])[1], shellName,
-      onName: (e) => this.setState({ name: e.target.value.slice(0, 8) }),
+      bodyName: BODY[body], nextHint, coatName, shellName,
+      onName: (e) => this.setState({ name: e.target.value }),
+      agreeAll: { dot: allOn ? '#1E2228' : '#D1D6DB', tap: () => { const v = !allOn; this.setState({ agree: { terms: v, privacy: v, age: v, mkt: v } }); } },
+      agreeItems: AG.map(([k, tag, label, req]) => ({ tag, label, tagColor: req ? '#1E2228' : '#8B95A1', check: S.agree[k] ? '#1E2228' : '#D1D6DB', tap: () => this.setState(s => ({ agree: { ...s.agree, [k]: !s.agree[k] } })), view: () => this.showToast(label.replace(' 동의', '') + ' 전문을 열어요') })),
+      genders: [['f', '여성'], ['m', '남성'], ['n', '선택 안 함']].map(([k, n]) => ({ name: n, ...sel(S.gender === k), pick: () => this.setState({ gender: k }) })),
+      birthFmt: fmt(bd), birthBad, birthLine: birthBad ? '#D70015' : '#1E2228',
+      onBirth: (e) => { const v = e.target.value; let d = v.replace(/\D/g, '').slice(0, 8); if (v.length < fmt(S.birth).length && d === S.birth) d = d.slice(0, -1); this.setState({ birth: d }); },
       obPct: ((obIdx + 1) / OB.length * 100) + '%', obStep: `${obIdx + 1}/${OB.length}`,
-      obCta: obIdx === OB.length - 1 ? '시작하기' : '다음', obOpacity: obCanNext ? 1 : 0.3,
-      obNext: () => { if (!obCanNext) return; this.go(obIdx === OB.length - 1 ? 'home' : OB[obIdx + 1]); },
+      obCta: obIdx === 0 ? '동의하고 시작하기' : obIdx === OB.length - 1 ? '시작하기' : '다음', obOpacity: obCanNext ? 1 : 0.3,
+      obNext: () => { if (!obCanNext) return; if (obIdx === OB.length - 1) return this.pawGo('home'); this.go(OB[obIdx + 1]); },
+      skipSplash: () => { clearTimeout(this._sp); this.pawGo('login'); }, pawRun: S.pawRun,
+      catBg: ({ cheese: '#FCEBD6', mackerel: '#E7EBF0', tuxedo: '#E6E7EE', cow: '#F2F2EE', cream: '#FBF2E1', blue: '#E3E9F3', choco: '#F1E5DA' })[S.coat] || '#F6F0E1',
       obBack: () => this.go(obIdx <= 0 ? 'login' : OB[obIdx - 1]),
-      goals: [['slim', '날렵', '살 빼기 · 체력'], ['bulk', '벌크', '근육']].map(([key, n, desc]) => ({ key, name: n, desc, ...sel(S.goal === key), pick: () => this.setState({ goal: key }) })),
-      coats: COATS.map(([key, n]) => ({ key, name: n, border: key === S.coat ? '#1E2228' : 'transparent', pick: () => this.setState({ coat: key }) })),
-      alarms: [['morning', '아침', '오전 8:00'], ['noon', '점심', '오후 12:30'], ['night', '저녁', '오후 9:00']].map(([key, n, time]) => ({ name: n, time, ...sel(S.alarm === key), pick: () => this.setState({ alarm: key }) })),
+      goals: [['slim', '날렵', '체지방 감량'], ['fit', '탄탄', '린매스업 · 근력'], ['bulk', '벌크', '근육량 증가'], ['normal', '건강', '체력 · 컨디션 유지']].map(([key, n, desc]) => ({ key, name: n, desc, ...sel(S.goal === key), pick: () => this.setState({ goal: key }) })),
+      coats: myCoats.map(([key, n]) => ({ key, name: n, border: key === S.coat ? '#1E2228' : 'transparent', pick: () => this.setState({ coat: key }) })),
+      freqs: FREQ.map(([k, n]) => ({ name: n, ...sel(S.freq === k), pick: () => this.setState({ freq: k }) })),
+      presets: PRE.map(([n, ap, hr, mi]) => { const on = S.ap === ap && S.hr === hr && S.mi === mi; return { name: n, bg: on ? '#1E2228' : '#F2F4F6', color: on ? '#FFFFFF' : '#4E5968', pick: () => this.setTime(ap, hr, mi) }; }),
+      wheel, freqName,
+      schedModes: [['count', '횟수로'], ['days', '요일로']].map(([k, n]) => ({ name: n, bg: S.schedMode === k ? '#FFFFFF' : 'transparent', shadow: S.schedMode === k ? '0 2px 6px rgba(0,0,0,0.10)' : 'none', pick: () => this.setState({ schedMode: k }) })),
+      schedCount: S.schedMode === 'count', schedDays: S.schedMode === 'days',
+      dayPresets: DPRE.map(([n, arr]) => { const on = !!dPre && dPre[0] === n; return { name: n, bg: on ? '#1E2228' : '#F2F4F6', color: on ? '#FFFFFF' : '#4E5968', pick: () => this.setState({ days: arr.map(Boolean) }) }; }),
+      dayToggles: WDN.map((label, i) => ({ label, bg: S.days[i] ? '#1E2228' : '#F2F4F6', color: S.days[i] ? '#FFFFFF' : (i === 0 ? '#F04452' : i === 6 ? '#3182F6' : '#4E5968'), tap: () => this.setState(s => ({ days: s.days.map((v, j) => j === i ? !v : v) })) })),
+      strap: S.strap, pattern: S.pattern, showAds: (this.props.ads ?? true) && !own('noads'),
+      cookies: S.cookies, openCookies: () => this.setState({ cookieSheet: true }), closeCookies: () => this.setState({ cookieSheet: false, paying: null }),
+      cookieOpen: S.cookieSheet && (scr === 'shop' || scr === 'my'),
+      packs: [[100, 0], [300, 30], [1000, 150]].map(([n, bonus]) => ({ n, bonus: bonus ? '+' + bonus + '개 보너스' : '기본', op: S.paying && S.paying !== n ? 0.4 : 1, cta: S.paying === n ? '결제 중…' : '테스트 결제', buy: () => { if (S.paying) return; this.setState({ paying: n }); clearTimeout(this._pt); this._pt = setTimeout(() => { this.setState(s => ({ cookies: s.cookies + n + bonus, paying: null })); this.showToast('쿠키 ' + (n + bonus) + '개를 받았어요'); }, 800); } })),
+      noadsCard: { show: S.shopFilter === 'all' && !own('noads') && (this.props.ads ?? true), price: 500, tap: () => this.setState({ buy: 'noads', buying: false }) },
+      goNoads: () => this.setState({ screen: 'shop', shopFilter: 'all', buy: 'noads', buying: false, sheet: false }),
+      patterns: [['none', '없음'], ...ITEMS.filter(i => i.kind === 'pattern' && own(i.id)).map(i => [i.val, i.name.replace(' 무늬', '')])].map(([k, n]) => ({ name: n, swatch: swatch(k, S.shell), ring: S.pattern === k ? '#1E2228' : 'transparent', pick: () => this.setState({ pattern: k }) })),
+      lcdStats: [
+        { label: '체형', value: BODY[body] + ' · ' + nextHint, pct: (body === S.goal ? 100 : Math.round((S.streak % 6) / 6 * 100)) + '%', fill: '#1E2228' },
+        { label: '배부름', value: S.checked ? '배불러요' : '배고파요 · 출석하면 밥을 줘요', pct: S.checked ? '100%' : '40%', fill: '#F49A3C' },
+        { label: '기분', value: missedOpen ? '조금 서운해요' : '좋아요', pct: missedOpen ? '55%' : '90%', fill: '#F6A2A6' }
+      ],
+      shopFilters: [['all', '전체'], ['device', '빵틀'], ['cat', '고양이']].map(([k, n]) => ({ name: n, bg: S.shopFilter === k ? '#1E2228' : '#F2F4F6', color: S.shopFilter === k ? '#FFFFFF' : '#4E5968', pick: () => this.setState({ shopFilter: k }) })),
+      shopItems: ITEMS.filter(i => i.kind !== 'noads' && (S.shopFilter === 'all' || i.cat === S.shopFilter)).map(i => ({ ...i, isStrap: i.kind === 'strap', isShell: i.kind === 'shell', isCoat: i.kind === 'coat', isPattern: i.kind === 'pattern', swatch: swatch(i.val, S.shell), tile: i.kind === 'coat' ? '#F6F0E1' : '#F2F4F6', notOwned: !own(i.id), priceLabel: own(i.id) ? '보유 중' : String(i.price), priceBg: own(i.id) ? '#F2F4F6' : '#FFEEF1', priceColor: own(i.id) ? '#8B95A1' : '#191F28', tap: () => this.setState({ buy: i.id, buying: false }) })),
+      restore: () => this.showToast('구매 내역을 복원했어요'),
+      buyOpen: !!S.buy && scr === 'shop',
+      buy: (() => {
+        const bi = ITEMS.find(i => i.id === S.buy); if (!bi) return {};
+        const enough = S.cookies >= bi.price;
+        return { ...bi, isCoat: bi.kind === 'coat', isNoads: bi.kind === 'noads', isDevice: ['strap', 'shell', 'pattern'].includes(bi.kind), tile: bi.kind === 'coat' ? '#F6F0E1' : '#F2F2F7', pShell: bi.kind === 'shell' ? bi.val : S.shell, pStrap: bi.kind === 'strap' ? bi.val : S.strap, pPattern: bi.kind === 'pattern' ? bi.val : S.pattern, owned: own(bi.id), notOwned: !own(bi.id), op: S.buying ? 0.6 : 1, balance: S.cookies,
+          cta: S.buying ? '구매 중…' : enough ? '쿠키 ' + bi.price + '개로 구매하기' : '쿠키가 부족해요 · 충전하기',
+          equipLabel: bi.kind === 'noads' ? '확인' : isEq(bi) ? '적용 중' : '바로 적용하기',
+          purchase: () => {
+            if (S.buying) return; if (!enough) return this.setState({ cookieSheet: true });
+            this.setState({ buying: true }); clearTimeout(this._bt);
+            this._bt = setTimeout(() => {
+              this.setState(s => ({ owned: s.owned.includes(bi.id) ? s.owned : [...s.owned, bi.id], buying: false, cookies: s.cookies - bi.price, buy: null }));
+              if (bi.kind === 'noads') this.showToast('이제 광고 없이 쓸 수 있어요');
+              else this.showToast(bi.name + josa(bi.name, '을', '를') + ' 샀어요', { label: '바로 적용', fn: () => equipItem(bi) });
+            }, 700);
+          },
+          equip: () => bi.kind === 'noads' ? this.setState({ buy: null }) : equipItem(bi),
+          close: () => this.setState({ buy: null, buying: false }) };
+      })(),
+      straps: [['none', '없음', '#C9CDD2'], ...ITEMS.filter(i => i.kind === 'strap' && own(i.id)).map(i => [i.val, i.name, i.hex])].map(([k, n, hex]) => ({ name: n, hex, ring: S.strap === k ? '#1E2228' : 'transparent', pick: () => this.setState({ strap: k }) })),
+      goShopDevice: () => this.setState({ screen: 'shop', shopFilter: 'device', buy: null }),
+      goShopCat: () => this.setState({ screen: 'shop', shopFilter: 'cat', buy: null }),
+      saveAlarm: () => { this.go('my'); this.showToast(`${freqName} · ${timeLabel}에 알려드려요`); },
       rules: [
-        { type: S.goal, expr: 'happy', pose: 'sit', title: `${goalName} · 6일 연속 출석`, desc: S.goal === 'slim' ? '살 빼기 · 체력' : '근육' },
+        { type: S.goal, expr: 'happy', pose: 'sit', title: S.goal === 'normal' ? '건강 · 꾸준히 출석' : `${goalName} · 6일 연속 출석`, desc: ({ slim: '체지방 감량', fit: '린매스업 · 근력', bulk: '근육량 증가', normal: '보통 모습을 지켜요' })[S.goal] },
         { type: 'normal', expr: 'idle', pose: 'sit', title: '보통 · 시작 모습', desc: '습관만의 종착' },
         { type: 'jjin', expr: 'idle', pose: 'sit', title: '찐빵 · 3일 결석', desc: '조금씩 동그래져요' },
         { type: 'loaf', expr: 'sleep', pose: 'sleep', title: '식빵 · 6일 결석', desc: '9일부터 문틀에 껴요' },
@@ -661,28 +1345,44 @@ class Component extends DCLogic {
       checked: S.checked, notChecked: !S.checked,
       checkinBtn: () => this.doCheckin(false),
       lcdBtns: [['메뉴', '0px'], ['선택', '18px'], ['취소', '0px']].map(([label, dy], i) => ({ label, dy, press: () => { const rt = document.querySelector('[data-loafy-root="' + this.uid + '"]'); const l = rt && rt.querySelector('loafy-lcd'); l && l.button && l.button(i); } })),
-      shareTargets: SHARE.map(t => ({ ...t, tap: () => this.showToast(t.msg) })),
+      shareTargets: SHARE.map(t => ({ ...t, tap: () => t.label === '이미지 저장' ? this.saveImage() : this.showToast(t.msg) })),
       letter: S.letter, letterLen: S.letter.length, letterOpacity: S.letter.trim() ? 1 : 0.3,
       onLetter: (e) => this.setState({ letter: e.target.value.slice(0, 200) }),
-      sendLetter: () => { if (!S.letter.trim()) return; this.setState({ recovered: true, screen: 'letterDone' }); },
-      shells: SHELLS.map(([n, hex]) => ({ name: n, hex, ring: hex === S.shell ? '0 0 0 2px #fff, 0 0 0 4px #1E2228' : 'inset 0 0 0 1px rgba(0,0,0,0.12)', pick: () => this.setState({ shell: hex }) })),
-      lcdModes: [['color', '컬러'], ['mono', '흑백']].map(([k, n]) => ({ name: n, bg: S.lcd === k ? '#FFFFFF' : 'transparent', shadow: S.lcd === k ? '0 3px 8px rgba(0,0,0,0.12)' : 'none', pick: () => this.setState({ lcd: k }) })),
-      saveEdit: () => { this.go('home'); this.showToast('다마고치를 저장했어요'); },
-      weekdays: ['일', '월', '화', '수', '목', '금', '토'].map((label, i) => ({ label, color: i === 0 ? '#FF3B30' : i === 6 ? '#007AFF' : 'rgba(60,60,67,0.6)' })),
-      weeks, monthCount, cal, day, calStats,
-      legend: [{ label: '출석', bg: '#1E2228', ring: 'none' }, { label: '사연', bg: '#FFF1E0', ring: 'inset 0 0 0 2px #F49A3C' }, { label: '결석', bg: '#FF3B30', ring: 'none' }],
-      todayStatus: S.checked ? '완료' : '아직 안 했어요', todayBox: S.checked ? '#1E2228' : 'transparent',
-      recCheck: () => { if (!S.checked) this.go('home'); },
-      letterStatus: S.recovered ? '보냈어요 · 연속 기록 복구됨' : '아직 안 보냈어요', recoveredStr: S.recovered ? 'true' : 'false',
-      recLetter: () => { if (!S.recovered) this.go('letter'); },
+      sendLetter: () => {
+        if (!S.letter.trim()) return;
+        if (S.editId) { this.setState(s => ({ letters: s.letters.map(l => l.id === s.editId ? { ...l, text: s.letter.trim() } : l), editId: null, letter: '', screen: 'letters' })); this.showToast('사연을 수정했어요'); return; }
+        this.setState(s => ({ recovered: true, screen: 'letterDone', letters: [{ id: 1012, date: '10월 12일 월요일', text: s.letter.trim() }, ...s.letters.filter(l => l.id !== 1012)], letter: '' }));
+      },
+      letterTitle: S.editId ? '사연 수정' : '어제 왜 못 왔나요?',
+      letterSub1: S.editId ? '보낸 사연을 고칠 수 있어요' : '사연을 보내면 연속 기록이 이어져요',
+      letterSub2: S.editId ? ((S.letters.find(l => l.id === S.editId) || {}).date || '') + '에 보낸 사연' : '한 달에 2번까지 보낼 수 있어요',
+      letterCta: S.editId ? '수정 완료' : '사연 보내기',
+      letterBack: () => S.editId ? this.setState({ screen: 'letters', editId: null, letter: '' }) : this.go('home'),
+      letterList: S.letters.map(l => ({ ...l, edit: () => this.setState({ screen: 'letter', editId: l.id, letter: l.text }) })),
+      noLetters: !S.letters.length, letterUsed: S.letters.filter(l => Math.floor(l.id / 100) === 10).length,
+      shells: myShells.map(([n, hex]) => ({ name: n, hex, ring: hex === S.shell ? '0 0 0 2px #fff, 0 0 0 4px #1E2228' : 'inset 0 0 0 1px rgba(0,0,0,0.12)', pick: () => this.setState({ shell: hex }) })),
+      lcdModes: [['color', '컬러'], ['mono', '흑백']].map(([k, n]) => ({ name: n, bg: S.lcd === k ? '#FFFFFF' : 'transparent', shadow: S.lcd === k ? '0 2px 6px rgba(0,0,0,0.10)' : 'none', pick: () => this.setState({ lcd: k }) })),
+      shopTabs: [['device', '빵틀'], ['cat', '고양이']].map(([k, label]) => ({ label, color: S.shopTab === k ? '#191F28' : '#B0B8C1', line: S.shopTab === k ? 'inset 0 -2px 0 #191F28' : 'none', tap: () => this.setState({ shopTab: k }) })),
+      shopDevice: S.shopTab === 'device', shopCat: S.shopTab === 'cat',
+      weekdays: WD.map((label, i) => ({ label, color: i === 0 ? '#F04452' : i === 6 ? '#3182F6' : '#8B95A1' })),
+      weeks, monthCount, cal, day, calStats, sheetOpen: S.sheet && scr === 'record', calWheel, stop: (e) => e.stopPropagation(),
+      legend: [{ label: '출석', bg: '#EEF0F3', icon: 'pawpink', hasIcon: true, noIcon: false }, { label: '사연', bg: '#DCEBFF', icon: 'letterblue', hasIcon: true, noIcon: false }, { label: '결석', bg: '#F04452', icon: '', hasIcon: false, noIcon: true }],
       myStats: [{ label: '연속 출석', value: 'D+' + S.streak }, { label: '이번 달', value: octCount + '일' }, { label: '사연', value: (S.recovered || S.missed ? 1 : 0) + '/2' }],
       myRows: [
-        { icon: 'brush', label: '다마고치 꾸미기', value: shellName, tap: () => this.go('edit') },
-        { icon: 'bell', label: '출석 알림', value: { morning: '오전 8:00', noon: '오후 12:30', night: '오후 9:00' }[S.alarm], tap: () => this.showToast('알림 시간 설정은 다음 버전에서') },
-        { icon: 'letter', label: '사연', value: S.recovered || S.missed ? '이번 달 1/2' : '이번 달 0/2', tap: () => this.go('letter') }
+        { icon: 'cookie', tint: '#FFEEF1', label: '발자국 쿠키', value: S.cookies + '개', tap: () => this.setState({ cookieSheet: true }) },
+        { icon: 'brush', tint: '#FFF4D1', label: '빵틀 꾸미기', value: shellName, tap: () => this.go('decoDevice') },
+        { icon: 'paw', tint: '#FFEBD9', label: '고양이 변경', value: coatName, tap: () => this.go('decoCat') },
+        { icon: 'home', tint: '#FFEBD9', label: '출석 장소', value: S.gym.trim() || '미설정', tap: () => this.showToast('출석 장소 변경은 다음 버전에서 열려요') },
+        { icon: 'bell', tint: '#FFF4D1', label: '출석 알림', value: freqName + ' · ' + timeLabel, tap: () => this.go('alarm') },
+        { icon: 'letter', tint: '#E3EEFF', label: '사연 내역', value: '이번 달 ' + S.letters.filter(l => Math.floor(l.id / 100) === 10).length + '/2', tap: () => this.go('letters') },
+        { icon: 'shop', tint: '#F1ECFD', label: '광고 제거', value: own('noads') ? '적용 중' : '', tap: () => own('noads') ? this.showToast('이미 광고 없이 쓰고 있어요') : this.setState({ screen: 'shop', shopFilter: 'all', buy: 'noads', buying: false }) }
       ],
-      tabs: [['home', 'home', '홈'], ['record', 'record', '기록'], ['my', 'my', '마이']].map(([k, icon, label]) => ({ icon, label, on: scr === k ? 'true' : 'false', bg: scr === k ? 'rgba(120,120,128,0.14)' : 'transparent', color: scr === k ? '#1E2228' : '#8E929B', tap: () => this.go(k) })),
-      hasToast: !!S.toast, toast: S.toast
+      tabs: [['home', 'home', '홈'], ['record', 'record', '기록'], ['shop', 'shop', '샵'], ['my', 'my', '마이']].map(([k, icon, label]) => ({ icon, label, on: scr === k ? 'true' : 'false', bg: scr === k ? 'rgba(120,120,128,0.14)' : 'transparent', color: scr === k ? '#1E2228' : '#8E929B', tap: () => this.go(k) })),
+      gym: S.gym, notGym: scr !== 'obGym', onGym: (e) => this.setState({ gym: e.target.value }),
+      skipGym: () => { this.setState({ gym: '' }); this.go('obCoat'); },
+      gymChips: ['집에서 홈트', '야외 러닝', '필라테스', '수영장'].map(n => ({ name: n, bg: S.gym === n ? '#1E2228' : '#F2F4F6', color: S.gym === n ? '#FFFFFF' : '#4E5968', pick: () => this.setState({ gym: S.gym === n ? '' : n }) })),
+      hasToast: !!S.toast, toast: S.toast, hasToastAction: !!S.toastAct, toastActionLabel: S.toastAct ? S.toastAct.label : '', toastPad: S.toastAct ? '8px 8px 8px 18px' : '12px 18px',
+      toastAction: () => { const a = S.toastAct; clearTimeout(this._tt); this.setState({ toast: null, toastAct: null }); a && a.fn(); }
     };
   }
 }
