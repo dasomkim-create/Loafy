@@ -156,7 +156,7 @@
   };
   ICONS.pawpink = ICONS.paw; ICONS.letterblue = ICONS.letter;
   const ICON_INK = { cookie: '#C9566D', pawpink: '#D24E66', letterblue: '#1B64DA' };
-  const ICON_FILL = { pawpink: '#FF8FA0', letterblue: '#FFFFFF',  home: '#F49A3C', record: '#8FC7B4', my: '#F6A2A6', paw: '#F49A3C', share: '#9DB6E6', brush: '#F2C14E', letter: '#FFF6E6', bell: '#F2C14E', shop: '#C9B6F0', cookie: '#FFC2CD' };
+  const ICON_FILL = { pawpink: '#FF8FA0', letterblue: '#FFFFFF', home: '#B4BCC8', record: '#8FC7B4', my: '#F6A2A6', paw: '#F49A3C', share: '#9DB6E6', brush: '#F2C14E', letter: '#FFF6E6', bell: '#F2C14E', shop: '#C9B6F0', cookie: '#FFC2CD' };
   function drawIcon(ctx, name, s, active, lineColor) {
     const rows = ICONS[name]; if (!rows) return;
     const at = (x, y) => (y < 0 || y >= 12 || x < 0 || x >= 12) ? '.' : rows[y][x];
@@ -240,8 +240,21 @@
 
   window.LoafySprites = { make, draw, drawIcon, COATS, COAT_NAMES, TYPES, BODY_NAMES, ICONS, ICON_FILL, Sim, LCD_SIZE: N * CELL };
 
+  function drawAcc(ctx, type, acc, oy) {
+    if (!acc || acc === 'none') return;
+    const h = (TYPES[type] || TYPES.normal).head, ey = Math.round(h.y + 0.6) + oy, ex = Math.round(16 - h.rx * 0.52) - 1, rex = 31 - ex - 2;
+    const put = (x, y, c) => { ctx.fillStyle = c; ctx.fillRect(x, y, 1, 1); };
+    const bmp = (rows, x0, y0, pal) => rows.forEach((r, y) => [...r].forEach((k, x) => { if (pal[k]) put(x0 + x, y0 + y, pal[k]); }));
+    if (acc === 'glasses') {
+      [ex, rex].forEach(x0 => { for (let i = -1; i <= 3; i++) { put(x0 + i, ey - 2, '#2A2E36'); put(x0 + i, ey + 2, '#2A2E36'); } for (let j = -1; j <= 1; j++) { put(x0 - 1, ey + j, '#2A2E36'); put(x0 + 3, ey + j, '#2A2E36'); } });
+      for (let x = ex + 4; x < rex - 1; x++) put(x, ey - 1, '#2A2E36');
+    }
+    if (acc === 'ribbon') { const cx = Math.round(h.x + h.rx - 3.5), cy = Math.round(h.y - h.ry + 0.5) + oy; bmp(['##.##', '#####', '##.##'], cx - 2, cy - 1, { '#': '#FF6B8A' }); put(cx, cy, '#D9435F'); }
+    if (acc === 'crown') { const cy = Math.round(h.y - h.ry) - 2 + oy; bmp(['#.#.#', '#####', '##o##'], 14, cy, { '#': '#F2C14E', o: '#FF6B8A' }); }
+  }
+
   class LoafySprite extends HTMLElement {
-    static get observedAttributes() { return ['type', 'coat', 'expr', 'pose', 'scale', 'animate']; }
+    static get observedAttributes() { return ['type', 'coat', 'expr', 'pose', 'scale', 'animate', 'acc']; }
     connectedCallback() {
       if (!this.cv) { this.cv = document.createElement('canvas'); this.cv.style.imageRendering = 'pixelated'; this.cv.style.display = 'block'; this.appendChild(this.cv); }
       this.style.display = 'inline-block';
@@ -256,9 +269,11 @@
       let expr = this.getAttribute('expr') || 'idle';
       if (anim && expr === 'idle' && f % 6 === 5) expr = 'blink';
       const spr = make(this.getAttribute('type') || 'normal', this.getAttribute('coat') || 'cheese', expr, this.getAttribute('pose') || 'sit');
-      this.cv.width = spr.w * s; this.cv.height = (spr.h + 1) * s;
+      this.cv.width = spr.w; this.cv.height = spr.h + 1;
+      this.cv.style.width = spr.w * s + 'px'; this.cv.style.height = (spr.h + 1) * s + 'px';
       const ctx = this.cv.getContext('2d'); ctx.clearRect(0, 0, this.cv.width, this.cv.height);
-      draw(ctx, spr, 0, anim && f % 2 ? 1 : 0, s);
+      draw(ctx, spr, 0, anim && f % 2 ? 1 : 0, 1);
+      drawAcc(ctx, this.getAttribute('type') || 'normal', this.getAttribute('acc'), anim && f % 2 ? 1 : 0);
     }
   }
   if (!customElements.get('loafy-sprite')) customElements.define('loafy-sprite', LoafySprite);
@@ -302,7 +317,7 @@
   // ---------- logo (from uploads/Loafy.svg, 46x22 units) ----------
   const LOGO = [[0,0,2,2,0],[2,2,2,10,0],[2,12,2,2,0],[4,14,2,2,0],[6,14,2,2,0],[8,10,2,2,0],[8,8,2,2,0],[20,12,2,2,0],[22,14,2,2,0],[26,0,2,2,0],[28,2,2,2,0],[24,2,2,2,0],[24,4,2,4,0],[24,8,2,4,0],[28,8,2,6,0],[30,14,2,2,0],[32,14,2,2,0],[32,10,2,4,0],[32,16,2,4,0],[30,20,2,2,0],[28,18,2,2,0],[32,8,2,2,0],[38,7,2,2,1],[39,10,4,4,1],[42,7,2,2,1],[36,10,2,2,1],[44,10,2,2,1],[26,6,2,2,0],[24,12,2,2,0],[24,14,2,2,0],[10,6,2,2,0],[18,10,2,2,0],[18,14,2,2,0],[10,14,2,2,0],[8,12,2,2,0],[12,8,2,2,0],[20,8,2,2,0],[20,6,2,2,0],[18,4,2,2,0],[16,6,2,2,0],[20,10,2,2,0],[16,12,2,2,0],[12,10,2,4,0],[14,14,2,2,0]];
   class LoafyLogo extends HTMLElement {
-    static get observedAttributes() { return ['scale', 'replay']; }
+    static get observedAttributes() { return ['scale', 'replay', 'ink']; }
     connectedCallback() { if (!this.cv) { this.cv = document.createElement('canvas'); this.cv.style.display = 'block'; this.appendChild(this.cv); } this.style.display = 'inline-block'; this.style.lineHeight = '0'; this.start(); }
     disconnectedCallback() { cancelAnimationFrame(this.raf); }
     attributeChangedCallback() { if (this.cv) this.start(); }
@@ -322,7 +337,7 @@
         blocks.forEach(b => {
           const p = Math.max(0, Math.min(1, (t - b.t) / b.d)); if (p < 1) done = false; if (p <= 0) return;
           const k = p >= 1 ? 1 : back(p), cx = (b.x + b.w / 2) * s, cy = (b.y + b.h / 2) * s, ww = b.w * s * k, hh = b.h * s * k;
-          ctx.globalAlpha = Math.min(1, p * 2.5); ctx.fillStyle = b.c ? '#FF7474' : '#111114';
+          ctx.globalAlpha = Math.min(1, p * 2.5); ctx.fillStyle = b.c ? '#FF7474' : (this.getAttribute('ink') || '#111114');
           ctx.fillRect(cx - ww / 2, cy - hh / 2 - (1 - p) * s * 2, ww, hh);
         });
         ctx.globalAlpha = 1; if (!done) this.raf = requestAnimationFrame(frame); else if (!still) this.dispatchEvent(new CustomEvent('loafy:logo-done', { bubbles: true }));

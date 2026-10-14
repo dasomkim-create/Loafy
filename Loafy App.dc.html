@@ -150,7 +150,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
             <sc-for list="{{ goals }}" as="g" hint-placeholder-count="4">
               <button onClick="{{ g.pick }}" style="position:relative;display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:10px 10px 14px;border-radius:20px;border:2px solid {{ g.border }};background:{{ g.bg }};cursor:pointer;text-align:left;transition:border-color 180ms,background 180ms" style-active="transform:scale(0.98)">
                 <div style="height:96px;border-radius:14px;background:{{ catBg }};display:flex;align-items:center;justify-content:center">
-                  <x-import component-from-global-scope="loafy-sprite" type="{{ g.key }}" coat="{{ coat }}" scale="2.5" hint-size="80px,83px"></x-import>
+                  <x-import component-from-global-scope="loafy-sprite" type="{{ g.key }}" coat="{{ coat }}" acc="{{ catAcc }}" scale="2.5" hint-size="80px,83px"></x-import>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:2px;padding:0 4px">
                   <span style="font-size:17px;font-weight:700;color:#000">{{ g.name }}</span>
@@ -193,7 +193,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
             <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ coatName }}</span>
           </div>
           <div style="height:236px;border-radius:24px;background:{{ catBg }};transition:background 280ms;display:flex;align-items:center;justify-content:center">
-            <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ coat }}" scale="6" animate="" hint-size="192px,198px"></x-import>
+            <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ coat }}" acc="{{ catAcc }}" scale="6" animate="" hint-size="192px,198px"></x-import>
           </div>
           <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px">
             <sc-for list="{{ coats }}" as="k" hint-placeholder-count="5">
@@ -293,7 +293,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
             <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
               <div style="display:flex;align-items:center;gap:14px;padding:8px 0">
                 <div style="width:60px;height:60px;border-radius:14px;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
-                  <x-import component-from-global-scope="loafy-sprite" type="{{ r.type }}" coat="{{ coat }}" expr="{{ r.expr }}" pose="{{ r.pose }}" scale="1.5" hint-size="48px,50px"></x-import>
+                  <x-import component-from-global-scope="loafy-sprite" type="{{ r.type }}" coat="{{ coat }}" acc="{{ catAcc }}" expr="{{ r.expr }}" pose="{{ r.pose }}" scale="1.5" hint-size="48px,50px"></x-import>
                 </div>
                 <div style="flex:1;display:flex;flex-direction:column;gap:2px">
                   <span style="font-size:17px;font-weight:700">{{ r.title }}</span>
@@ -311,6 +311,27 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
     </div>
   </sc-if>
 
+  <sc-if value="{{ is.terms }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="02-0 약관 전문" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
+      <div style="height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:inset 0 -1px 0 #F2F4F6">
+        <button onClick="{{ terms.back }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+        <span style="font-size:17px;font-weight:600">{{ terms.title }}</span>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:20px 24px 120px;display:flex;flex-direction:column;gap:22px">
+        <span style="font-size:13px;color:#8B95A1">시행일 2026년 10월 1일 · 예시 문안이에요. 출시 전 법률 검토가 필요해요</span>
+        <sc-for list="{{ terms.sections }}" as="s" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:16px;font-weight:700;color:#191F28">{{ s.h }}</span>
+            <span style="font-size:15px;line-height:24px;color:#4E5968;white-space:pre-line">{{ s.p }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 20px 42px;background:#FFFFFF">
+        <button onClick="{{ terms.agree }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418;transform:scale(0.98)">동의하고 돌아가기</button>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ is.home }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="03 홈" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#F2F2F7;padding-top:{{ fr.top }};display:flex;flex-direction:column">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:6px 16px 0 20px">
@@ -319,6 +340,12 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           <span style="font-size:34px;line-height:41px;font-weight:700">{{ name }}</span>
         </div>
         <div style="display:flex;gap:8px;padding-bottom:2px">
+          <button onClick="{{ nav.noti }}" title="알림" style="position:relative;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.78);box-shadow:0 2px 6px rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <x-import component-from-global-scope="loafy-icon" name="bell" size="24" color="#1E2228" hint-size="24px,24px"></x-import>
+            <sc-if value="{{ hasUnread }}" hint-placeholder-val="{{ false }}">
+              <span style="position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:#F04452;box-shadow:0 0 0 2px #FFFFFF"></span>
+            </sc-if>
+          </button>
           <button onClick="{{ nav.share }}" title="공유" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.78);box-shadow:0 2px 6px rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center;cursor:pointer">
             <x-import component-from-global-scope="loafy-icon" name="share" size="24" color="#1E2228" hint-size="24px,24px"></x-import>
           </button>
@@ -358,7 +385,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
       <div style="padding:12px 16px 112px">
         <sc-if value="{{ notChecked }}" hint-placeholder-val="{{ true }}">
           <button onClick="{{ checkinBtn }}" style="width:100%;height:64px;border:0;border-radius:20px;background:#1E2228;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 3px 10px rgba(30,34,40,0.14)" style-active="background:#111418;transform:scale(0.98)">
-            <x-import component-from-global-scope="loafy-icon" name="paw" size="24" active="true" hint-size="24px,24px"></x-import>
+            <x-import component-from-global-scope="loafy-icon" name="pawpink" size="24" active="true" hint-size="24px,24px"></x-import>
             <span style="font-size:19px;font-weight:700">오늘 출석하기</span>
           </button>
         </sc-if>
@@ -397,7 +424,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
       <div style="margin:20px 20px 32px;flex-shrink:0;width:calc(100% - 40px);max-width:380px;box-sizing:border-box;padding:22px 22px 24px;border-radius:26px;background:rgba(255,255,255,0.82);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.6);box-shadow:0 1px 4px rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:18px">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="width:44px;height:44px;border-radius:14px;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
-            <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" scale="1.25" hint-size="40px,41px"></x-import>
+            <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" scale="1.25" hint-size="40px,41px"></x-import>
           </div>
           <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
             <span style="font-size:17px;font-weight:700;color:#191F28">{{ name }}의 상태</span>
@@ -424,7 +451,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
     <div data-screen-label="05 출석 완료" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;align-items:center">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding-bottom:60px">
         <div style="animation:lfPop 520ms 120ms cubic-bezier(0.34,1.56,0.64,1) both;width:240px;height:240px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" expr="happy" pose="stamp" scale="5" hint-size="160px,165px"></x-import>
+          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" expr="happy" pose="stamp" scale="5" hint-size="160px,165px"></x-import>
         </div>
         <span style="font-size:17px;font-weight:600;color:#5B6472">출석 완료</span>
         <span style="font-size:56px;line-height:64px;font-weight:800;color:#000;letter-spacing:-0.02em">D+{{ streak }}</span>
@@ -487,7 +514,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
             <span style="font-size:26px;line-height:36px;font-weight:700">{{ letterTitle }}</span>
             <span style="font-size:15px;line-height:22px;color:rgba(60,60,67,0.6)">{{ letterSub1 }}<br>{{ letterSub2 }}</span>
           </div>
-          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" pose="letter" scale="2.5" hint-size="80px,83px"></x-import>
+          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" pose="letter" scale="2.5" hint-size="80px,83px"></x-import>
         </div>
         <div style="display:flex;flex-direction:column;gap:8px">
           <textarea value="{{ letter }}" onChange="{{ onLetter }}" maxlength="200" placeholder="예) 야근하느라 출석을 깜빡했어요" style="height:180px;resize:none;border:0;outline:none;border-radius:18px;background:#F4F5F7;padding:18px;font-size:17px;line-height:26px;color:#000;box-sizing:border-box"></textarea>
@@ -530,11 +557,55 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
     </div>
   </sc-if>
 
+  <sc-if value="{{ is.noti }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="15 알림" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;overflow-y:auto">
+      <div style="height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative">
+        <button onClick="{{ notiBack }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+        <span style="font-size:17px;font-weight:600">알림</span>
+        <button onClick="{{ readAll }}" style="position:absolute;right:12px;height:36px;padding:0 6px;border:0;background:transparent;font-size:14px;font-weight:600;color:{{ readAllColor }};cursor:pointer">모두 읽음</button>
+      </div>
+      <div style="display:flex;flex-direction:column;padding:4px 0 40px">
+        <span style="padding:14px 20px 6px;font-size:14px;font-weight:600;color:#8B95A1">오늘</span>
+        <sc-for list="{{ notiToday }}" as="n" hint-placeholder-count="2">
+          <button onClick="{{ n.tap }}" style="width:100%;border:0;background:{{ n.bg }};display:flex;align-items:flex-start;gap:14px;padding:14px 20px;text-align:left;cursor:pointer;transition:background 200ms" style-active="background:#F2F4F6">
+            <span style="width:40px;height:40px;border-radius:13px;background:{{ n.tint }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <x-import component-from-global-scope="loafy-icon" name="{{ n.icon }}" size="24" active="true" hint-size="24px,24px"></x-import>
+            </span>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+              <div style="display:flex;justify-content:space-between;gap:8px">
+                <span style="font-size:15px;font-weight:700;color:#191F28">{{ n.title }}</span>
+                <span style="font-size:12px;color:#8B95A1;white-space:nowrap">{{ n.time }}</span>
+              </div>
+              <span style="font-size:14px;line-height:20px;color:#4E5968">{{ n.body }}</span>
+            </div>
+            <span style="width:6px;height:6px;margin-top:8px;border-radius:50%;background:{{ n.dot }};flex-shrink:0"></span>
+          </button>
+        </sc-for>
+        <span style="padding:22px 20px 6px;font-size:14px;font-weight:600;color:#8B95A1">이전</span>
+        <sc-for list="{{ notiPast }}" as="n" hint-placeholder-count="2">
+          <button onClick="{{ n.tap }}" style="width:100%;border:0;background:{{ n.bg }};display:flex;align-items:flex-start;gap:14px;padding:14px 20px;text-align:left;cursor:pointer;transition:background 200ms" style-active="background:#F2F4F6">
+            <span style="width:40px;height:40px;border-radius:13px;background:{{ n.tint }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <x-import component-from-global-scope="loafy-icon" name="{{ n.icon }}" size="24" active="true" hint-size="24px,24px"></x-import>
+            </span>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+              <div style="display:flex;justify-content:space-between;gap:8px">
+                <span style="font-size:15px;font-weight:700;color:#191F28">{{ n.title }}</span>
+                <span style="font-size:12px;color:#8B95A1;white-space:nowrap">{{ n.time }}</span>
+              </div>
+              <span style="font-size:14px;line-height:20px;color:#4E5968">{{ n.body }}</span>
+            </div>
+            <span style="width:6px;height:6px;margin-top:8px;border-radius:50%;background:{{ n.dot }};flex-shrink:0"></span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ is.letterDone }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="08 사연 완료" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding-bottom:60px">
         <div style="width:220px;height:220px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;margin-bottom:18px">
-          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" expr="happy" scale="4.5" hint-size="144px,149px"></x-import>
+          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" expr="happy" scale="4.5" hint-size="144px,149px"></x-import>
         </div>
         <span style="font-size:26px;font-weight:700">사연이 도착했어요</span>
         <span style="font-size:16px;color:rgba(60,60,67,0.6)">연속 기록이 이어졌어요 · D+{{ streak }}</span>
@@ -555,24 +626,42 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           <span style="font-size:13px;font-weight:600;color:#C24D63">충전</span>
         </button>
       </div>
-      <div style="display:flex;gap:8px;padding:4px 20px 14px">
-        <sc-for list="{{ shopFilters }}" as="f" hint-placeholder-count="3">
-          <button onClick="{{ f.pick }}" style="height:36px;padding:0 16px;border:0;border-radius:999px;background:{{ f.bg }};color:{{ f.color }};font-size:15px;font-weight:600;cursor:pointer">{{ f.name }}</button>
+      <div style="display:flex;padding:0 20px;box-shadow:inset 0 -1px 0 #F2F4F6;flex-shrink:0">
+        <sc-for list="{{ shopTops }}" as="t" hint-placeholder-count="2">
+          <button onClick="{{ t.tap }}" style="flex:1;height:48px;border:0;background:transparent;box-shadow:{{ t.line }};font-size:16px;font-weight:700;color:{{ t.color }};cursor:pointer;transition:color 180ms,box-shadow 180ms">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:8px;padding:14px 20px;overflow-x:auto;scrollbar-width:none;flex-shrink:0">
+        <sc-for list="{{ shopFilters }}" as="f" hint-placeholder-count="4">
+          <button onClick="{{ f.pick }}" style="flex-shrink:0;height:34px;padding:0 14px;border:0;border-radius:999px;background:{{ f.bg }};color:{{ f.color }};font-size:14px;font-weight:600;cursor:pointer;transition:background 180ms,color 180ms">{{ f.name }}</button>
         </sc-for>
       </div>
       <div style="flex:1;min-height:0;overflow-y:auto;padding:0 20px">
         <sc-if value="{{ noadsCard.show }}" hint-placeholder-val="{{ true }}">
-          <button onClick="{{ noadsCard.tap }}" style="width:100%;margin-bottom:20px;padding:16px;border:0;border-radius:20px;background:#1E2228;display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer" style-active="transform:scale(0.98)">
-            <span style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,0.12);color:#FFFFFF;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;text-decoration:line-through">AD</span>
-            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
-              <span style="font-size:16px;font-weight:700;color:#FFFFFF">광고 제거권</span>
-              <span style="font-size:13px;color:rgba(255,255,255,0.72)">홈·기록·마이의 배너를 없애요</span>
+          <button onClick="{{ noadsCard.tap }}" style="position:relative;width:100%;margin-bottom:24px;padding:20px 20px 18px;border:0;border-radius:24px;background:#1E2228;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:14px;text-align:left;cursor:pointer" style-active="transform:scale(0.98)">
+            <div style="position:absolute;right:-4px;top:-2px;display:grid;grid-template-columns:repeat(3,24px);gap:12px 16px;opacity:0.28;transform:rotate(-14deg);pointer-events:none">
+              <x-import component-from-global-scope="loafy-icon" name="pawpink" size="24" active="true" hint-size="24px,24px"></x-import><x-import component-from-global-scope="loafy-icon" name="pawpink" size="24" active="true" hint-size="24px,24px"></x-import><x-import component-from-global-scope="loafy-icon" name="pawpink" size="24" active="true" hint-size="24px,24px"></x-import><x-import component-from-global-scope="loafy-icon" name="pawpink" size="24" active="true" hint-size="24px,24px"></x-import><x-import component-from-global-scope="loafy-icon" name="pawpink" size="24" active="true" hint-size="24px,24px"></x-import><x-import component-from-global-scope="loafy-icon" name="pawpink" size="24" active="true" hint-size="24px,24px"></x-import>
             </div>
-            <span style="height:28px;padding:0 10px 0 7px;border-radius:999px;background:#FFEEF1;color:#191F28;font-size:13px;font-weight:700;display:flex;align-items:center;gap:4px"><x-import component-from-global-scope="loafy-icon" name="cookie" size="12" active="true" hint-size="12px,12px"></x-import><span>{{ noadsCard.price }}</span></span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <x-import component-from-global-scope="loafy-logo" scale="1.4" still="" ink="#FFFFFF" hint-size="64px,31px"></x-import>
+              <span style="height:24px;padding:0 8px;border-radius:7px;background:rgba(255,255,255,0.14);color:#FFFFFF;font-size:12px;font-weight:800;display:flex;align-items:center;text-decoration:line-through;text-decoration-thickness:2px">AD</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px;max-width:74%">
+              <span style="font-size:19px;font-weight:800;color:#FFFFFF">광고 없이 로피와 함께</span>
+              <span style="font-size:14px;line-height:20px;color:rgba(255,255,255,0.72)">홈·기록·마이의 배너를 모두 없애요. 한 번 사면 계속 적용돼요</span>
+            </div>
+            <span style="height:34px;padding:0 14px;border-radius:999px;background:#FFFFFF;color:#191F28;font-size:14px;font-weight:700;display:flex;align-items:center">광고 제거권 · {{ noadsCard.price }}</span>
           </button>
         </sc-if>
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px">
-          <sc-for list="{{ shopItems }}" as="it" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column;gap:32px">
+          <sc-for list="{{ shopSections }}" as="sec" hint-placeholder-count="2">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between">
+                <span style="font-size:18px;font-weight:700;color:#191F28">{{ sec.title }}</span>
+                <span style="font-size:13px;color:#8B95A1">{{ sec.count }}개</span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px">
+                <sc-for list="{{ sec.items }}" as="it" hint-placeholder-count="2">
             <button onClick="{{ it.tap }}" style="border:0;padding:0;background:transparent;display:flex;flex-direction:column;gap:10px;text-align:left;cursor:pointer" style-active="transform:scale(0.98)">
               <div style="width:100%;height:136px;border-radius:20px;background:{{ it.tile }};display:flex;align-items:center;justify-content:center">
                 <sc-if value="{{ it.isStrap }}" hint-placeholder-val="{{ false }}">
@@ -583,6 +672,9 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
                 </sc-if>
                 <sc-if value="{{ it.isCoat }}" hint-placeholder-val="{{ false }}">
                   <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ it.val }}" scale="3" hint-size="96px,99px"></x-import>
+                </sc-if>
+                <sc-if value="{{ it.isCatAcc }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ coat }}" acc="{{ it.val }}" scale="3" hint-size="96px,99px"></x-import>
                 </sc-if>
                 <sc-if value="{{ it.isPattern }}" hint-placeholder-val="{{ false }}">
                   <span style="width:64px;height:64px;border-radius:50%;background:{{ it.swatch }};box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span>
@@ -596,6 +688,9 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
                 </span>
               </div>
             </button>
+          </sc-for>
+              </div>
+            </div>
           </sc-for>
         </div>
         <div style="height:130px"></div>
@@ -676,12 +771,23 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         <sc-if value="{{ shopCat }}" hint-placeholder-val="{{ false }}">
           <div style="display:flex;flex-direction:column">
             <div style="height:260px;background:{{ catBg }};transition:background 280ms;display:flex;align-items:center;justify-content:center">
-              <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" scale="6" animate="" hint-size="192px,198px"></x-import>
+              <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" scale="6" animate="" hint-size="192px,198px"></x-import>
             </div>
             <div style="padding:24px 20px 0;display:flex;flex-direction:column;gap:28px">
               <div style="display:flex;flex-direction:column;gap:12px">
                 <span style="font-size:17px;font-weight:700;color:#191F28">이름</span>
                 <input value="{{ nameRaw }}" onChange="{{ onName }}" maxlength="8" placeholder="로피" style="height:52px;border:0;outline:none;border-radius:14px;background:#F2F4F6;padding:0 16px;font-size:17px;font-weight:600;color:#191F28">
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline">
+                  <span style="font-size:17px;font-weight:700;color:#191F28">액세서리</span>
+                  <button onClick="{{ goShopCatAcc }}" style="border:0;background:transparent;padding:0;font-size:14px;font-weight:600;color:#4E5968;cursor:pointer">샵에서 더 보기 ›</button>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ catAccs }}" as="a" hint-placeholder-count="2">
+                    <button onClick="{{ a.pick }}" style="height:44px;padding:0 16px;border-radius:999px;border:2px solid {{ a.ring }};background:#F4F5F7;font-size:15px;font-weight:600;color:#191F28;cursor:pointer">{{ a.name }}</button>
+                  </sc-for>
+                </div>
               </div>
               <div style="display:flex;flex-direction:column;gap:12px">
                 <div style="display:flex;justify-content:space-between;align-items:baseline">
@@ -702,7 +808,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
                 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
                   <sc-for list="{{ goals }}" as="g" hint-placeholder-count="2">
                     <button onClick="{{ g.pick }}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:16px;border:2px solid {{ g.border }};background:#F4F5F7;cursor:pointer;text-align:left">
-                      <x-import component-from-global-scope="loafy-sprite" type="{{ g.key }}" coat="{{ coat }}" scale="1.5" hint-size="48px,50px"></x-import>
+                      <x-import component-from-global-scope="loafy-sprite" type="{{ g.key }}" coat="{{ coat }}" acc="{{ catAcc }}" scale="1.5" hint-size="48px,50px"></x-import>
                       <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
                         <span style="font-size:16px;font-weight:700;color:#191F28">{{ g.name }}</span>
                         <span style="font-size:13px;color:#8B95A1">{{ g.desc }}</span>
@@ -776,7 +882,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
       <div style="padding:22px 20px 0;display:flex;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:center;gap:14px">
           <div style="width:56px;height:56px;border-radius:16px;background:{{ day.tile }};display:flex;align-items:center;justify-content:center">
-            <x-import component-from-global-scope="loafy-sprite" type="{{ day.type }}" coat="{{ coat }}" expr="{{ day.expr }}" pose="{{ day.pose }}" scale="1.5" hint-size="48px,50px"></x-import>
+            <x-import component-from-global-scope="loafy-sprite" type="{{ day.type }}" coat="{{ coat }}" acc="{{ catAcc }}" expr="{{ day.expr }}" pose="{{ day.pose }}" scale="1.5" hint-size="48px,50px"></x-import>
           </div>
           <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
             <span style="font-size:15px;color:#8B95A1">{{ day.date }}</span>
@@ -796,12 +902,16 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
 
   <sc-if value="{{ is.my }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="11 마이" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;overflow-y:auto">
-      <div style="height:52px;display:flex;align-items:center;padding:0 20px">
+      <div style="height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 20px">
         <span style="font-size:20px;font-weight:700;color:#191F28">마이</span>
+        <button onClick="{{ nav.noti }}" title="알림" style="position:relative;width:44px;height:44px;border:0;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer" style-active="background:#F2F4F6">
+          <x-import component-from-global-scope="loafy-icon" name="bell" size="24" color="#1E2228" hint-size="24px,24px"></x-import>
+          <sc-if value="{{ hasUnread }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:#F04452;box-shadow:0 0 0 2px #FFFFFF"></span></sc-if>
+        </button>
       </div>
       <div style="display:flex;align-items:center;gap:16px;padding:12px 20px 24px">
         <div style="width:72px;height:72px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;overflow:hidden">
-          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" scale="1.75" hint-size="56px,58px"></x-import>
+          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" scale="1.75" hint-size="56px,58px"></x-import>
         </div>
         <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
           <span style="font-size:22px;font-weight:700;color:#191F28">{{ name }}</span>
@@ -811,10 +921,10 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
       </div>
       <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0 20px 24px;padding:18px 0;border-radius:18px;background:#F9FAFB">
         <sc-for list="{{ myStats }}" as="st" hint-placeholder-count="3">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+          <button onClick="{{ st.tap }}" style="border:0;background:transparent;padding:4px 0;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer" style-active="background:#F2F4F6">
             <span style="font-size:13px;color:#8B95A1">{{ st.label }}</span>
             <span style="font-size:20px;font-weight:700;color:#191F28">{{ st.value }}</span>
-          </div>
+          </button>
         </sc-for>
       </div>
       <sc-if value="{{ showAds }}" hint-placeholder-val="{{ true }}">
@@ -956,8 +1066,14 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           <sc-if value="{{ buy.isCoat }}" hint-placeholder-val="{{ false }}">
             <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ buy.val }}" scale="5" animate="" hint-size="160px,165px"></x-import>
           </sc-if>
+          <sc-if value="{{ buy.isCatAcc }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ buy.val }}" scale="5" animate="" hint-size="160px,165px"></x-import>
+          </sc-if>
           <sc-if value="{{ buy.isNoads }}" hint-placeholder-val="{{ false }}">
-            <span style="width:112px;height:112px;border-radius:28px;background:#FFFFFF;box-shadow:0 8px 24px rgba(0,0,0,0.08);color:#8B95A1;font-size:34px;font-weight:800;display:flex;align-items:center;justify-content:center;text-decoration:line-through">AD</span>
+            <div style="position:absolute;inset:0;background:#1E2228;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px">
+              <x-import component-from-global-scope="loafy-logo" scale="3" still="" ink="#FFFFFF" hint-size="138px,66px"></x-import>
+              <span style="height:30px;padding:0 12px;border-radius:9px;background:rgba(255,255,255,0.14);color:#FFFFFF;font-size:14px;font-weight:800;display:flex;align-items:center;text-decoration:line-through;text-decoration-thickness:2px">AD</span>
+            </div>
           </sc-if>
         </div>
         <div style="display:flex;flex-direction:column;gap:4px">
@@ -967,7 +1083,8 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         <sc-if value="{{ buy.notOwned }}" hint-placeholder-val="{{ true }}">
           <div style="display:flex;flex-direction:column;gap:10px">
             <button onClick="{{ buy.purchase }}" style="height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer;opacity:{{ buy.op }}" style-active="background:#111418;transform:scale(0.98)">{{ buy.cta }}</button>
-            <div style="display:flex;align-items:center;justify-content:center;gap:4px"><x-import component-from-global-scope="loafy-icon" name="cookie" size="12" active="true" hint-size="12px,12px"></x-import><span style="font-size:13px;color:#8B95A1">보유 쿠키 {{ buy.balance }}개</span></div>
+            <sc-if value="{{ buy.showBalance }}" hint-placeholder-val="{{ true }}"><div style="display:flex;align-items:center;justify-content:center;gap:4px"><x-import component-from-global-scope="loafy-icon" name="cookie" size="12" active="true" hint-size="12px,12px"></x-import><span style="font-size:13px;color:#8B95A1">보유 쿠키 {{ buy.balance }}개</span></div></sc-if>
+            <sc-if value="{{ buy.isNoads }}" hint-placeholder-val="{{ false }}"><span style="text-align:center;font-size:13px;color:#8B95A1">테스트 결제예요 · 실제로 결제되지 않아요</span></sc-if>
           </div>
         </sc-if>
         <sc-if value="{{ buy.owned }}" hint-placeholder-val="{{ false }}">
@@ -1041,12 +1158,12 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;frame&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;web&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;web&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;webHeight&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;login&quot;,&quot;obAgree&quot;,&quot;obProfile&quot;,&quot;obName&quot;,&quot;obGoal&quot;,&quot;obGym&quot;,&quot;obCoat&quot;,&quot;obShell&quot;,&quot;obTime&quot;,&quot;obRule&quot;,&quot;home&quot;,&quot;lcd&quot;,&quot;checkin&quot;,&quot;share&quot;,&quot;letter&quot;,&quot;letterDone&quot;,&quot;shop&quot;,&quot;shopBuy&quot;,&quot;deco&quot;,&quot;decoCat&quot;,&quot;record&quot;,&quot;my&quot;,&quot;alarm&quot;,&quot;letters&quot;],&quot;default&quot;:&quot;splash&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;missed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;body&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;slim&quot;,&quot;bulk&quot;,&quot;fit&quot;,&quot;normal&quot;,&quot;jjin&quot;,&quot;loaf&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;lcd&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;mono&quot;],&quot;default&quot;:&quot;color&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;shell&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#C9CCD3&quot;,&quot;#F1E4CB&quot;,&quot;#A8DCCB&quot;,&quot;#CFC8EC&quot;],&quot;default&quot;:&quot;#C9CCD3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;ads&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;frame&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;web&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;web&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;webHeight&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;login&quot;,&quot;obAgree&quot;,&quot;terms&quot;,&quot;obProfile&quot;,&quot;obName&quot;,&quot;obGoal&quot;,&quot;obGym&quot;,&quot;obCoat&quot;,&quot;obShell&quot;,&quot;obTime&quot;,&quot;obRule&quot;,&quot;home&quot;,&quot;lcd&quot;,&quot;checkin&quot;,&quot;share&quot;,&quot;letter&quot;,&quot;letterDone&quot;,&quot;shop&quot;,&quot;shopBuy&quot;,&quot;deco&quot;,&quot;decoCat&quot;,&quot;record&quot;,&quot;my&quot;,&quot;alarm&quot;,&quot;letters&quot;,&quot;noti&quot;],&quot;default&quot;:&quot;splash&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;missed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;body&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;slim&quot;,&quot;bulk&quot;,&quot;fit&quot;,&quot;normal&quot;,&quot;jjin&quot;,&quot;loaf&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;lcd&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;mono&quot;],&quot;default&quot;:&quot;color&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;shell&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#C9CCD3&quot;,&quot;#F1E4CB&quot;,&quot;#A8DCCB&quot;,&quot;#CFC8EC&quot;],&quot;default&quot;:&quot;#C9CCD3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;ads&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;}}">
 class Component extends DCLogic {
   state = {
     screen: ['edit', 'deco', 'decoCat'].includes(this.props.start) ? 'deco' : this.props.start === 'shopBuy' ? 'shop' : (this.props.start || 'splash'), pawRun: 0, shopTab: this.props.start === 'decoCat' ? 'cat' : 'device',
     owned: ['deco', 'decoCat'].includes(this.props.start) ? ['chain-silver', 'coat-blue'] : [], strap: 'none', schedMode: 'count', days: [false, true, true, true, true, true, false], shopFilter: 'all', buy: this.props.start === 'shopBuy' ? 'chain-gold' : null, buying: false,
-    gym: '', cookies: 50, cookieSheet: false, paying: null, pattern: 'none', editId: null, toastAct: null,
+    gym: '', notiRead: [], notiFrom: 'home', termKey: 'terms', shopTop: 'device', catAcc: 'none', cookies: 50, cookieSheet: false, paying: null, pattern: 'none', editId: null, toastAct: null,
     letters: [{ id: 1005, date: '10월 5일 월요일', text: '야근하느라 출석을 깜빡했어요' }],
     name: '로피', goal: 'slim', coat: this.props.coat || 'cheese',
     agree: { terms: false, privacy: false, age: false, mkt: false }, gender: null, birth: '',
@@ -1078,6 +1195,7 @@ class Component extends DCLogic {
     if (s === 'decoCat') return this.setState({ screen: 'deco', shopTab: 'cat', sheet: false, buy: null });
     if (s === 'decoDevice' || s === 'edit' || s === 'deco') return this.setState({ screen: 'deco', shopTab: 'device', sheet: false, buy: null });
     if (s === 'splash') this.armSplash();
+    if (s === 'noti') return this.setState({ screen: 'noti', notiFrom: this.state.screen === 'noti' ? this.state.notiFrom : this.state.screen, sheet: false, buy: null });
     if (s === 'letter') return this.setState({ screen: 'letter', editId: null, sheet: false, buy: null });
     if (s === 'shopBuy') return this.setState({ screen: 'shop', buy: 'chain-gold', buying: false, sheet: false });
     this.setState({ screen: s, sheet: false, buy: null });
@@ -1139,7 +1257,10 @@ class Component extends DCLogic {
       { id: 'shell-lemon', cat: 'device', kind: 'shell', val: '#F2DF85', hex: '#F2DF85', name: '레몬 케이스', desc: '상큼한 레몬색 빵틀', price: 120 },
       { id: 'coat-blue', cat: 'cat', kind: 'coat', val: 'blue', name: '러시안블루', desc: '푸른 회색 털', price: 250 },
       { id: 'coat-choco', cat: 'cat', kind: 'coat', val: 'choco', name: '초코', desc: '진한 갈색 줄무늬 털', price: 250 },
-      { id: 'noads', cat: 'etc', kind: 'noads', val: 'noads', name: '광고 제거권', desc: '홈·기록·마이의 광고 배너가 사라져요', price: 500 }
+      { id: 'acc-glasses', cat: 'cat', kind: 'catacc', val: 'glasses', name: '동글 안경', desc: '똑똑해 보이는 동그란 안경', price: 180 },
+      { id: 'acc-ribbon', cat: 'cat', kind: 'catacc', val: 'ribbon', name: '핑크 리본', desc: '귀 옆에 다는 리본', price: 150 },
+      { id: 'acc-crown', cat: 'cat', kind: 'catacc', val: 'crown', name: '꼬마 왕관', desc: '머리 위 반짝 왕관', price: 220 },
+      { id: 'noads', cat: 'etc', kind: 'noads', val: 'noads', name: '광고 제거권', desc: '홈·기록·마이의 광고 배너가 사라져요 · ₩9,900', price: 9900 }
     ];
     const swatch = (k, base) => {
       const h = (base || '#C9CCD3').replace('#', ''); const lum = parseInt(h.slice(0, 2), 16) * 0.299 + parseInt(h.slice(2, 4), 16) * 0.587 + parseInt(h.slice(4, 6), 16) * 0.114;
@@ -1149,8 +1270,8 @@ class Component extends DCLogic {
       if (k === 'hearts') { const fl = lum > 150 ? "fill='black' fill-opacity='0.2'" : "fill='white' fill-opacity='0.6'"; return 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27%3E%3Cpath d=%27M8 13C2 9 3 3.5 8 6C13 3.5 14 9 8 13Z%27 ' + fl.replace(/'/g, '%27') + '/%3E%3C/svg%3E") 0 0/16px 16px, ' + base; }
       return base;
     };
-    const isEq = (bi) => bi.kind === 'strap' ? S.strap === bi.val : bi.kind === 'shell' ? S.shell === bi.val : bi.kind === 'pattern' ? S.pattern === bi.val : S.coat === bi.val;
-    const equipItem = (bi) => { const p = bi.kind === 'strap' ? { strap: bi.val } : bi.kind === 'shell' ? { shell: bi.val } : bi.kind === 'pattern' ? { pattern: bi.val } : { coat: bi.val }; this.setState({ ...p, buy: null }); this.showToast('적용했어요', { label: '꾸미기에서 보기', fn: () => this.go(bi.kind === 'coat' ? 'decoCat' : 'decoDevice') }); };
+    const isEq = (bi) => bi.kind === 'catacc' ? S.catAcc === bi.val : bi.kind === 'strap' ? S.strap === bi.val : bi.kind === 'shell' ? S.shell === bi.val : bi.kind === 'pattern' ? S.pattern === bi.val : S.coat === bi.val;
+    const equipItem = (bi) => { const p = bi.kind === 'catacc' ? { catAcc: bi.val } : bi.kind === 'strap' ? { strap: bi.val } : bi.kind === 'shell' ? { shell: bi.val } : bi.kind === 'pattern' ? { pattern: bi.val } : { coat: bi.val }; this.setState({ ...p, buy: null }); this.showToast('적용했어요', { label: '꾸미기에서 보기', fn: () => this.go(bi.kind === 'coat' || bi.kind === 'catacc' ? 'decoCat' : 'decoDevice') }); };
     const own = (id) => S.owned.includes(id);
     const ALLCOATS = [...COATS, ...ITEMS.filter(i => i.kind === 'coat').map(i => [i.val, i.name])];
     const myCoats = [...COATS, ...ITEMS.filter(i => i.kind === 'coat' && own(i.id)).map(i => [i.val, i.name])];
@@ -1161,9 +1282,9 @@ class Component extends DCLogic {
     const left = 6 - (S.streak % 6);
     const nextHint = body === 'normal' ? (S.goal === 'normal' ? '건강 유지 중' : `${goalName}까지 ${left}일`) : body === 'jjin' || body === 'loaf' ? '출석하면 다시 보통으로' : `${BODY[body]} 유지 중`;
     const is = { tabs: ['home', 'record', 'shop', 'my'].includes(scr), ob: obIdx >= 0 };
-    ['splash', 'login', 'home', 'lcd', 'checkin', 'share', 'letter', 'letterDone', 'letters', 'shop', 'deco', 'record', 'my', 'alarm', ...OB].forEach(k => is[k] = scr === k);
+    ['splash', 'login', 'home', 'lcd', 'checkin', 'share', 'letter', 'letterDone', 'letters', 'noti', 'terms', 'shop', 'deco', 'record', 'my', 'alarm', ...OB].forEach(k => is[k] = scr === k);
     const nav = {};
-    ['login', 'obAgree', 'home', 'lcd', 'checkin', 'share', 'letter', 'shop', 'decoDevice', 'decoCat', 'record', 'my', 'alarm', 'letters'].forEach(k => nav[k] = () => this.go(k));
+    ['login', 'obAgree', 'home', 'lcd', 'checkin', 'share', 'letter', 'shop', 'decoDevice', 'decoCat', 'record', 'my', 'alarm', 'letters', 'noti'].forEach(k => nav[k] = () => this.go(k));
     const sel = (on) => ({ border: on ? '#1E2228' : 'transparent', bg: on ? '#FFFFFF' : '#F4F5F7', dot: on ? '#1E2228' : '#E3E5E9', on: on ? 'true' : 'false' });
 
     // agree + profile
@@ -1256,7 +1377,7 @@ class Component extends DCLogic {
     if (sst === 'ok') Object.assign(day, { title: sk === kToday ? '오늘 출석 완료' : '출석했어요', note: time + (S.gym.trim() ? ' · ' + S.gym.trim() : '') + ' 출석', hasNote: true, expr: 'happy', pose: 'stamp' });
     else if (sst === 'letter') Object.assign(day, { title: '사연으로 채웠어요', note: (S.letters.find(l => l.id === cm * 100 + sd) || { text: '야근하느라 출석을 깜빡했어요' }).text, hasNote: true, pose: 'letter', tone: '#1B64DA', tile: '#EAF2FF' });
     else if (sst === 'miss') Object.assign(day, { title: '결석했어요', tone: '#D70015', tile: '#F2F4F6', type: 'jjin', expr: 'sleep', hasCta: isYesterday, ctaLabel: '사연 보내고 채우기', cta: () => this.go('letter'), ctaBg: '#EAF2FF', ctaColor: '#1B64DA' });
-    else if (sst === 'today') Object.assign(day, { title: '아직 출석 전이에요', hasCta: true, ctaLabel: '오늘 출석하러 가기', cta: () => this.go('home'), expr: 'up' });
+    else if (sst === 'today') Object.assign(day, { title: '아직 출석 전이에요', hasCta: true, ctaLabel: '지금 출석하기', cta: () => { if (S.checked) return; this.setState(s => ({ checked: true, streak: s.streak + 1 })); this.showToast('출석했어요 · D+' + (S.streak + 1), { label: '홈으로', fn: () => this.go('home') }); }, expr: 'up' });
     else Object.assign(day, { title: sk < kJoin ? '함께하기 전이에요' : '아직 오지 않은 날이에요', tone: '#B0B8C1', tile: '#F2F4F6', expr: 'sleep' });
     const cal = {
       year: cy, month: cm, notCurrent: !(cy === TODAY[0] && cm === TODAY[1]),
@@ -1277,7 +1398,7 @@ class Component extends DCLogic {
       bodyName: BODY[body], nextHint, coatName, shellName,
       onName: (e) => this.setState({ name: e.target.value }),
       agreeAll: { dot: allOn ? '#1E2228' : '#D1D6DB', tap: () => { const v = !allOn; this.setState({ agree: { terms: v, privacy: v, age: v, mkt: v } }); } },
-      agreeItems: AG.map(([k, tag, label, req]) => ({ tag, label, tagColor: req ? '#1E2228' : '#8B95A1', check: S.agree[k] ? '#1E2228' : '#D1D6DB', tap: () => this.setState(s => ({ agree: { ...s.agree, [k]: !s.agree[k] } })), view: () => this.showToast(label.replace(' 동의', '') + ' 전문을 열어요') })),
+      agreeItems: AG.map(([k, tag, label, req]) => ({ tag, label, tagColor: req ? '#1E2228' : '#8B95A1', check: S.agree[k] ? '#1E2228' : '#D1D6DB', tap: () => this.setState(s => ({ agree: { ...s.agree, [k]: !s.agree[k] } })), view: () => this.setState({ screen: 'terms', termKey: k }) })),
       genders: [['f', '여성'], ['m', '남성'], ['n', '선택 안 함']].map(([k, n]) => ({ name: n, ...sel(S.gender === k), pick: () => this.setState({ gender: k }) })),
       birthFmt: fmt(bd), birthBad, birthLine: birthBad ? '#D70015' : '#1E2228',
       onBirth: (e) => { const v = e.target.value; let d = v.replace(/\D/g, '').slice(0, 8); if (v.length < fmt(S.birth).length && d === S.birth) d = d.slice(0, -1); this.setState({ birth: d }); },
@@ -1300,7 +1421,7 @@ class Component extends DCLogic {
       cookies: S.cookies, openCookies: () => this.setState({ cookieSheet: true }), closeCookies: () => this.setState({ cookieSheet: false, paying: null }),
       cookieOpen: S.cookieSheet && (scr === 'shop' || scr === 'my'),
       packs: [[100, 0], [300, 30], [1000, 150]].map(([n, bonus]) => ({ n, bonus: bonus ? '+' + bonus + '개 보너스' : '기본', op: S.paying && S.paying !== n ? 0.4 : 1, cta: S.paying === n ? '결제 중…' : '테스트 결제', buy: () => { if (S.paying) return; this.setState({ paying: n }); clearTimeout(this._pt); this._pt = setTimeout(() => { this.setState(s => ({ cookies: s.cookies + n + bonus, paying: null })); this.showToast('쿠키 ' + (n + bonus) + '개를 받았어요'); }, 800); } })),
-      noadsCard: { show: S.shopFilter === 'all' && !own('noads') && (this.props.ads ?? true), price: 500, tap: () => this.setState({ buy: 'noads', buying: false }) },
+      noadsCard: { show: !own('noads') && (this.props.ads ?? true), price: '₩9,900', tap: () => this.setState({ buy: 'noads', buying: false }) },
       goNoads: () => this.setState({ screen: 'shop', shopFilter: 'all', buy: 'noads', buying: false, sheet: false }),
       patterns: [['none', '없음'], ...ITEMS.filter(i => i.kind === 'pattern' && own(i.id)).map(i => [i.val, i.name.replace(' 무늬', '')])].map(([k, n]) => ({ name: n, swatch: swatch(k, S.shell), ring: S.pattern === k ? '#1E2228' : 'transparent', pick: () => this.setState({ pattern: k }) })),
       lcdStats: [
@@ -1308,21 +1429,22 @@ class Component extends DCLogic {
         { label: '배부름', value: S.checked ? '배불러요' : '배고파요 · 출석하면 밥을 줘요', pct: S.checked ? '100%' : '40%', fill: '#F49A3C' },
         { label: '기분', value: missedOpen ? '조금 서운해요' : '좋아요', pct: missedOpen ? '55%' : '90%', fill: '#F6A2A6' }
       ],
-      shopFilters: [['all', '전체'], ['device', '빵틀'], ['cat', '고양이']].map(([k, n]) => ({ name: n, bg: S.shopFilter === k ? '#1E2228' : '#F2F4F6', color: S.shopFilter === k ? '#FFFFFF' : '#4E5968', pick: () => this.setState({ shopFilter: k }) })),
-      shopItems: ITEMS.filter(i => i.kind !== 'noads' && (S.shopFilter === 'all' || i.cat === S.shopFilter)).map(i => ({ ...i, isStrap: i.kind === 'strap', isShell: i.kind === 'shell', isCoat: i.kind === 'coat', isPattern: i.kind === 'pattern', swatch: swatch(i.val, S.shell), tile: i.kind === 'coat' ? '#F6F0E1' : '#F2F4F6', notOwned: !own(i.id), priceLabel: own(i.id) ? '보유 중' : String(i.price), priceBg: own(i.id) ? '#F2F4F6' : '#FFEEF1', priceColor: own(i.id) ? '#8B95A1' : '#191F28', tap: () => this.setState({ buy: i.id, buying: false }) })),
+      shopTops: [['device', '빵틀'], ['cat', '고양이']].map(([k, label]) => ({ label, color: S.shopTop === k ? '#191F28' : '#B0B8C1', line: S.shopTop === k ? 'inset 0 -2px 0 #191F28' : 'none', tap: () => this.setState({ shopTop: k, shopFilter: 'all' }) })),
+      shopFilters: (S.shopTop === 'cat' ? [['all', '전체'], ['catacc', '액세서리'], ['coat', '털색']] : [['all', '전체'], ['strap', '액세서리'], ['pattern', '무늬'], ['shell', '케이스']]).map(([k, n]) => ({ name: n, bg: S.shopFilter === k ? '#1E2228' : '#F2F4F6', color: S.shopFilter === k ? '#FFFFFF' : '#4E5968', pick: () => this.setState({ shopFilter: k }) })),
+      shopSections: (S.shopTop === 'cat' ? [['catacc', '액세서리'], ['coat', '털색']] : [['strap', '액세서리'], ['pattern', '무늬'], ['shell', '케이스']]).filter(([k]) => S.shopFilter === 'all' || S.shopFilter === k).map(([k, title]) => ({ title, count: ITEMS.filter(i => i.kind === k).length, items: ITEMS.filter(i => i.kind === k).map(i => ({ ...i, isStrap: i.kind === 'strap', isShell: i.kind === 'shell', isCoat: i.kind === 'coat', isCatAcc: i.kind === 'catacc', isPattern: i.kind === 'pattern', swatch: swatch(i.val, S.shell), tile: i.kind === 'coat' || i.kind === 'catacc' ? '#F6F0E1' : '#F2F4F6', notOwned: !own(i.id), priceLabel: own(i.id) ? '보유 중' : String(i.price), priceBg: own(i.id) ? '#F2F4F6' : '#FFEEF1', priceColor: own(i.id) ? '#8B95A1' : '#191F28', tap: () => this.setState({ buy: i.id, buying: false }) })) })),
       restore: () => this.showToast('구매 내역을 복원했어요'),
       buyOpen: !!S.buy && scr === 'shop',
       buy: (() => {
         const bi = ITEMS.find(i => i.id === S.buy); if (!bi) return {};
-        const enough = S.cookies >= bi.price;
-        return { ...bi, isCoat: bi.kind === 'coat', isNoads: bi.kind === 'noads', isDevice: ['strap', 'shell', 'pattern'].includes(bi.kind), tile: bi.kind === 'coat' ? '#F6F0E1' : '#F2F2F7', pShell: bi.kind === 'shell' ? bi.val : S.shell, pStrap: bi.kind === 'strap' ? bi.val : S.strap, pPattern: bi.kind === 'pattern' ? bi.val : S.pattern, owned: own(bi.id), notOwned: !own(bi.id), op: S.buying ? 0.6 : 1, balance: S.cookies,
-          cta: S.buying ? '구매 중…' : enough ? '쿠키 ' + bi.price + '개로 구매하기' : '쿠키가 부족해요 · 충전하기',
+        const cash = bi.kind === 'noads', enough = cash || S.cookies >= bi.price;
+        return { ...bi, isCoat: bi.kind === 'coat', isCatAcc: bi.kind === 'catacc', isNoads: bi.kind === 'noads', isDevice: ['strap', 'shell', 'pattern'].includes(bi.kind), tile: bi.kind === 'coat' || bi.kind === 'catacc' ? '#F6F0E1' : '#F2F2F7', pShell: bi.kind === 'shell' ? bi.val : S.shell, pStrap: bi.kind === 'strap' ? bi.val : S.strap, pPattern: bi.kind === 'pattern' ? bi.val : S.pattern, owned: own(bi.id), notOwned: !own(bi.id), op: S.buying ? 0.6 : 1, balance: S.cookies, showBalance: !cash,
+          cta: S.buying ? '구매 중…' : cash ? '₩9,900 구매하기' : enough ? '쿠키 ' + bi.price + '개로 구매하기' : '쿠키가 부족해요 · 충전하기',
           equipLabel: bi.kind === 'noads' ? '확인' : isEq(bi) ? '적용 중' : '바로 적용하기',
           purchase: () => {
             if (S.buying) return; if (!enough) return this.setState({ cookieSheet: true });
             this.setState({ buying: true }); clearTimeout(this._bt);
             this._bt = setTimeout(() => {
-              this.setState(s => ({ owned: s.owned.includes(bi.id) ? s.owned : [...s.owned, bi.id], buying: false, cookies: s.cookies - bi.price, buy: null }));
+              this.setState(s => ({ owned: s.owned.includes(bi.id) ? s.owned : [...s.owned, bi.id], buying: false, cookies: s.cookies - (cash ? 0 : bi.price), buy: null }));
               if (bi.kind === 'noads') this.showToast('이제 광고 없이 쓸 수 있어요');
               else this.showToast(bi.name + josa(bi.name, '을', '를') + ' 샀어요', { label: '바로 적용', fn: () => equipItem(bi) });
             }, 700);
@@ -1331,8 +1453,9 @@ class Component extends DCLogic {
           close: () => this.setState({ buy: null, buying: false }) };
       })(),
       straps: [['none', '없음', '#C9CDD2'], ...ITEMS.filter(i => i.kind === 'strap' && own(i.id)).map(i => [i.val, i.name, i.hex])].map(([k, n, hex]) => ({ name: n, hex, ring: S.strap === k ? '#1E2228' : 'transparent', pick: () => this.setState({ strap: k }) })),
-      goShopDevice: () => this.setState({ screen: 'shop', shopFilter: 'device', buy: null }),
-      goShopCat: () => this.setState({ screen: 'shop', shopFilter: 'cat', buy: null }),
+      goShopDevice: () => this.setState({ screen: 'shop', shopTop: 'device', shopFilter: 'all', buy: null }),
+      goShopCatAcc: () => this.setState({ screen: 'shop', shopTop: 'cat', shopFilter: 'catacc', buy: null }),
+      goShopCat: () => this.setState({ screen: 'shop', shopTop: 'cat', shopFilter: 'coat', buy: null }),
       saveAlarm: () => { this.go('my'); this.showToast(`${freqName} · ${timeLabel}에 알려드려요`); },
       rules: [
         { type: S.goal, expr: 'happy', pose: 'sit', title: S.goal === 'normal' ? '건강 · 꾸준히 출석' : `${goalName} · 6일 연속 출석`, desc: ({ slim: '체지방 감량', fit: '린매스업 · 근력', bulk: '근육량 증가', normal: '보통 모습을 지켜요' })[S.goal] },
@@ -1367,7 +1490,7 @@ class Component extends DCLogic {
       weekdays: WD.map((label, i) => ({ label, color: i === 0 ? '#F04452' : i === 6 ? '#3182F6' : '#8B95A1' })),
       weeks, monthCount, cal, day, calStats, sheetOpen: S.sheet && scr === 'record', calWheel, stop: (e) => e.stopPropagation(),
       legend: [{ label: '출석', bg: '#EEF0F3', icon: 'pawpink', hasIcon: true, noIcon: false }, { label: '사연', bg: '#DCEBFF', icon: 'letterblue', hasIcon: true, noIcon: false }, { label: '결석', bg: '#F04452', icon: '', hasIcon: false, noIcon: true }],
-      myStats: [{ label: '연속 출석', value: 'D+' + S.streak }, { label: '이번 달', value: octCount + '일' }, { label: '사연', value: (S.recovered || S.missed ? 1 : 0) + '/2' }],
+      myStats: [{ label: '연속 출석', value: 'D+' + S.streak, tap: () => this.go('lcd') }, { label: '이번 달', value: octCount + '일', tap: () => this.setState({ screen: 'record', calY: 2026, calM: 10, selD: 13, sheet: false }) }, { label: '사연', value: S.letters.filter(l => Math.floor(l.id / 100) === 10).length + '/2', tap: () => this.go('letters') }],
       myRows: [
         { icon: 'cookie', tint: '#FFEEF1', label: '발자국 쿠키', value: S.cookies + '개', tap: () => this.setState({ cookieSheet: true }) },
         { icon: 'brush', tint: '#FFF4D1', label: '빵틀 꾸미기', value: shellName, tap: () => this.go('decoDevice') },
@@ -1381,6 +1504,47 @@ class Component extends DCLogic {
       gym: S.gym, notGym: scr !== 'obGym', onGym: (e) => this.setState({ gym: e.target.value }),
       skipGym: () => { this.setState({ gym: '' }); this.go('obCoat'); },
       gymChips: ['집에서 홈트', '야외 러닝', '필라테스', '수영장'].map(n => ({ name: n, bg: S.gym === n ? '#1E2228' : '#F2F4F6', color: S.gym === n ? '#FFFFFF' : '#4E5968', pick: () => this.setState({ gym: S.gym === n ? '' : n }) })),
+      ...(() => {
+        const mk = (n) => { const read = S.notiRead.includes(n.id); return { ...n, bg: read ? '#FFFFFF' : '#F7FAFF', dot: read ? 'transparent' : '#3182F6', tap: () => { this.setState(s => ({ notiRead: s.notiRead.includes(n.id) ? s.notiRead : [...s.notiRead, n.id] })); n.go(); } }; };
+        const today = [{ id: 'n1', icon: 'bell', tint: '#FFF4D1', title: S.checked ? '오늘 출석 완료' : '출석할 시간이에요', body: S.checked ? '내일 또 만나요' : name + josa(name, '이', '가') + ' 기다리고 있어요. 출석하고 밥을 주세요', time: '오전 8:00', go: () => this.go('home') }];
+        if (missedOpen) today.push({ id: 'n2', icon: 'letterblue', tint: '#E3EEFF', title: '어제 출석을 못 했어요', body: '오늘 안에 사연을 보내면 연속 기록이 이어져요', time: '오전 0:00', go: () => this.go('letter') });
+        const past = [
+          { id: 'n3', icon: 'pawpink', tint: '#FFEEF1', title: S.goal === 'normal' ? '건강하게 유지 중이에요' : goalName + '까지 ' + left + '일 남았어요', body: '이대로 출석하면 모습이 바뀌어요', time: '어제', go: () => this.go('lcd') },
+          { id: 'n4', icon: 'cookie', tint: '#FFEEF1', title: '발자국 쿠키 50개가 도착했어요', body: '가입 선물이에요. 샵에서 써보세요', time: '8월 17일', go: () => this.go('shop') }
+        ];
+        const all = [...today, ...past], unread = all.some(n => !S.notiRead.includes(n.id));
+        return { notiToday: today.map(mk), notiPast: past.map(mk), hasUnread: unread, readAllColor: unread ? '#3182F6' : '#B0B8C1', readAll: () => this.setState({ notiRead: all.map(n => n.id) }) };
+      })(),
+      catAcc: S.catAcc === 'none' ? '' : S.catAcc,
+      catAccs: [['none', '없음'], ...ITEMS.filter(i => i.kind === 'catacc' && own(i.id)).map(i => [i.val, i.name])].map(([k, n]) => ({ name: n, ring: S.catAcc === k ? '#1E2228' : 'transparent', pick: () => this.setState({ catAcc: k }) })),
+      notiBack: () => this.go(S.notiFrom === 'my' ? 'my' : 'home'),
+      terms: (() => {
+        const T = {
+          terms: ['서비스 이용약관', [
+            ['제1조 (목적)', '이 약관은 Loafy(이하 "서비스")를 이용하는 조건과 절차, 이용자와 회사의 권리와 의무를 정해요.'],
+            ['제2조 (서비스 내용)', '서비스는 출석 기록, 고양이 캐릭터 육성, 출석 알림, 사연 보내기, 샵(발자국 쿠키와 아이템)을 제공해요.'],
+            ['제3조 (유료 서비스)', '발자국 쿠키와 광고 제거권은 앱스토어 인앱결제로 구매해요.\n환불은 각 스토어의 환불 정책을 따라요.'],
+            ['제4조 (이용자의 의무)', '이용자는 다른 사람의 계정을 쓰거나 서비스 운영을 방해하는 행동을 해서는 안 돼요.'],
+            ['제5조 (서비스 변경과 중단)', '회사는 점검이나 개선을 위해 서비스를 잠시 멈출 수 있고, 미리 앱 안에서 알려드려요.']
+          ]],
+          privacy: ['개인정보 수집·이용 동의', [
+            ['수집 항목', '소셜 로그인 식별자, 성별, 생년월일, 고양이 이름, 출석 장소(선택), 출석 기록, 사연 내용'],
+            ['이용 목적', '회원 식별, 출석 기록과 통계 제공, 출석 알림 발송, 고객 문의 응대'],
+            ['보유 기간', '회원 탈퇴 시 바로 파기해요.\n단, 관계 법령에 따라 보관해야 하는 정보는 정해진 기간 동안 보관해요.'],
+            ['동의를 거부할 권리', '동의하지 않을 수 있지만, 필수 항목에 동의하지 않으면 서비스를 이용할 수 없어요.']
+          ]],
+          age: ['만 14세 이상 확인', [
+            ['가입 연령', '서비스는 만 14세 이상만 가입할 수 있어요.'],
+            ['안내', '만 14세 미만 아동의 개인정보를 처리하려면 법정대리인의 동의가 필요해요.']
+          ]],
+          mkt: ['마케팅 정보 수신 동의 (선택)', [
+            ['받는 정보', '이벤트, 할인, 새 아이템 소식을 앱 푸시로 보내드려요.'],
+            ['철회', '마이 › 알림에서 언제든 수신을 끌 수 있어요.\n동의하지 않아도 서비스 이용에는 영향이 없어요.']
+          ]]
+        };
+        const cur = T[S.termKey] || T.terms;
+        return { title: cur[0], sections: cur[1].map(([h, p]) => ({ h, p })), back: () => this.go('obAgree'), agree: () => this.setState(s => ({ agree: { ...s.agree, [s.termKey]: true }, screen: 'obAgree' })) };
+      })(),
       hasToast: !!S.toast, toast: S.toast, hasToastAction: !!S.toastAct, toastActionLabel: S.toastAct ? S.toastAct.label : '', toastPad: S.toastAct ? '8px 8px 8px 18px' : '12px 18px',
       toastAction: () => { const a = S.toastAct; clearTimeout(this._tt); this.setState({ toast: null, toastAct: null }); a && a.fn(); }
     };

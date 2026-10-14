@@ -20,7 +20,7 @@ a{color:#1E2228;text-decoration:none}a:hover{color:#2C313A}
 <section style="padding:64px 72px 96px;display:flex;flex-direction:column;gap:56px">
   <div style="display:flex;flex-direction:column;gap:8px;max-width:900px">
     <span style="font-size:13px;font-weight:700;color:#5B6472;letter-spacing:0.04em">LOAFY MVP · 화면 목록</span>
-    <span style="font-size:36px;font-weight:800;color:#000">전체 화면 20종</span>
+    <span style="font-size:36px;font-weight:800;color:#000">전체 화면 22종</span>
     <span style="font-size:17px;line-height:26px;color:rgba(60,60,67,0.6)">각 폰은 실제로 눌러볼 수 있는 프로토타입이에요. 같은 소스(Loafy App)를 화면별로 띄운 것이라 디자인이 바뀌면 여기도 함께 바뀌어요. 처음부터 흐름대로 보려면 <a href="Loafy App.dc.html" style="font-weight:600">Loafy App</a>을 열어주세요.</span>
   </div>
 
@@ -170,8 +170,8 @@ class Component extends DCLogic {
   renderVals() {
     const s = (arr) => arr.map(([no, key, title]) => ({ no, key, title }));
     return {
-      flowA: s([['00', 'splash', '스플래시 (픽셀 로고)'], ['01', 'login', '로그인'], ['02-1', 'obAgree', '약관 동의'], ['02-2', 'obProfile', '기본 정보'], ['02-3', 'obName', '이름'], ['02-4', 'obGoal', '목표 체형'], ['02-5', 'obGym', '출석 장소 (건너뛰기 가능)'], ['02-6', 'obCoat', '털색'], ['02-7', 'obShell', '빵틀 색'], ['02-8', 'obTime', '출석 횟수 · 알림 시간'], ['02-9', 'obRule', '성장 규칙']]),
-      flowB: s([['03', 'home', '홈 (어제 결석 상태)'], ['04', 'lcd', '빵틀 화면 크게 보기'], ['05', 'checkin', '출석 완료'], ['06', 'share', '공유카드'], ['07', 'letter', '사연 보내기'], ['08', 'letterDone', '사연 완료']]),
+      flowA: s([['00', 'splash', '스플래시 (픽셀 로고)'], ['01', 'login', '로그인'], ['02-1', 'obAgree', '약관 동의'], ['02-1a', 'terms', '약관 전문'], ['02-2', 'obProfile', '기본 정보'], ['02-3', 'obName', '이름'], ['02-4', 'obGoal', '목표 체형'], ['02-5', 'obGym', '출석 장소 (건너뛰기 가능)'], ['02-6', 'obCoat', '털색'], ['02-7', 'obShell', '빵틀 색'], ['02-8', 'obTime', '출석 횟수 · 알림 시간'], ['02-9', 'obRule', '성장 규칙']]),
+      flowB: s([['03', 'home', '홈 (어제 결석 상태)'], ['04', 'lcd', '빵틀 화면 크게 보기'], ['05', 'checkin', '출석 완료'], ['06', 'share', '공유카드'], ['07', 'letter', '사연 보내기'], ['08', 'letterDone', '사연 완료'], ['15', 'noti', '알림']]),
       flowC: s([['10', 'record', '기록 · 캘린더'], ['09-1', 'shop', '샵'], ['09-2', 'shopBuy', '샵 · 구매 시트'], ['11', 'my', '마이'], ['13-1', 'deco', '꾸미기 · 빵틀'], ['13-2', 'decoCat', '꾸미기 · 고양이'], ['12', 'alarm', '출석 알림 설정'], ['14', 'letters', '사연 내역']]),
       bodies: [
         ['s4', 'slim', '날렵', '6일 연속 · 살 빼기 · 체력', '#DCEEE8'], ['s5', 'bulk', '벌크', '6일 연속 · 근육', '#DCEEE8'],
