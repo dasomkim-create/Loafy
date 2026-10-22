@@ -5,7 +5,7 @@
   const zSurf = (x, y) => { const R = Rf(y / H); if (R <= Math.abs(x)) return 0; return D * R * Math.pow(1 - Math.pow(Math.abs(x) / R, PX), 1 / PX); };
 
   class LoafyTama extends HTMLElement {
-    static get observedAttributes() { return ['color', 'body', 'coat', 'lcd', 'streak', 'fit-scale', 'fitscale', 'strap', 'pattern']; }
+    static get observedAttributes() { return ['color', 'body', 'coat', 'lcd', 'streak', 'fit-scale', 'fitscale', 'strap', 'pattern', 'form', 'scene', 'lcdbg']; }
     connectedCallback() {
       if (this._init) return; this._init = true;
       Object.assign(this.style, { display: 'block', position: 'relative', width: '100%', height: '100%', touchAction: 'none', userSelect: 'none' });
@@ -23,6 +23,7 @@
     attributeChangedCallback(n, o, v) {
       if (n === 'color' && this.shell) this.setShell(v);
       if (n === 'strap' && this.chain) this.setStrap(v);
+      if (n === 'form' && this.ears) this.setForm(v);
       if (n === 'pattern' && this.shell) this.setShell(this.getAttribute('color'));
       if ((n === 'fit-scale' || n === 'fitscale') && this._fit && this.cam) { this._fit(this.cam.aspect); this.cam.updateProjectionMatrix(); }
       this._dirty = true;
@@ -37,8 +38,14 @@
       if (kind === 'dots') for (let j = 0; j < 11; j++) for (let i = 0; i < 11; i++) { x.beginPath(); x.arc(i * st + (j % 2) * st / 2, j * st, 20, 0, 7); x.fill(); }
       if (kind === 'hearts') for (let j = 0; j < 11; j++) for (let i = 0; i < 11; i++) { const cx = i * st + (j % 2) * st / 2, cy = j * st, s = 30; x.beginPath(); x.moveTo(cx, cy + s * 0.55); x.bezierCurveTo(cx - s * 1.2, cy - s * 0.2, cx - s * 0.55, cy - s * 1.05, cx, cy - s * 0.4); x.bezierCurveTo(cx + s * 0.55, cy - s * 1.05, cx + s * 1.2, cy - s * 0.2, cx, cy + s * 0.55); x.fill(); }
       if (kind === 'stripes') for (let i = 0; i < 18; i++) x.fillRect(0, i * 60, 1024, 24);
-      const tex = new T.CanvasTexture(cv); tex.colorSpace = T.SRGBColorSpace; tex.anisotropy = 4; return tex;
+      if (kind === 'stars') for (let j = 0; j < 9; j++) for (let i = 0; i < 9; i++) { const cx = i * 128 + (j % 2) * 64, cy = j * 128; x.beginPath(); for (let k = 0; k < 10; k++) { const rr2 = k % 2 ? 11 : 26, a = -Math.PI / 2 + k * Math.PI / 5; x.lineTo(cx + Math.cos(a) * rr2, cy + Math.sin(a) * rr2); } x.closePath(); x.fill(); }
+      if (kind === 'check') for (let j = 0; j < 16; j++) for (let i = 0; i < 16; i++) if ((i + j) % 2) x.fillRect(i * 64, j * 64, 64, 64);
+      if (kind === 'paws') for (let j = 0; j < 9; j++) for (let i = 0; i < 9; i++) { const cx = i * 128 + (j % 2) * 64, cy = j * 128; x.beginPath(); x.ellipse(cx, cy + 8, 17, 14, 0, 0, 7); x.fill(); [[-15, -13], [0, -19], [15, -13]].forEach(([dx, dy]) => { x.beginPath(); x.arc(cx + dx, cy + dy, 6.5, 0, 7); x.fill(); }); }
+      if (kind === 'waves') { x.strokeStyle = x.fillStyle; x.lineWidth = 14; for (let j = 0; j < 12; j++) { x.beginPath(); for (let px = 0; px <= 1024; px += 16) { const py = j * 90 + Math.sin(px / 1024 * Math.PI * 8) * 18; px ? x.lineTo(px, py) : x.moveTo(px, py); } x.stroke(); } }
+      if (kind === 'flowers') for (let j = 0; j < 7; j++) for (let i = 0; i < 7; i++) { const cx = i * 160 + (j % 2) * 80, cy = j * 160; for (let k = 0; k < 5; k++) { const a = k * Math.PI * 2 / 5; x.beginPath(); x.arc(cx + Math.cos(a) * 17, cy + Math.sin(a) * 17, 12, 0, 7); x.fill(); } x.fillStyle = '#' + base.getHexString(T.SRGBColorSpace); x.beginPath(); x.arc(cx, cy, 8, 0, 7); x.fill(); x.fillStyle = '#' + pc.getHexString(T.SRGBColorSpace); }
+      const tex = new T.CanvasTexture(cv); tex.colorSpace = T.SRGBColorSpace; tex.anisotropy = 4; tex.wrapS = tex.wrapT = T.RepeatWrapping; return tex;
     }
+    setForm(v) { this.ears.visible = v === 'cat' || v === 'cattail'; if (this.tail) this.tail.visible = v === 'cattail' || v === 'tail'; this._dirty = true; }
     snapshot() { if (!this.renderer || !this.scene) return null; this.renderer.render(this.scene, this.cam); return this.renderer.domElement.toDataURL('image/png'); }
     setStrap(v) {
       const on = !!v && v !== 'none';
@@ -108,8 +115,43 @@
       const uv = []; for (let q = 0; q < pos.length; q += 3) uv.push(0.5 + pos[q] / 2.6, 0.5 + pos[q + 1] / 2.6);
       const g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setIndex(idx); g.computeVertexNormals();
       this.shell = new T.MeshPhysicalMaterial({ color: 0xc9ccd3, roughness: 0.32, metalness: 0.15, clearcoat: 0.8, clearcoatRoughness: 0.18 });
+      this.shell.onBeforeCompile = (sh) => {
+        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vOP; varying vec3 vON;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvOP = position; vON = normal;');
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vOP; varying vec3 vON;').replace('#include <map_fragment>', '#ifdef USE_MAP\n vec3 bw = pow(abs(normalize(vON)), vec3(4.0)); bw /= (bw.x + bw.y + bw.z);\n vec4 tc = texture2D(map, vOP.zy * 0.385 + 0.5) * bw.x + texture2D(map, vOP.xz * 0.385 + 0.5) * bw.y + texture2D(map, vOP.xy * 0.385 + 0.5) * bw.z;\n diffuseColor *= tc;\n #endif');
+      };
+      this.shell.customProgramCacheKey = () => 'loafy-tri';
       this.ringMat = new T.MeshStandardMaterial({ color: 0x8a8d94, roughness: 0.5 });
       egg.add(new T.Mesh(g, this.shell));
+      // cat ears (rounded tips, recessed pink inner)
+      const ears = this.ears = new T.Group(); egg.add(ears);
+      const rtri = (w, h, r, cy, path) => {
+        const P = [[0, h / 2 + cy], [-w / 2, -h / 2 + cy], [w / 2, -h / 2 + cy]], sh = path || new T.Shape();
+        P.forEach((v, i) => {
+          const pv = P[(i + 2) % 3], nx = P[(i + 1) % 3], d1 = new T.Vector2(pv[0] - v[0], pv[1] - v[1]).normalize(), d2 = new T.Vector2(nx[0] - v[0], nx[1] - v[1]).normalize();
+          const a = [v[0] + d1.x * r, v[1] + d1.y * r], b = [v[0] + d2.x * r, v[1] + d2.y * r];
+          if (i === 0) sh.moveTo(a[0], a[1]); else sh.lineTo(a[0], a[1]);
+          sh.quadraticCurveTo(v[0], v[1], b[0], b[1]);
+        });
+        sh.closePath(); return sh;
+      };
+      const outer = rtri(0.72, 0.64, 0.2, 0);
+      outer.holes.push(rtri(0.46, 0.4, 0.12, -0.06, new T.Path()));
+      const earG = new T.ExtrudeGeometry(outer, { depth: 0.2, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.05, bevelSegments: 6, curveSegments: 20 }); earG.translate(0, 0, -0.1);
+      const inG = new T.ExtrudeGeometry(rtri(0.5, 0.44, 0.13, -0.06), { depth: 0.04, bevelEnabled: false, curveSegments: 20 });
+      const inMat = new T.MeshStandardMaterial({ color: 0xf4b6bf, roughness: 0.6 });
+      [-1, 1].forEach(sd => {
+        const g2 = new T.Group(); g2.position.set(sd * 0.5, 1.22, 0); g2.rotation.z = -sd * 0.36;
+        g2.add(new T.Mesh(earG, this.shell));
+        const i2 = new T.Mesh(inG, inMat); i2.position.set(0, 0.05, 0.12); g2.add(i2);
+        ears.add(g2);
+      });
+      ears.visible = ['cat', 'cattail'].includes(this.getAttribute('form'));
+      // tail
+      const tail = this.tail = new T.Group(); egg.add(tail);
+      const tcurve = new T.CatmullRomCurve3([new T.Vector3(0.25, -0.8, -0.2), new T.Vector3(0.75, -1.0, -0.42), new T.Vector3(1.1, -0.76, -0.5), new T.Vector3(1.04, -0.42, -0.5), new T.Vector3(1.06, -0.08, -0.5), new T.Vector3(1.32, 0.12, -0.46)]);
+      tail.add(new T.Mesh(new T.TubeGeometry(tcurve, 64, 0.085, 14, false), this.shell));
+      const ttip = new T.Mesh(new T.SphereGeometry(0.085, 20, 16), this.shell); ttip.position.copy(tcurve.getPoint(1)); tail.add(ttip);
+      tail.visible = ['cattail', 'tail'].includes(this.getAttribute('form'));
       // seam line around the side
       const seam = new T.Mesh(new T.TorusGeometry(1, 0.008, 6, 160), this.ringMat);
       seam.rotation.x = Math.PI / 2; seam.scale.set(Rf(-0.02 / H) * 1.002, D * Rf(-0.02 / H) * 1.01, 1); seam.position.y = -0.02; seam.visible = false;
@@ -133,6 +175,19 @@
       { const LG = (window.LoafySprites && window.LoafySprites.LOGO) || [], ls = 5.4, ox = (512 - 46 * ls) / 2, oy = (128 - 22 * ls) / 2; LG.forEach(([x, y, w, h, c]) => { lx.fillStyle = c ? '#FF7474' : '#26262c'; lx.fillRect(ox + x * ls, oy + y * ls, w * ls + 0.5, h * ls + 0.5); }); }
       const lt = new T.CanvasTexture(lc); lt.colorSpace = T.SRGBColorSpace;
       conform(0.56, 0.14, 0, 1.0, 0.004, new T.MeshStandardMaterial({ map: lt, transparent: true, roughness: 0.5 }));
+      // back side: battery cover, logo, paw
+      const conformBack = (w2, h2, cx, cy, off, mat) => {
+        const pg = new T.PlaneGeometry(w2, h2, 40, 40), p = pg.attributes.position;
+        for (let i = 0; i < p.count; i++) p.setZ(i, -(zSurf(p.getX(i) + cx, p.getY(i) + cy) + off));
+        pg.computeVertexNormals(); const nA = pg.attributes.normal; for (let i = 0; i < nA.count; i++) nA.setXYZ(i, -nA.getX(i), -nA.getY(i), -nA.getZ(i));
+        const m = new T.Mesh(pg, mat); m.position.set(cx, cy, 0); egg.add(m); return m;
+      };
+      conformBack(0.96, 0.62, 0, 0.12, 0.004, new T.MeshStandardMaterial({ color: 0x000000, roughness: 0.7, transparent: true, opacity: 0.13, alphaMap: alphaTex(0.96, 0.62, 0.16), side: T.DoubleSide }));
+      const lt2 = lt.clone(); lt2.wrapS = T.RepeatWrapping; lt2.repeat.x = -1; lt2.offset.x = 1; lt2.needsUpdate = true;
+      conformBack(0.56, 0.14, 0, 0.3, 0.008, new T.MeshStandardMaterial({ map: lt2, transparent: true, roughness: 0.5, side: T.DoubleSide }));
+      const pc2 = document.createElement('canvas'); pc2.width = pc2.height = 120; if (window.LoafySprites && window.LoafySprites.drawIcon) window.LoafySprites.drawIcon(pc2.getContext('2d'), 'pawpink', 10, true, '#000');
+      const pt2 = new T.CanvasTexture(pc2); pt2.colorSpace = T.SRGBColorSpace; pt2.wrapS = T.RepeatWrapping; pt2.repeat.x = -1; pt2.offset.x = 1; pt2.magFilter = T.NearestFilter; pt2.minFilter = T.NearestFilter; pt2.generateMipmaps = false;
+      conformBack(0.3, 0.3, 0, -0.04, 0.008, new T.MeshStandardMaterial({ map: pt2, transparent: true, roughness: 0.55, side: T.DoubleSide }));
 
       // buttons
       const btnMat = new T.MeshPhysicalMaterial({ color: 0x1b1b20, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.1 });
@@ -173,7 +228,7 @@
 
       // interaction
       const ray = new T.Raycaster(), v2 = new T.Vector2();
-      const hit = (e) => { const b = r.domElement.getBoundingClientRect(); v2.set(((e.clientX - b.left) / b.width) * 2 - 1, -((e.clientY - b.top) / b.height) * 2 + 1); ray.setFromCamera(v2, cam); const h2 = ray.intersectObjects(this.buttons.concat([this.lcdMesh]), true)[0]; return h2 ? (h2.object === this.lcdMesh ? 9 : h2.object.userData.idx) : -1; };
+      const hit = (e) => { if (Math.cos(this.rot.y) < 0.25) return -1; const b = r.domElement.getBoundingClientRect(); v2.set(((e.clientX - b.left) / b.width) * 2 - 1, -((e.clientY - b.top) / b.height) * 2 + 1); ray.setFromCamera(v2, cam); const h2 = ray.intersectObjects(this.buttons.concat([this.lcdMesh]), true)[0]; return h2 ? (h2.object === this.lcdMesh ? 9 : h2.object.userData.idx) : -1; };
       this.drag = null; this.rot = { x: 0, y: 0, tx: 0, ty: 0 }; this.press = [0, 0, 0];
       r.domElement.addEventListener('pointerdown', (e) => {
         const i = hit(e);
@@ -183,10 +238,10 @@
         this.drag = { x: e.clientX, y: e.clientY, ry: this.rot.ty, rx: this.rot.tx }; r.domElement.setPointerCapture(e.pointerId); r.domElement.style.cursor = 'grabbing';
       });
       r.domElement.addEventListener('pointermove', (e) => {
-        if (this.drag) { this.rot.ty = Math.max(-1.1, Math.min(1.1, this.drag.ry + (e.clientX - this.drag.x) * 0.008)); this.rot.tx = Math.max(-0.6, Math.min(0.6, this.drag.rx + (e.clientY - this.drag.y) * 0.006)); }
+        if (this.drag) { this.rot.ty = this.drag.ry + (e.clientX - this.drag.x) * 0.012; this.rot.tx = Math.max(-0.6, Math.min(0.6, this.drag.rx + (e.clientY - this.drag.y) * 0.006)); }
         else r.domElement.style.cursor = hit(e) >= 0 ? 'pointer' : 'grab';
       });
-      const up = () => { this.drag = null; this.rot.tx = 0; this.rot.ty = 0; r.domElement.style.cursor = 'grab'; };
+      const up = () => { if (this.drag) { const P2 = Math.PI * 2, a = ((this.rot.ty % P2) + P2) % P2; this._dwell = (a > 1.2 && a < P2 - 1.2) ? 4200 : 600; this._rel = performance.now(); } this.drag = null; this.rot.tx = 0; r.domElement.style.cursor = 'grab'; };
       r.domElement.addEventListener('pointerup', up); r.domElement.addEventListener('pointercancel', up);
 
       this.ro = new ResizeObserver(() => { const W2 = this.clientWidth, H2 = this.clientHeight; if (!W2 || !H2) return; r.setSize(W2, H2); cam.aspect = W2 / H2; this._fit(W2 / H2); cam.updateProjectionMatrix(); });
@@ -197,6 +252,7 @@
         this.raf = requestAnimationFrame(tick);
         const still = this.hasAttribute('still'); if (still) this.drag = null;
         const t = still ? 0 : (now - this.t0) / 1000;
+        if (!this.drag && this._rel && now - this._rel > this._dwell) { this.rot.ty = Math.round(this.rot.ty / (Math.PI * 2)) * Math.PI * 2; this._rel = 0; }
         const idle = !this.drag && Math.abs(this.rot.y - this.rot.ty) < 0.02;
         this.rot.y += ((this.rot.ty + (this.drag ? 0 : Math.sin(t * 0.6) * 0.14)) - this.rot.y) * 0.12;
         this.rot.x += ((this.rot.tx + (this.drag ? 0 : Math.sin(t * 0.8) * 0.04)) - this.rot.x) * 0.12;
@@ -225,7 +281,7 @@
     }
     drawLcd(now) {
       if (!this.sim) return;
-      this.sim.draw(this.lcd.getContext('2d'), now, { body: this.getAttribute('body'), coat: this.getAttribute('coat'), lcd: this.getAttribute('lcd'), streak: this.getAttribute('streak') });
+      this.sim.draw(this.lcd.getContext('2d'), now, { body: this.getAttribute('body'), coat: this.getAttribute('coat'), lcd: this.getAttribute('lcd'), streak: this.getAttribute('streak'), scene: this.getAttribute('scene'), lcdbg: this.getAttribute('lcdbg') });
       if (this.tex) this.tex.needsUpdate = true;
     }
   }

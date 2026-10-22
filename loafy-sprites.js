@@ -152,11 +152,24 @@
     letter: ['............', '############', '#o########o#', '##o######o##', '###o####o###', '####oooo####', '############', '############', '############', '############', '............', '............'],
     shop: ['............', '....####....', '...##..##...', '...#....#...', '.##########.', '.##########.', '.##o####o##.', '.##########.', '.##########.', '.##########.', '.##########.', '............'],
     cookie: ['...######...', '..########..', '.##o#oo#o##.', '.##########.', '##o######o##', '####oooo####', '###oooooo###', '###oooooo###', '.###oooo###.', '.##########.', '..########..', '...######...'],
+    dumbbell: ['............', '............', '.##......##.', '.##......##.', '####....####', '############', '############', '####....####', '.##......##.', '.##......##.', '............', '............'],
+    ex_run: ['.....###....', '....#####...', '....#####...', '.....###....', '..#########.', '.###.###....', '###..####...', '##....####..', '.......###..', '......###.##', '.....###..##', '............'],
+    ex_chest: ['............', '.####..####.', '######.#####', '############', '############', '.##########.', '..########..', '...######...', '............', '............', '............', '............'],
+    ex_back: ['############', '#####oo#####', '.####oo####.', '.####oo####.', '..###oo###..', '..###oo###..', '...##oo##...', '...######...', '....####....', '....####....', '.....##.....', '............'],
+    ex_leg: ['.####..####.', '.####..####.', '.####..####.', '.####..####.', '..###..###..', '..###..###..', '..###..###..', '..###..###..', '..###..###..', '.####..####.', '.####..####.', '............'],
+    ex_shoulder: ['....####....', '..########..', '.##########.', '############', '###.####.###', '###.####.###', '###.####.###', '###.####.###', '###......###', '............', '............', '............'],
+    ex_arm: ['.......###..', '......#####.', '.....#######', '....########', '...#########', '..#######o#.', '.#######o##.', '########....', '.######.....', '..####......', '...##.......', '............'],
+    ex_core: ['..########..', '..###oo###..', '..###oo###..', '..########..', '..###oo###..', '..###oo###..', '..########..', '..###oo###..', '..###oo###..', '...######...', '....####....', '............'],
+    flame: ['.....#......', '....##......', '....###.....', '...####..#..', '..#####.##..', '..##########', '.####oo#####', '.###oooo####', '.###oooo####', '..##oooo###.', '...######...', '............'],
+    timer: ['....####....', '.....##.....', '...######...', '..###oo###..', '.####oo####.', '.####oo####.', '.####oooo##.', '.##########.', '..########..', '...######...', '............', '............'],
+    plane: ['..........##', '........####', '......######', '....########', '..#####o####', '.#####oo###.', '..###ooo##..', '...##oo.#...', '....#o......', '.....#......', '............', '............'],
+    speaker: ['............', '.....#......', '....##..#...', '.#####...#..', '.#####.#..#.', '.#####.#..#.', '.#####.#..#.', '.#####...#..', '....##..#...', '.....#......', '............', '............'],
+    speaker_off: ['............', '.....#......', '....##......', '.#####..#.#.', '.#####...#..', '.#####..#.#.', '.#####......', '.#####......', '....##......', '.....#......', '............', '............'],
     bell: ['.....##.....', '....####....', '...######...', '..########..', '..########..', '..########..', '.##########.', '############', '............', '....####....', '.....##.....', '............']
   };
   ICONS.pawpink = ICONS.paw; ICONS.letterblue = ICONS.letter;
   const ICON_INK = { cookie: '#C9566D', pawpink: '#D24E66', letterblue: '#1B64DA' };
-  const ICON_FILL = { pawpink: '#FF8FA0', letterblue: '#FFFFFF', home: '#B4BCC8', record: '#8FC7B4', my: '#F6A2A6', paw: '#F49A3C', share: '#9DB6E6', brush: '#F2C14E', letter: '#FFF6E6', bell: '#F2C14E', shop: '#C9B6F0', cookie: '#FFC2CD' };
+  const ICON_FILL = { speaker: '#9DB6E6', speaker_off: '#C9CED8', plane: '#9DB6E6', dumbbell: '#C9CED8', ex_run: '#FF9F55', ex_chest: '#FFC9A3', ex_back: '#B9D4FF', ex_leg: '#BFE6C9', ex_shoulder: '#D9CCF5', ex_arm: '#FFE08A', ex_core: '#FFB8C4', flame: '#FF9F55', timer: '#9DC3FF', pawpink: '#FF8FA0', letterblue: '#FFFFFF', home: '#B4BCC8', record: '#8FC7B4', my: '#F6A2A6', paw: '#F49A3C', share: '#9DB6E6', brush: '#F2C14E', letter: '#FFF6E6', bell: '#F2C14E', shop: '#C9B6F0', cookie: '#FFC2CD' };
   function drawIcon(ctx, name, s, active, lineColor) {
     const rows = ICONS[name]; if (!rows) return;
     const at = (x, y) => (y < 0 || y >= 12 || x < 0 || x >= 12) ? '.' : rows[y][x];
@@ -202,11 +215,41 @@
       const mono = o.lcd === 'mono';
       const buf = new Array(N * N).fill(null);
       const put = (x, y, c) => { x |= 0; y |= 0; if (x >= 0 && y >= 0 && x < N && y < N) buf[y * N + x] = c; };
-      const ink = mono ? '#2E3A26' : '#3A2A22', red = mono ? ink : '#E5566A', off = mono ? '#8FA07C' : '#D8CBB4';
+      const lumF = (h) => { const n = parseInt(h.slice(1), 16); return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255; };
+      const adj = (h, d) => { const n = parseInt(h.slice(1), 16), c = (v) => Math.max(0, Math.min(255, Math.round(v + d * 255))); return '#' + [n >> 16, (n >> 8) & 255, n & 255].map(v => c(v).toString(16).padStart(2, '0')).join(''); };
+      const sceneK = mono ? 'none' : (o.scene || 'none'), lcdbg = !mono && o.lcdbg ? o.lcdbg : '';
+      const dark = !mono && (sceneK === 'night' || (lcdbg && lumF(lcdbg) < 0.35));
+      const ink = mono ? '#2E3A26' : dark ? '#F3EBDD' : '#3A2A22', red = mono ? ink : '#E5566A', off = mono ? '#8FA07C' : dark ? '#5A6285' : '#D8CBB4';
+      const bgb = new Array(N * N).fill(null);
+      const bput = (x, y, c) => { x |= 0; y |= 0; if (x >= 0 && y >= 0 && x < N && y < N) bgb[y * N + x] = c; };
+      const bbmp = (rows, ox, oy, c) => rows.forEach((row, y) => [...row].forEach((chr, x) => { if (chr === '#') bput(ox + x, oy + y, c); }));
       const bmp = (rows, ox, oy, c, sc) => { sc = sc || 1; rows.forEach((row, y) => [...row].forEach((chr, x) => { if (chr === '#') for (let a = 0; a < sc; a++) for (let b = 0; b < sc; b++) put(ox + x * sc + a, oy + y * sc + b, c); })); };
       const text = (str, ox, oy, c, sc) => { sc = sc || 1; [...str].forEach((chr, k) => FONT[chr] && bmp(FONT[chr], ox + k * 4 * sc, oy, c, sc)); };
       const t = now / 1000, streak = String(o.streak || 12), body = o.body || 'normal', coat = o.coat || 'cheese';
       if (this.anim && now - this.animT > (this.anim === 'eat' ? 2600 : 1800)) this.anim = null;
+      if (sceneK !== 'none') {
+        const band = (y0, y1, c) => { for (let y = y0; y < y1; y++) for (let x = 0; x < N; x++) bput(x, y, c); };
+        const CL = ['...####....', '..######...', '.########..', '###########', '.#########.'];
+        const cloud = (x, y, c) => { bbmp(CL, x, y, c); };
+        if (sceneK === 'cloud') {
+          band(0, 16, '#A9D6FF'); band(16, 32, '#BDE2FF'); band(32, N, '#D3EEFF');
+          cloud(((t * 1.6) % 62) - 13, 9, '#FFFFFF'); cloud(((t * 1.0 + 30) % 62) - 13, 22, '#F4FAFF'); cloud(((t * 0.7 + 12) % 62) - 13, 34, '#FFFFFF');
+        } else if (sceneK === 'meadow') {
+          band(0, N, '#CDEBFF'); cloud(((t * 0.8) % 62) - 13, 6, '#FFFFFF');
+          for (let x = 0; x < N; x++) { const h = 34 + Math.round(2 * Math.sin(x * 0.22)); for (let y = h; y < N; y++) bput(x, y, y < h + 3 ? '#8FCB6B' : '#79BC58'); }
+          [[5, 40, '#FF8FA0'], [14, 43, '#FFE066'], [27, 41, '#FFFFFF'], [36, 44, '#FF8FA0'], [43, 40, '#FFE066'], [20, 45, '#FFFFFF']].forEach(([x, y, c]) => bput(x, y, c));
+        } else if (sceneK === 'desert') {
+          band(0, 22, '#FBE3B8'); band(22, N, '#FCEBCB');
+          for (let y = -4; y <= 4; y++) for (let x = -4; x <= 4; x++) if (x * x + y * y <= 17) bput(38 + x, 9 + y, '#F6A24A');
+          for (let x = 0; x < N; x++) { const h = 36 + Math.round(2 * Math.sin(x * 0.3 + 1)); for (let y = h; y < N; y++) bput(x, y, y < h + 4 ? '#E9C27D' : '#DDB06A'); }
+          bbmp(['..#..', '#.#.#', '#.#.#', '###.#', '..###', '..#..', '..#..'], 3, 31, '#6FB04F');
+        } else if (sceneK === 'night') {
+          band(0, N, '#2B3354');
+          [[5, 6], [14, 3], [22, 9], [33, 4], [41, 13], [9, 18], [45, 24], [3, 30], [28, 44], [18, 15]].forEach(([x, y], i) => { if ((Math.floor(t * 1.6) + i) % 3) bput(x, y, '#FFF4C2'); });
+          for (let y = -4; y <= 4; y++) for (let x = -4; x <= 4; x++) if (x * x + y * y <= 17) bput(37 + x, 8 + y, '#F6EFC8');
+          for (let y = -4; y <= 4; y++) for (let x = -4; x <= 4; x++) if (x * x + y * y <= 14) bput(35 + x, 7 + y, '#2B3354');
+        }
+      }
       if (this.mode === 'status') {
         const wT = ('D+' + streak).length * 8 - 2; text('D+' + streak, (N - wT) / 2, 6, ink, 2);
         for (let k = 0; k < 4; k++) bmp(HEART3, 10 + k * 8, 22, k < this.mood ? red : off, 2);
@@ -227,12 +270,13 @@
         ['feed', 'pet', 'stat'].forEach((k, i) => {
           const x = 8 + i * 13, y = 41, sel = this.menu === i;
           if (sel) for (let a = -1; a < 6; a++) for (let b = -1; b < 6; b++) put(x + a, y + b, ink);
-          bmp(LICONS[k], x, y, sel ? (mono ? '#B7C7A2' : '#F6F0E1') : ink);
+          bmp(LICONS[k], x, y, sel ? (mono ? '#B7C7A2' : dark ? '#2B3354' : '#F6F0E1') : ink);
         });
       }
-      ctx.fillStyle = mono ? '#B7C7A2' : '#F6F0E1'; ctx.fillRect(0, 0, N * CELL, N * CELL);
+      const base = mono ? '#B7C7A2' : (lcdbg || '#F6F0E1'), cellC = mono ? '#AEBF98' : (lcdbg ? adj(lcdbg, dark ? 0.06 : -0.05) : '#EEE6D3');
+      ctx.fillStyle = base; ctx.fillRect(0, 0, N * CELL, N * CELL);
       for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-        ctx.fillStyle = buf[y * N + x] || (mono ? '#AEBF98' : '#EEE6D3');
+        ctx.fillStyle = buf[y * N + x] || bgb[y * N + x] || cellC;
         ctx.fillRect(x * CELL + 0.5, y * CELL + 0.5, CELL - 1, CELL - 1);
       }
     }
@@ -308,7 +352,7 @@
       this.raf = requestAnimationFrame(tick);
     }
     disconnectedCallback() { cancelAnimationFrame(this.raf); this.cv && this.cv.remove(); this.cv = null; }
-    draw(now) { this.sim.draw(this.cv.getContext('2d'), now, { body: this.getAttribute('body'), coat: this.getAttribute('coat'), lcd: this.getAttribute('lcd'), streak: this.getAttribute('streak') }); }
+    draw(now) { this.sim.draw(this.cv.getContext('2d'), now, { body: this.getAttribute('body'), coat: this.getAttribute('coat'), lcd: this.getAttribute('lcd'), streak: this.getAttribute('streak'), scene: this.getAttribute('scene'), lcdbg: this.getAttribute('lcdbg') }); }
     play(a) { this.sim.play(a); }
     button(i) { const r = this.sim.button(i); if (r === 'feed') this.dispatchEvent(new CustomEvent('loafy:device-feed', { bubbles: true })); return r; }
   }
