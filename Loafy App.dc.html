@@ -16,11 +16,19 @@ a{color:#1E2228;text-decoration:none}a:hover{color:#111418}
 button,input,textarea{font-family:inherit;letter-spacing:inherit}
 textarea::placeholder,input::placeholder{color:#B0B3BA}
 [data-wheel]::-webkit-scrollbar{display:none}
-@keyframes lfIn{from{opacity:0;transform:translateY(10px) scale(0.992)}to{opacity:1;transform:none}}
+@keyframes lfIn{from{opacity:0;transform:translateY(6px) scale(0.996)}to{opacity:1;transform:none}}
 @keyframes lfFade{from{opacity:0}to{opacity:1}}
 @keyframes lfSheet{from{transform:translateY(calc(100% + 16px))}to{transform:translateY(0)}}
-@keyframes lfToast{from{opacity:0;transform:translate(-50%,14px) scale(0.94)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
-@keyframes lfPop{0%{opacity:0;transform:scale(0.6)}60%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes lfToast{from{opacity:0;transform:translate(-50%,10px) scale(0.98)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes lfBanner{from{transform:translateY(-140%);opacity:0}to{transform:none;opacity:1}}
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.sc-placeholder{background:transparent!important;border-color:transparent!important}
+.sc-placeholder::before{display:none!important}
+@keyframes lfBump{0%{transform:scale(0.82)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes lfFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-6px) rotate(5deg)}}
+@keyframes lfPix{0%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes lfPop{0%{opacity:0;transform:scale(0.92)}60%{opacity:1;transform:scale(1.02)}100%{opacity:1;transform:scale(1)}}
 </style>
 </helmet>
 
@@ -41,18 +49,26 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         <span style="font-size:16px;line-height:24px;color:rgba(60,60,67,0.6)">출석하면 날렵해지고, 빠지면 식빵이 돼요</span>
       </div>
       <div style="flex:1;position:relative;min-height:0">
-        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" fit-scale="0.62" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
+        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" form="{{ form }}" scene="{{ scene }}" lcdbg="{{ lcdbg }}" fit-scale="0.62" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
       </div>
-      <div style="padding:0 20px 42px;display:flex;flex-direction:column;gap:10px">
-        <button onClick="{{ nav.obAgree }}" style="height:56px;border:0;border-radius:16px;background:#000;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
+      <div style="padding:0 20px 36px;display:flex;flex-direction:column;gap:8px">
+        <button onClick="{{ nav.obAgree }}" style="height:52px;border:0;border-radius:16px;background:#000;color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
           <svg width="18" height="20" viewBox="0 0 17 20" fill="#fff"><path d="M14.1 10.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.700-2-1.600-.2-3.100.9-3.900.9-.8 0-2-.9-3.4-.9C3.6 4.8 2 5.8 1.1 7.4c-1.9 3.2-.5 8 1.3 10.6.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.8 3.4-.8s2 .8 3.4.8c1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-3-.1 0-2.900-1.100-3-4.400zM11.5 3c.7-.9 1.2-2 1.1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"></path></svg>
           Apple로 계속하기
         </button>
-        <button onClick="{{ nav.obAgree }}" style="height:56px;border:0;border-radius:16px;background:#FEE500;color:#191919;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
+        <button onClick="{{ nav.obAgree }}" style="height:52px;border:0;border-radius:16px;background:#FEE500;color:#191919;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
           <svg width="20" height="18" viewBox="0 0 20 18" fill="#191919"><path d="M10 0C4.5 0 0 3.5 0 7.8c0 2.8 1.9 5.3 4.7 6.6l-1 3.6c-.1.3.3.6.6.4l4.3-2.8c.5.1.9.1 1.4.1 5.5 0 10-3.5 10-7.9S15.5 0 10 0z"></path></svg>
           카카오로 계속하기
         </button>
-        <button onClick="{{ nav.obAgree }}" style="height:44px;border:0;background:transparent;color:rgba(60,60,67,0.6);font-size:15px;font-weight:500;cursor:pointer">다른 방법으로 시작하기</button>
+        <button onClick="{{ nav.obAgree }}" style="height:52px;border:0;border-radius:16px;background:#03C75A;color:#FFFFFF;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="#FFFFFF"><path d="M13.600 10.700 6.200 0H0v20h6.400V9.300L13.800 20H20V0h-6.400z"/></svg>
+          네이버로 계속하기
+        </button>
+        <button onClick="{{ nav.obAgree }}" style="height:52px;border:0;border-radius:16px;background:#FFFFFF;color:#191919;box-shadow:inset 0 0 0 1px #E1E4E8;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="transform:scale(0.98)">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7a14.500 14.500 0 0 1 0-9.400l-7.900-6.100a24 24 0 0 0 0 21.600l7.900-6.100z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.500-5.800c-2.100 1.400-4.800 2.300-8.400 2.300-6.300 0-11.600-4.100-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg>
+          Google로 계속하기
+        </button>
+        <button onClick="{{ nav.obAgree }}" style="height:44px;border:0;background:transparent;color:rgba(60,60,67,0.6);font-size:15px;font-weight:500;text-decoration:underline;text-underline-offset:3px;cursor:pointer">게스트로 둘러보기</button>
       </div>
     </div>
   </sc-if>
@@ -212,7 +228,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ shellName }} · 나중에 샵에서 바꿀 수 있어요</span>
         </div>
         <div style="position:relative;height:380px">
-          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" fit-scale="0.62" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,380px"></x-import>
+          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" form="{{ form }}" scene="{{ scene }}" lcdbg="{{ lcdbg }}" fit-scale="0.62" color="{{ shell }}" body="normal" coat="{{ coat }}" lcd="{{ lcd }}" streak="0" style="position:absolute;inset:0" hint-size="100%,380px"></x-import>
         </div>
         <div style="display:flex;justify-content:space-between;padding:0 24px">
           <sc-for list="{{ shells }}" as="s" hint-placeholder-count="6">
@@ -326,8 +342,8 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           </div>
         </sc-for>
       </div>
-      <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 20px 42px;background:#FFFFFF">
-        <button onClick="{{ terms.agree }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418;transform:scale(0.98)">동의하고 돌아가기</button>
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:28px 20px 42px;pointer-events:none;background:linear-gradient(to top,#FFFFFF 62%,rgba(255,255,255,0))">
+        <button onClick="{{ terms.agree }}" style="pointer-events:auto;width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418;transform:scale(0.98)">동의하고 돌아가기</button>
       </div>
     </div>
   </sc-if>
@@ -347,7 +363,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
             </sc-if>
           </button>
           <button onClick="{{ nav.share }}" title="공유" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.78);box-shadow:0 2px 6px rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center;cursor:pointer">
-            <x-import component-from-global-scope="loafy-icon" name="share" size="24" color="#1E2228" hint-size="24px,24px"></x-import>
+            <x-import component-from-global-scope="loafy-icon" name="plane" size="24" active="true" hint-size="24px,24px"></x-import>
           </button>
         </div>
       </div>
@@ -375,10 +391,20 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4C6CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
         </button>
       </sc-if>
+      <sc-if value="{{ showRoutineCard }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ routineCard.tap }}" style="margin:12px 16px 0;padding:12px 14px;border:0;border-radius:18px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.04);display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer" style-active="transform:scale(0.98)">
+          <span style="width:36px;height:36px;border-radius:12px;background:#F2F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E2228" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"></path></svg></span>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+            <span style="font-size:15px;font-weight:600;color:#000">{{ routineCard.title }}</span>
+            <span style="font-size:13px;color:rgba(60,60,67,0.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ routineCard.sub }}</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4C6CC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+        </button>
+      </sc-if>
       </div>
 
       <div style="position:relative;flex:1;min-height:0">
-        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
+        <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" form="{{ form }}" scene="{{ scene }}" lcdbg="{{ lcdbg }}" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
         <span style="position:absolute;left:0;right:0;bottom:4px;text-align:center;font-size:12px;color:rgba(60,60,67,0.45);pointer-events:none">화면을 누르면 크게 볼 수 있어요</span>
       </div>
 
@@ -390,10 +416,11 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           </button>
         </sc-if>
         <sc-if value="{{ checked }}" hint-placeholder-val="{{ false }}">
-          <div style="width:100%;height:64px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E2228" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-            <span style="font-size:17px;font-weight:700;color:#1E2228">오늘 출석 완료</span>
-            <span style="font-size:15px;color:rgba(60,60,67,0.6)">· 내일 또 만나요</span>
+          <div style="display:flex;justify-content:center;animation:lfBump 520ms 120ms cubic-bezier(0.32,0.72,0,1) both">
+            <button onClick="{{ nav.routine }}" style="height:44px;padding:0 18px 0 14px;border:0;border-radius:999px;background:#1E2228;color:#FFFFFF;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:15px;font-weight:600" style-active="transform:scale(0.98)">
+              <x-import component-from-global-scope="loafy-icon" name="dumbbell" size="24" color="#FFFFFF" hint-size="24px,24px"></x-import>
+              {{ routineCtaLabel }}
+            </button>
           </div>
         </sc-if>
       </div>
@@ -408,7 +435,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
       </div>
       <div style="margin-top:8px;flex-shrink:0;padding:14px;border-radius:44px;background:linear-gradient(160deg,#2A2A31 0%,#0B0B0E 70%);box-shadow:0 16px 36px rgba(0,0,0,0.28),0 2px 0 rgba(255,255,255,0.35),inset 0 1px 0 rgba(255,255,255,0.14),inset 0 -3px 8px rgba(0,0,0,0.6)">
         <div style="width:300px;height:300px;border-radius:30px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.06)">
-          <x-import component-from-global-scope="loafy-lcd" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" hint-size="300px,300px"></x-import>
+          <x-import component-from-global-scope="loafy-lcd" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" scene="{{ scene }}" lcdbg="{{ lcdbg }}" hint-size="300px,300px"></x-import>
         </div>
       </div>
       <div style="margin-top:24px;flex-shrink:0;display:flex;gap:32px;align-items:flex-start">
@@ -450,7 +477,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
   <sc-if value="{{ is.checkin }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="05 출석 완료" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;align-items:center">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding-bottom:60px">
-        <div style="animation:lfPop 520ms 120ms cubic-bezier(0.34,1.56,0.64,1) both;width:240px;height:240px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+        <div style="animation:lfPop 520ms 120ms cubic-bezier(0.32,0.72,0,1) both;width:240px;height:240px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
           <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" expr="happy" pose="stamp" scale="5" hint-size="160px,165px"></x-import>
         </div>
         <span style="font-size:17px;font-weight:600;color:#5B6472">출석 완료</span>
@@ -458,8 +485,9 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         <span style="font-size:16px;color:rgba(60,60,67,0.6)">{{ nextHint }}</span>
       </div>
       <div style="width:100%;box-sizing:border-box;padding:0 20px 42px;display:flex;flex-direction:column;gap:8px">
-        <button onClick="{{ nav.share }}" style="height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418;transform:scale(0.98)">공유카드 만들기</button>
-        <button onClick="{{ nav.home }}" style="height:56px;border:0;border-radius:16px;background:#F2F3F5;color:#1E2228;font-size:17px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">확인</button>
+        <button onClick="{{ nav.routine }}" style="height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-active="background:#111418;transform:scale(0.98)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"></path></svg>오늘 운동 기록하기</button>
+        <button onClick="{{ nav.share }}" style="height:56px;border:0;border-radius:16px;background:#F2F3F5;color:#1E2228;font-size:17px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">공유카드 만들기</button>
+        <button onClick="{{ nav.home }}" style="height:44px;border:0;background:transparent;color:rgba(60,60,67,0.6);font-size:15px;font-weight:500;cursor:pointer">나중에 할게요</button>
       </div>
     </div>
   </sc-if>
@@ -478,7 +506,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
           <span style="font-size:13px;font-weight:600;color:rgba(0,0,0,0.5)">2026.10.13</span>
         </div>
         <div style="position:relative;height:300px;margin:0 -8px">
-          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" still="" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,300px"></x-import>
+          <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" form="{{ form }}" scene="{{ scene }}" lcdbg="{{ lcdbg }}" still="" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,300px"></x-import>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:flex-end;padding:0 4px">
           <div style="display:flex;flex-direction:column;gap:2px">
@@ -601,6 +629,222 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
     </div>
   </sc-if>
 
+  <sc-if value="{{ is.routine }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="16 운동 기록" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
+
+      <sc-if value="{{ stPick }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:68px;flex-shrink:0;display:flex;align-items:center;gap:6px;padding:0 20px 0 8px">
+            <button onClick="{{ rBack }}" style="width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+            <sc-if value="{{ rTabSearch }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:1;min-width:0;height:46px;border-radius:23px;background:#F2F4F6;display:flex;align-items:center;gap:10px;padding:0 16px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B95A1" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.500-3.500"></path></svg>
+              <input value="{{ rQuery }}" onChange="{{ onRQuery }}" placeholder="운동 이름을 검색해주세요" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font-size:16px;color:#000">
+            </div>
+          </sc-if>
+          <sc-if value="{{ rTabRec }}" hint-placeholder-val="{{ false }}"><span style="flex:1;font-size:20px;font-weight:700;color:#191F28">추천 루틴</span></sc-if>
+          </div>
+          <sc-if value="{{ rTabSearch }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;overflow-x:auto;scrollbar-width:none;flex-shrink:0;padding:0 8px;box-shadow:inset 0 -1px 0 #F2F4F6">
+              <sc-for list="{{ rCats }}" as="c" hint-placeholder-count="5"><button onClick="{{ c.tap }}" style="flex-shrink:0;height:46px;padding:0 12px;border:0;background:transparent;box-shadow:{{ c.line }};font-size:16px;font-weight:700;color:{{ c.color }};cursor:pointer;transition:color 160ms,box-shadow 160ms">{{ c.name }}</button></sc-for>
+            </div>
+            <div style="flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;padding:4px 20px 48px;animation:lfIn 260ms cubic-bezier(0.32,0.72,0,1) both">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0 10px"><span style="font-size:18px;font-weight:700;color:#191F28">추천 루틴</span><button onClick="{{ goRecAll }}" style="border:0;background:transparent;padding:4px 0 4px 8px;font-size:14px;font-weight:600;color:#6B7684;cursor:pointer">전체보기 ›</button></div>
+              <div style="display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;scrollbar-width:none;margin:0 -20px;padding:0 20px 6px;align-items:stretch">
+                <sc-for list="{{ recs }}" as="c" hint-placeholder-count="3">
+                  <button onClick="{{ c.tap }}" style="flex-shrink:0;scroll-snap-align:start;width:204px;box-sizing:border-box;padding:16px;border:0;border-radius:22px;background:#FFFFFF;box-shadow:inset 0 0 0 {{ c.bw }} {{ c.bc }};display:flex;flex-direction:column;align-items:stretch;gap:12px;text-align:left;cursor:pointer;transition:box-shadow 180ms" style-active="transform:scale(0.98)">
+                    <span style="display:flex;align-items:center;justify-content:space-between">
+                      <span style="width:52px;height:52px;border-radius:16px;background:{{ c.iconBg }};display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="display:flex;animation:lfPix 1.2s steps(1,end) {{ c.delay }} infinite"><x-import component-from-global-scope="loafy-icon" name="{{ c.icon }}" size="28" active="true" hint-size="28px,28px"></x-import></span></span>
+                      <span style="display:flex;gap:4px"><sc-if value="{{ c.isTop }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 9px;border-radius:999px;background:#1E2228;color:#FFFFFF;font-size:12px;font-weight:700;display:flex;align-items:center">추천</span></sc-if><span style="height:24px;padding:0 9px;border-radius:999px;background:#F2F4F6;color:#4E5968;font-size:12px;font-weight:700;display:flex;align-items:center">{{ c.nPill }}</span></span>
+                    </span>
+                    <span style="font-size:17px;line-height:23px;font-weight:700;color:#191F28;word-break:keep-all">{{ c.name }}</span>
+                    <span style="display:flex;flex-direction:column;gap:5px"><sc-for list="{{ c.items }}" as="it" hint-placeholder-count="3"><span style="display:flex;align-items:center;gap:8px;font-size:13px;line-height:18px;color:#6B7684"><span style="width:4px;height:4px;border-radius:1px;background:#B0B8C1;flex-shrink:0"></span>{{ it.n }}</span></sc-for></span>
+                    <span style="margin-top:auto;padding-top:12px;box-shadow:inset 0 1px 0 #F2F4F6;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#191F28">{{ c.cta }}<sc-if value="{{ c.notOn }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></sc-if><sc-if value="{{ c.isOn }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+                  </button>
+                </sc-for>
+              </div>
+              <div style="display:flex;gap:8px;padding:16px 0 8px">
+                <input value="{{ exText }}" onChange="{{ onExText }}" maxlength="20" placeholder="목록에 없으면 직접 등록" style="flex:1;min-width:0;height:44px;border:0;border-radius:12px;background:#F2F4F6;padding:0 14px;font-size:15px;outline:none;color:#000">
+                <button onClick="{{ addCustom }}" style="width:64px;height:44px;border:0;border-radius:12px;background:#1E2228;color:#FFFFFF;font-size:15px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">등록</button>
+              </div>
+              <sc-if value="{{ noMatch }}" hint-placeholder-val="{{ false }}"><button onClick="{{ regQuery }}" style="width:100%;height:56px;border:0;border-radius:14px;background:#F9FAFB;color:#191F28;font-size:16px;font-weight:600;cursor:pointer;margin-bottom:8px">"{{ rQuery }}" 직접 등록하기</button></sc-if>
+              <sc-for list="{{ pickList }}" as="x" hint-placeholder-count="6">
+                <div style="display:flex;align-items:center;gap:14px;height:68px;box-shadow:inset 0 -1px 0 #F2F4F6">
+                  <button onClick="{{ x.tap }}" style="flex:1;min-width:0;height:68px;border:0;background:transparent;display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;padding:0">
+                    <span style="width:46px;height:46px;border-radius:50%;background:{{ x.bg }};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 160ms">
+                      <sc-if value="{{ x.sel }}" hint-placeholder-val="{{ false }}"><span style="display:flex;animation:lfBump 380ms cubic-bezier(0.32,0.72,0,1) both"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                      <sc-if value="{{ x.showIcon }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="loafy-icon" name="{{ x.icon }}" size="24" active="true" hint-size="24px,24px"></x-import></sc-if>
+                    </span>
+                    <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:600;color:#191F28">{{ x.n }}</span><span style="font-size:13px;color:#8B95A1">{{ x.part }}</span></span>
+                  </button>
+                  <button onClick="{{ x.info }}" title="자세히" style="width:40px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B0B8C1" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg></button>
+                  <button onClick="{{ x.star }}" style="width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24" fill="{{ x.starColor }}" stroke="none"><path d="m12 2.500 2.900 6 6.600.9-4.800 4.600 1.200 6.500L12 17.300l-5.900 3.200 1.200-6.500L2.500 9.400l6.600-.9z"></path></svg></button>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ rTabRec }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;padding:12px 20px 48px;display:flex;flex-direction:column;gap:12px;animation:lfIn 260ms cubic-bezier(0.32,0.72,0,1) both">
+              <div style="display:flex;flex-direction:column;gap:3px;padding-bottom:4px"><span style="font-size:13px;color:#8B95A1">{{ recReason }}</span></div>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch"><sc-for list="{{ recs }}" as="c" hint-placeholder-count="3">
+                <button onClick="{{ c.tap }}" style="width:100%;box-sizing:border-box;padding:16px;border:0;border-radius:22px;background:#FFFFFF;box-shadow:inset 0 0 0 {{ c.bw }} {{ c.bc }};display:flex;flex-direction:column;align-items:stretch;gap:12px;text-align:left;cursor:pointer;transition:box-shadow 180ms" style-active="transform:scale(0.98)">
+                    <span style="display:flex;align-items:center;justify-content:space-between">
+                      <span style="width:52px;height:52px;border-radius:16px;background:{{ c.iconBg }};display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="display:flex;animation:lfPix 1.2s steps(1,end) {{ c.delay }} infinite"><x-import component-from-global-scope="loafy-icon" name="{{ c.icon }}" size="28" active="true" hint-size="28px,28px"></x-import></span></span>
+                      <span style="display:flex;gap:4px"><sc-if value="{{ c.isTop }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 9px;border-radius:999px;background:#1E2228;color:#FFFFFF;font-size:12px;font-weight:700;display:flex;align-items:center">추천</span></sc-if><span style="height:24px;padding:0 9px;border-radius:999px;background:#F2F4F6;color:#4E5968;font-size:12px;font-weight:700;display:flex;align-items:center">{{ c.nPill }}</span></span>
+                    </span>
+                    <span style="font-size:17px;line-height:23px;font-weight:700;color:#191F28;word-break:keep-all">{{ c.name }}</span>
+                    <span style="display:flex;flex-direction:column;gap:5px"><sc-for list="{{ c.items }}" as="it" hint-placeholder-count="3"><span style="display:flex;align-items:center;gap:8px;font-size:13px;line-height:18px;color:#6B7684"><span style="width:4px;height:4px;border-radius:1px;background:#B0B8C1;flex-shrink:0"></span>{{ it.n }}</span></sc-for></span>
+                    <span style="margin-top:auto;padding-top:12px;box-shadow:inset 0 1px 0 #F2F4F6;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#191F28">{{ c.cta }}<sc-if value="{{ c.notOn }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></sc-if><sc-if value="{{ c.isOn }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+                  </button>
+              </sc-for></div>
+            </div>
+          </sc-if>
+          <div style="flex-shrink:0;padding:0 20px 32px;position:relative;margin-top:-28px;padding-top:28px;pointer-events:none;background:linear-gradient(to top,#FFFFFF 62%,rgba(255,255,255,0))">
+            <button onClick="{{ rNext }}" style="pointer-events:auto;width:100%;height:54px;border:0;border-radius:16px;background:#1E2228;color:#FFFFFF;font-size:17px;font-weight:600;cursor:pointer;opacity:{{ rNextOp }};transition:opacity 160ms" style-active="transform:scale(0.98)">{{ rNextLabel }}</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ stEdit }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="height:60px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative">
+            <button onClick="{{ rBackEdit }}" style="position:absolute;left:8px;top:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+            <span style="font-size:13px;color:#8B95A1">{{ rDate }}</span>
+            <span style="font-size:17px;font-weight:600;color:#191F28">오늘 운동 기록</span>
+          </div>
+          <div style="flex:1;min-height:0;overflow-y:auto;padding-bottom:56px">
+            <div style="display:flex;gap:12px;padding:16px 20px 24px">
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                <div style="height:24px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:13px;color:#8B95A1">운동 시간</span><sc-if value="{{ minsEdited }}" hint-placeholder-val="{{ false }}"><button onClick="{{ minsReset }}" style="border:0;background:transparent;padding:0;font-size:12px;font-weight:600;color:#3182F6;cursor:pointer">자동으로</button></sc-if></div>
+                <div style="height:48px;padding:0 14px;border-radius:14px;background:#F2F4F6;display:flex;align-items:center;gap:4px"><input type="number" inputmode="numeric" value="{{ minsVal }}" onChange="{{ onMins }}" style="width:100%;min-width:0;border:0;outline:none;background:transparent;font-size:22px;font-weight:800;color:#191F28;text-align:right;font-family:inherit"><span style="font-size:15px;font-weight:600;color:#6B7684">분</span></div>
+              </div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                <div style="height:24px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:13px;color:#8B95A1">소모 칼로리</span><div style="display:flex;padding:2px;border-radius:9px;background:#F2F4F6"><button onClick="{{ setAuto }}" style="height:24px;padding:0 9px;border:0;border-radius:7px;background:{{ autoBg }};font-size:12px;font-weight:700;color:#191F28;cursor:pointer">자동</button><button onClick="{{ setManual }}" style="height:24px;padding:0 9px;border:0;border-radius:7px;background:{{ manualBg }};font-size:12px;font-weight:700;color:#191F28;cursor:pointer">직접</button></div></div>
+                <div style="height:48px;padding:0 14px;border-radius:14px;background:#F2F4F6;display:flex;align-items:center;gap:4px">
+                  <sc-if value="{{ kcalAutoOn }}" hint-placeholder-val="{{ true }}"><span style="flex:1;text-align:right;font-size:22px;font-weight:800;color:#191F28;font-variant-numeric:tabular-nums">{{ kcalVal }}</span></sc-if>
+                  <sc-if value="{{ kcalManualOn }}" hint-placeholder-val="{{ false }}"><input type="number" inputmode="numeric" value="{{ kcalVal }}" onChange="{{ onKcal }}" style="width:100%;min-width:0;border:0;outline:none;background:transparent;font-size:22px;font-weight:800;color:#191F28;text-align:right;font-family:inherit"></sc-if>
+                  <span style="font-size:15px;font-weight:600;color:#6B7684">kcal</span>
+                </div>
+                <span style="font-size:12px;color:#8B95A1">{{ kcalNote }}</span>
+              </div>
+            </div>
+            <sc-for list="{{ sExs }}" as="e" hint-placeholder-count="2">
+              <div style="box-shadow:inset 0 8px 0 #F4F5F7;padding:28px 20px 24px;display:flex;flex-direction:column;gap:16px">
+                <div style="display:flex;align-items:center;justify-content:space-between"><span style="display:flex;align-items:center;gap:12px;min-width:0"><span style="width:44px;height:44px;border-radius:50%;background:{{ e.tint }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><x-import component-from-global-scope="loafy-icon" name="{{ e.icon }}" size="24" active="true" hint-size="24px,24px"></x-import></span><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:20px;font-weight:700;color:#191F28">{{ e.n }}</span><span style="font-size:12px;color:#8B95A1">{{ e.hint }}</span></span></span><button onClick="{{ e.del }}" style="height:32px;padding:0 4px;border:0;background:transparent;font-size:14px;font-weight:600;color:#8B95A1;cursor:pointer">이 운동 삭제</button></div>
+                <sc-if value="{{ e.cardio }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <div style="height:62px;border-radius:18px;box-shadow:inset 0 0 0 1.5px #E5E8EB;display:flex;align-items:center;justify-content:center;gap:6px"><input type="number" inputmode="numeric" value="{{ e.cIn }}" onChange="{{ e.onC }}" style="width:90px;border:0;outline:none;background:transparent;font-size:28px;font-weight:800;color:#191F28;text-align:right;font-family:inherit"><span style="font-size:17px;font-weight:600;color:#6B7280">분</span></div>
+                    <div style="display:flex;gap:6px"><sc-for list="{{ e.cChips }}" as="ch" hint-placeholder-count="5"><button onClick="{{ ch.tap }}" style="flex:1;height:36px;border:0;border-radius:999px;background:{{ ch.bg }};color:{{ ch.color }};font-size:14px;font-weight:600;cursor:pointer;transition:background 160ms,color 160ms" style-active="transform:scale(0.98)">{{ ch.label }}</button></sc-for></div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ e.notCardio }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <sc-for list="{{ e.rows }}" as="r" hint-placeholder-count="3">
+                      <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:14px;background:#F9FAFB">
+                        <span style="width:20px;font-size:13px;font-weight:700;color:#8B95A1">{{ r.idx }}</span>
+                        <div style="flex:1;min-width:0;height:40px;border-radius:11px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E5E8EB;display:flex;align-items:center;justify-content:flex-end;gap:3px;padding:0 10px"><input type="number" inputmode="decimal" value="{{ r.kgVal }}" onChange="{{ r.onKg }}" style="width:56px;border:0;outline:none;background:transparent;font-size:16px;font-weight:700;color:#191F28;text-align:right;font-family:inherit;padding:0"><span style="font-size:13px;color:#8B95A1">kg</span></div>
+                        <div style="flex:1;min-width:0;height:40px;border-radius:11px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E5E8EB;display:flex;align-items:center;justify-content:flex-end;gap:3px;padding:0 10px"><input type="number" inputmode="decimal" value="{{ r.repsVal }}" onChange="{{ r.onReps }}" style="width:44px;border:0;outline:none;background:transparent;font-size:16px;font-weight:700;color:#191F28;text-align:right;font-family:inherit;padding:0"><span style="font-size:13px;color:#8B95A1">회</span></div>
+                        <button onClick="{{ r.toggle }}" style="width:36px;height:36px;border:0;border-radius:50%;background:{{ r.bg }};color:{{ r.color }};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background 160ms" style-active="transform:scale(0.95)"><span style="display:flex;animation:{{ r.anim }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></button>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <span style="font-size:14px;color:#8B95A1">운동 강도</span>
+                <div style="display:flex;justify-content:space-around">
+                  <sc-for list="{{ e.levels }}" as="lv" hint-placeholder-count="3">
+                    <button onClick="{{ lv.tap }}" style="border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;padding:0;width:96px" style-active="transform:scale(0.98)">
+                      <span style="position:relative;width:72px;height:72px;border-radius:50%;background:{{ lv.bg }};transition:background 200ms;overflow:hidden">
+                        <sc-if value="{{ lv.on }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;left:-14px;top:5px;display:flex;animation:lfBump 420ms cubic-bezier(0.32,0.72,0,1) both"><x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" expr="{{ lv.expr }}" scale="3.2" hint-size="102px,106px"></x-import></span></sc-if>
+                        <sc-if value="{{ lv.off }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;left:-14px;top:5px;display:flex;filter:grayscale(1);opacity:0.5"><x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" expr="{{ lv.expr }}" scale="3.2" hint-size="102px,106px"></x-import></span></sc-if>
+                      </span>
+                      <span style="font-size:15px;font-weight:{{ lv.fw }};color:{{ lv.color }}">{{ lv.name }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ e.notCardio }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;justify-content:center;gap:40px">
+                    <button onClick="{{ e.delSet }}" style="height:36px;border:0;background:transparent;font-size:15px;color:#8B95A1;cursor:pointer">마지막 세트 삭제</button>
+                    <button onClick="{{ e.addSet }}" style="height:36px;border:0;background:transparent;font-size:15px;color:#191F28;font-weight:600;cursor:pointer">+ 세트 추가</button>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+            <div style="box-shadow:inset 0 8px 0 #F4F5F7;padding:28px 20px 8px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:20px;font-weight:700;color:#191F28">메모</span>
+              <textarea value="{{ rMemo }}" onChange="{{ onRMemo }}" maxlength="200" placeholder="컨디션, 느낀 점, 다음에 늘릴 무게 등" style="height:96px;border:0;border-radius:16px;background:#F9FAFB;padding:14px 16px;font-size:16px;line-height:24px;resize:none;outline:none;color:#000;font-family:inherit"></textarea>
+            </div>
+          </div>
+          <div style="flex-shrink:0;display:flex;gap:10px;padding:0 20px 36px;position:relative;margin-top:-28px;padding-top:28px;pointer-events:none;background:linear-gradient(to top,#FFFFFF 62%,rgba(255,255,255,0))">
+            <button onClick="{{ rAddMore }}" style="pointer-events:auto;flex:1;height:56px;border:0;border-radius:16px;background:#F2F4F6;color:#191F28;font-size:17px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">운동 추가</button>
+            <button onClick="{{ rFinish }}" style="pointer-events:auto;flex:1;height:56px;border:0;border-radius:16px;background:#1E2228;color:#FFFFFF;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418;transform:scale(0.98)">기록 완료</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ stDone }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;padding-top:{{ fr.top }};background:#FFFFFF;display:flex;flex-direction:column;overflow-y:auto;animation:lfFade 240ms ease-out both">
+          <div style="height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative">
+            <button onClick="{{ doneOk }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+            <span style="font-size:17px;font-weight:600">{{ rDate }} 운동 기록</span>
+          </div>
+          <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 20px 24px">
+            <div style="width:148px;height:148px;border-radius:50%;background:{{ catBg }};display:flex;align-items:center;justify-content:center;margin-bottom:12px;animation:lfPop 520ms 100ms cubic-bezier(0.32,0.72,0,1) both"><x-import component-from-global-scope="loafy-sprite" type="{{ doneBody }}" coat="{{ coat }}" acc="{{ catAcc }}" expr="happy" scale="3.4" hint-size="109px,113px"></x-import></div>
+            <span style="font-size:24px;line-height:32px;font-weight:800;color:#191F28">오늘도 한층 더 강해졌어요</span>
+            <span style="font-size:15px;line-height:22px;color:#6B7684;text-align:center">{{ doneNth }}번째 운동 기록이에요<br>{{ name }}{{ jo.ga }} 자랑스러워해요</span>
+            <div style="display:flex;gap:8px;padding-top:8px"><sc-for list="{{ doneChips }}" as="c" hint-placeholder-count="2"><span style="height:30px;padding:0 12px;border-radius:999px;background:#F2F4F6;color:#191F28;font-size:13px;font-weight:700;display:flex;align-items:center;animation:lfPop 420ms 300ms cubic-bezier(0.32,0.72,0,1) both">{{ c.label }} {{ c.val }}</span></sc-for></div>
+          </div>
+          <div style="flex-shrink:0;padding:0 20px 24px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;padding:16px 18px;border-radius:20px;background:#F9FAFB;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#8B95A1">소모 칼로리</span><span style="font-size:26px;line-height:32px;font-weight:800;color:#191F28;font-variant-numeric:tabular-nums">{{ rKcal }}<span style="font-size:15px;font-weight:700"> kcal</span></span></div>
+              <div style="flex:1;padding:16px 18px;border-radius:20px;background:#F9FAFB;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#8B95A1">운동 시간</span><span style="font-size:26px;line-height:32px;font-weight:800;color:#191F28">{{ rMinsShow }}</span></div>
+            </div>
+            <div style="height:8px;background:#F4F5F7;margin:12px -20px 0"></div><div style="padding:12px 0 0;display:flex;flex-direction:column"><span style="font-size:18px;font-weight:700;color:#191F28;padding-bottom:6px">한 운동</span>
+              <sc-for list="{{ doneExs }}" as="x" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:12px;padding:12px 0;box-shadow:inset 0 -1px 0 #F2F4F6"><span style="width:40px;height:40px;border-radius:50%;background:{{ x.tint }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><x-import component-from-global-scope="loafy-icon" name="{{ x.icon }}" size="24" active="true" hint-size="24px,24px"></x-import></span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:15px;font-weight:600;color:#191F28">{{ x.n }}</span><span style="font-size:13px;color:#8B95A1">{{ x.sub }}</span></div></div></sc-for></div>
+            <div style="height:8px;background:#F4F5F7;margin:12px -20px 0"></div><div style="padding:12px 0 0;display:flex;flex-direction:column"><span style="font-size:18px;font-weight:700;color:#191F28;padding-bottom:6px">운동 부하</span>
+              <sc-for list="{{ loadRows }}" as="l" hint-placeholder-count="3"><div style="height:52px;display:flex;align-items:center;justify-content:space-between;box-shadow:inset 0 -1px 0 #F2F4F6"><span style="font-size:15px;color:#333D4B">{{ l.part }}</span><span style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:#191F28"><span style="width:14px;height:14px;border-radius:4px;background:{{ l.sq }}"></span>{{ l.lv }}단계</span></div></sc-for></div>
+            <sc-for list="{{ doneCards }}" as="c" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:20px;background:#F9FAFB">
+                <span style="width:44px;height:44px;border-radius:14px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><x-import component-from-global-scope="loafy-icon" name="{{ c.icon }}" size="24" active="true" hint-size="24px,24px"></x-import></span>
+                <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:16px;font-weight:700;color:#191F28">{{ c.title }}</span><span style="font-size:14px;color:#8B95A1">{{ c.sub }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:auto;position:sticky;bottom:0;flex-shrink:0;padding:12px 20px 36px;background:linear-gradient(to top,#FFFFFF 75%,rgba(255,255,255,0))">
+            <div style="display:flex;gap:10px">
+              <sc-if value="{{ doneEditable }}" hint-placeholder-val="{{ false }}"><button onClick="{{ doneEdit }}" style="flex:1;height:56px;border:0;border-radius:16px;background:#F2F4F6;color:#191F28;font-size:17px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px" style-active="transform:scale(0.98)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#191F28" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.500 3.500a2.100 2.100 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>수정</button></sc-if>
+              <button onClick="{{ doneOk }}" style="flex:1.6;height:56px;border:0;border-radius:16px;background:#1E2228;color:#FFFFFF;font-size:17px;font-weight:600;cursor:pointer" style-active="background:#111418;transform:scale(0.98)">확인했어요</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ is.push }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="18 알림 설정" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;overflow-y:auto">
+      <div style="height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative"><button onClick="{{ nav.my }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button><span style="font-size:17px;font-weight:600">알림 설정</span></div>
+      <div style="display:flex;padding:0 20px;box-shadow:inset 0 -1px 0 #F2F4F6;flex-shrink:0;position:sticky;top:0;background:#FFFFFF;z-index:2">
+        <sc-for list="{{ alarmTabs }}" as="t" hint-placeholder-count="2">
+          <button onClick="{{ t.tap }}" style="flex:1;height:48px;border:0;background:transparent;box-shadow:{{ t.line }};font-size:16px;font-weight:700;color:{{ t.color }};cursor:pointer;transition:color 180ms,box-shadow 180ms">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <div style="padding:20px 20px 48px;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:20px;font-weight:700;color:#191F28">받을 알림을 골라요</span>
+          <span style="font-size:14px;line-height:20px;color:#8B95A1">종류별로 켜고 끌 수 있어요</span>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ pushTypes }}" as="p" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:12px;min-height:72px;box-shadow:inset 0 -1px 0 #F2F4F6">
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:17px;font-weight:600;color:#191F28">{{ p.name }}</span><span style="font-size:13px;color:#8B95A1">{{ p.when }}</span></div>
+              <button onClick="{{ p.toggle }}" style="position:relative;width:51px;height:31px;border:0;border-radius:999px;background:{{ p.track }};cursor:pointer;flex-shrink:0;transition:background 200ms"><span style="position:absolute;top:2px;left:{{ p.knob }};width:27px;height:27px;border-radius:50%;background:#FFFFFF;box-shadow:0 2px 4px rgba(0,0,0,0.2);transition:left 220ms cubic-bezier(0.32,0.72,0,1)"></span></button>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ is.letterDone }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="08 사연 완료" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding-bottom:60px">
@@ -676,6 +920,12 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
                 <sc-if value="{{ it.isCatAcc }}" hint-placeholder-val="{{ false }}">
                   <x-import component-from-global-scope="loafy-sprite" type="normal" coat="{{ coat }}" acc="{{ it.val }}" scale="3" hint-size="96px,99px"></x-import>
                 </sc-if>
+                <sc-if value="{{ it.isForm }}" hint-placeholder-val="{{ false }}">
+                  <svg width="80" height="80" viewBox="0 0 80 80"><path d="M16 36 21 12 38 25Z" fill="#C9CCD3" stroke="#C9CCD3" stroke-width="9" stroke-linejoin="round"></path><path d="M64 36 59 12 42 25Z" fill="#C9CCD3" stroke="#C9CCD3" stroke-width="9" stroke-linejoin="round"></path><path d="M21 28 23 19 30 24Z" fill="#F4B6BF" stroke="#F4B6BF" stroke-width="3" stroke-linejoin="round"></path><path d="M59 28 57 19 50 24Z" fill="#F4B6BF" stroke="#F4B6BF" stroke-width="3" stroke-linejoin="round"></path><ellipse cx="40" cy="47" rx="27" ry="30" fill="#C9CCD3"></ellipse><rect x="27" y="35" width="26" height="24" rx="8" fill="#14161B"></rect></svg>
+                </sc-if>
+                <sc-if value="{{ it.isScene }}" hint-placeholder-val="{{ false }}">
+                  <span style="display:block;width:84px;height:84px;border-radius:16px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"><x-import component-from-global-scope="loafy-lcd" body="{{ body }}" coat="{{ coat }}" lcd="color" streak="{{ streak }}" scene="{{ it.sceneKey }}" lcdbg="{{ lcdbg }}" hint-size="84px,84px"></x-import></span>
+                </sc-if>
                 <sc-if value="{{ it.isPattern }}" hint-placeholder-val="{{ false }}">
                   <span style="width:64px;height:64px;border-radius:50%;background:{{ it.swatch }};box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span>
                 </sc-if>
@@ -701,7 +951,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
   <sc-if value="{{ is.deco }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="13 꾸미기" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column">
       <div style="height:52px;display:flex;align-items:center;justify-content:center;position:relative">
-        <button onClick="{{ nav.my }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+        <button onClick="{{ decoBack }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
         <span style="font-size:17px;font-weight:600">꾸미기</span>
       </div>
       <div style="display:flex;padding:0 20px;border-bottom:1px solid #F2F4F6">
@@ -713,7 +963,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         <sc-if value="{{ shopDevice }}" hint-placeholder-val="{{ true }}">
           <div style="display:flex;flex-direction:column">
             <div style="position:relative;height:300px;background:#F2F2F7">
-              <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,300px"></x-import>
+              <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" strap="{{ strap }}" pattern="{{ pattern }}" form="{{ form }}" scene="{{ scene }}" lcdbg="{{ lcdbg }}" color="{{ shell }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,300px"></x-import>
             </div>
             <div style="padding:24px 20px 0;display:flex;flex-direction:column;gap:28px">
               <div style="display:flex;flex-direction:column;gap:12px">
@@ -726,6 +976,29 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
                     <button onClick="{{ s.pick }}" title="{{ s.name }}" style="width:48px;height:48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer">
                       <span style="width:38px;height:38px;border-radius:50%;background:{{ s.hex }};box-shadow:{{ s.ring }}"></span>
                     </button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline">
+                  <span style="font-size:17px;font-weight:700;color:#191F28">화면 배경</span>
+                  <button onClick="{{ goShopDevice }}" style="border:0;background:transparent;padding:0;font-size:14px;font-weight:600;color:#4E5968;cursor:pointer">샵에서 더 보기 ›</button>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:10px">
+                  <sc-for list="{{ lcdColors }}" as="c" hint-placeholder-count="7"><button onClick="{{ c.pick }}" style="width:40px;height:40px;border:0;border-radius:50%;background:{{ c.hex }};box-shadow:{{ c.ring }};cursor:pointer;transition:box-shadow 160ms"></button></sc-for>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:10px">
+                  <sc-for list="{{ scenes }}" as="s" hint-placeholder-count="2"><button onClick="{{ s.pick }}" style="border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer" style-active="transform:scale(0.98)"><span style="display:block;width:76px;height:76px;border-radius:16px;overflow:hidden;box-shadow:{{ s.ringShadow }};transition:box-shadow 160ms"><x-import component-from-global-scope="loafy-lcd" body="{{ body }}" coat="{{ coat }}" lcd="color" streak="{{ streak }}" scene="{{ s.k }}" lcdbg="{{ lcdbg }}" hint-size="76px,76px"></x-import></span><span style="font-size:13px;font-weight:600;color:#191F28">{{ s.name }}</span></button></sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline">
+                  <span style="font-size:17px;font-weight:700;color:#191F28">모양</span>
+                  <button onClick="{{ goShopDevice }}" style="border:0;background:transparent;padding:0;font-size:14px;font-weight:600;color:#4E5968;cursor:pointer">샵에서 더 보기 ›</button>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ forms }}" as="fm" hint-placeholder-count="2">
+                    <button onClick="{{ fm.pick }}" style="height:44px;padding:0 16px;border-radius:999px;border:2px solid {{ fm.ring }};background:#F4F5F7;font-size:15px;font-weight:600;color:#191F28;cursor:pointer">{{ fm.name }}</button>
                   </sc-for>
                 </div>
               </div>
@@ -820,7 +1093,10 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
             </div>
           </div>
         </sc-if>
-        <div style="height:48px"></div>
+        <div style="height:76px"></div>
+      </div>
+      <div style="flex-shrink:0;padding:0 20px 36px;position:relative;margin-top:-28px;padding-top:28px;pointer-events:none;background:linear-gradient(to top,#FFFFFF 62%,rgba(255,255,255,0))">
+        <button onClick="{{ decoApply }}" style="pointer-events:auto;width:100%;height:56px;border:0;border-radius:16px;background:{{ decoBtnBg }};color:{{ decoBtnColor }};font-size:17px;font-weight:600;cursor:pointer;transition:background 180ms,color 180ms" style-active="transform:scale(0.98)">{{ decoBtnLabel }}</button>
       </div>
     </div>
   </sc-if>
@@ -828,8 +1104,8 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
   <sc-if value="{{ is.record }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="10 기록" style="position:absolute;inset:0;animation:lfIn 340ms cubic-bezier(0.32,0.72,0,1) both;background:#FFFFFF;padding-top:{{ fr.top }};display:flex;flex-direction:column;overflow-y:auto">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px 0 12px">
-        <button onClick="{{ cal.openSheet }}" style="height:48px;border:0;background:transparent;padding:0 8px;border-radius:12px;display:flex;align-items:center;gap:4px;cursor:pointer" style-active="background:#F2F4F6">
-          <span style="font-size:24px;font-weight:800;color:#191F28">{{ cal.year }}년 {{ cal.month }}월</span>
+        <button onClick="{{ cal.openSheet }}" style="flex-shrink:0;height:48px;border:0;background:transparent;padding:0 8px;border-radius:12px;display:flex;align-items:center;gap:4px;cursor:pointer" style-active="background:#F2F4F6">
+          <span style="font-size:24px;font-weight:800;color:#191F28;white-space:nowrap">{{ cal.year }}년 {{ cal.month }}월</span>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#191F28" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
         </button>
         <sc-if value="{{ cal.notCurrent }}" hint-placeholder-val="{{ false }}">
@@ -892,6 +1168,26 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         <sc-if value="{{ day.hasNote }}" hint-placeholder-val="{{ false }}">
           <div style="padding:16px 18px;border-radius:16px;background:#F9FAFB;font-size:16px;line-height:24px;color:#4E5968">{{ day.note }}</div>
         </sc-if>
+        <sc-if value="{{ day.hasRoutine }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ day.viewRoutine }}" style="padding:18px;border-radius:18px;background:#F9FAFB;display:flex;flex-direction:column;gap:12px;cursor:pointer" style-active="background:#F2F4F6">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <span style="font-size:16px;font-weight:700;color:#191F28">{{ day.rParts }}</span>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="height:26px;padding:0 10px;border-radius:999px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E5E8EB;font-size:13px;font-weight:700;color:#191F28;display:flex;align-items:center">{{ day.rKcal }} kcal</span>
+                <sc-if value="{{ day.canEditRoutine }}" hint-placeholder-val="{{ false }}"><button onClick="{{ day.editRoutine }}" title="수정" style="width:32px;height:32px;border:0;border-radius:50%;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E5E8EB;display:flex;align-items:center;justify-content:center;cursor:pointer" style-active="transform:scale(0.95)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E5968" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.500 3.500a2.100 2.100 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></button></sc-if>
+              </div>
+            </div>
+            <span style="font-size:14px;color:#8B95A1">{{ day.rMeta }}</span>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <sc-for list="{{ day.rExs }}" as="e" hint-placeholder-count="2">
+                <span style="font-size:15px;color:#4E5968">{{ e.line }}</span>
+              </sc-for>
+            </div>
+            <sc-if value="{{ day.hasMemo }}" hint-placeholder-val="{{ false }}">
+              <span style="padding-top:12px;box-shadow:inset 0 1px 0 #E5E8EB;font-size:15px;line-height:22px;color:#333D4B">{{ day.rMemo }}</span>
+            </sc-if>
+          </div>
+        </sc-if>
         <sc-if value="{{ day.hasCta }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ day.cta }}" style="height:56px;border:0;border-radius:16px;background:{{ day.ctaBg }};color:{{ day.ctaColor }};font-size:17px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">{{ day.ctaLabel }}</button>
         </sc-if>
@@ -919,6 +1215,17 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         </div>
         <button onClick="{{ nav.decoCat }}" style="height:36px;padding:0 14px;border:0;border-radius:10px;background:#F2F4F6;color:#4E5968;font-size:14px;font-weight:600;cursor:pointer" style-active="background:#E5E8EB">고양이 변경</button>
       </div>
+      <div style="margin:0 20px 12px;padding:18px;border-radius:20px;background:#F9FAFB;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-size:16px;font-weight:700;color:#191F28">이번 달 성장</span><span style="font-size:13px;color:#8B95A1">{{ growth.month }}월</span></div>
+        <div style="display:flex">
+          <sc-for list="{{ growth.stats }}" as="g" hint-placeholder-count="3"><div style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:12px;color:#8B95A1">{{ g.label }}</span><span style="font-size:19px;font-weight:800;color:#191F28;font-variant-numeric:tabular-nums">{{ g.value }}</span></div></sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;padding-top:14px;box-shadow:inset 0 1px 0 #ECEEF1">
+          <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-size:14px;font-weight:600;color:#4E5968">진화까지</span><span style="font-size:14px;font-weight:700;color:#191F28">{{ growth.evoText }}</span></div>
+          <div style="height:8px;border-radius:4px;background:#E5E8EB;overflow:hidden"><div style="height:8px;border-radius:4px;background:#1E2228;width:{{ growth.evoPct }};transition:width 400ms cubic-bezier(0.32,0.72,0,1)"></div></div>
+          <span style="font-size:12px;color:#8B95A1">{{ growth.evoSub }}</span>
+        </div>
+      </div>
       <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0 20px 24px;padding:18px 0;border-radius:18px;background:#F9FAFB">
         <sc-for list="{{ myStats }}" as="st" hint-placeholder-count="3">
           <button onClick="{{ st.tap }}" style="border:0;background:transparent;padding:4px 0;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer" style-active="background:#F2F4F6">
@@ -936,6 +1243,14 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         </div>
       </sc-if>
       <div style="height:12px;background:#F2F4F6;flex-shrink:0"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:16px 20px 0">
+        <sc-for list="{{ myQuick }}" as="q" hint-placeholder-count="2">
+          <button onClick="{{ q.tap }}" style="border:0;border-radius:18px;background:#F9FAFB;padding:16px 0 14px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer" style-active="transform:scale(0.96);background:#F2F4F6">
+            <span style="width:48px;height:48px;border-radius:16px;background:{{ q.tint }};display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="loafy-icon" name="{{ q.icon }}" size="24" active="true" hint-size="24px,24px"></x-import></span>
+            <span style="font-size:14px;font-weight:600;color:#191F28">{{ q.label }}</span>
+          </button>
+        </sc-for>
+      </div>
       <div style="padding:20px 0 8px">
         <span style="display:block;padding:0 20px 8px;font-size:14px;font-weight:600;color:#8B95A1">설정</span>
         <sc-for list="{{ myRows }}" as="r" hint-placeholder-count="4">
@@ -962,7 +1277,12 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         <button onClick="{{ nav.my }}" style="position:absolute;left:8px;width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
         </button>
-        <span style="font-size:17px;font-weight:600">출석 알림</span>
+        <span style="font-size:17px;font-weight:600">알림 설정</span>
+      </div>
+      <div style="display:flex;padding:0 20px;box-shadow:inset 0 -1px 0 #F2F4F6;flex-shrink:0">
+        <sc-for list="{{ alarmTabs }}" as="t" hint-placeholder-count="2">
+          <button onClick="{{ t.tap }}" style="flex:1;height:48px;border:0;background:transparent;box-shadow:{{ t.line }};font-size:16px;font-weight:700;color:{{ t.color }};cursor:pointer;transition:color 180ms,box-shadow 180ms">{{ t.label }}</button>
+        </sc-for>
       </div>
       <div style="animation:lfIn 360ms cubic-bezier(0.32,0.72,0,1) both;padding:20px 24px 0;display:flex;flex-direction:column;gap:28px">
         <div style="display:flex;flex-direction:column;gap:10px">
@@ -1061,7 +1381,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
         <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:#D1D6DB"></span>
         <div style="position:relative;height:240px;border-radius:20px;background:{{ buy.tile }};display:flex;align-items:center;justify-content:center;overflow:hidden">
           <sc-if value="{{ buy.isDevice }}" hint-placeholder-val="{{ false }}">
-            <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" fit-scale="0.8" color="{{ buy.pShell }}" strap="{{ buy.pStrap }}" pattern="{{ buy.pPattern }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,240px"></x-import>
+            <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" fit-scale="0.8" color="{{ buy.pShell }}" strap="{{ buy.pStrap }}" pattern="{{ buy.pPattern }}" form="{{ buy.pForm }}" scene="{{ buy.pScene }}" lcdbg="{{ lcdbg }}" body="{{ body }}" coat="{{ coat }}" lcd="{{ lcd }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,240px"></x-import>
           </sc-if>
           <sc-if value="{{ buy.isCoat }}" hint-placeholder-val="{{ false }}">
             <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ buy.val }}" scale="5" animate="" hint-size="160px,165px"></x-import>
@@ -1097,6 +1417,68 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
     </div>
   </sc-if>
 
+  <sc-if value="{{ notiModalOn }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;z-index:50;background:rgba(0,0,0,0.4);animation:lfFade 200ms ease-out both;display:flex;align-items:center;justify-content:center">
+      <div style="width:270px;border-radius:14px;background:rgba(242,242,242,0.92);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);overflow:hidden;text-align:center;animation:lfPop 300ms cubic-bezier(0.32,0.72,0,1) both">
+        <div style="padding:20px 16px 18px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:17px;line-height:22px;font-weight:600;color:#000;word-break:keep-all">"Loafy"에서 알림을 보내고자 합니다.</span>
+          <span style="font-size:13px;line-height:18px;color:#000;word-break:keep-all">알림 문구, 사운드 및 아이콘 배지가 알림에 포함될 수 있습니다. 설정에서 구성할 수 있습니다.</span>
+        </div>
+        <div style="display:flex;box-shadow:inset 0 0.5px 0 rgba(60,60,67,0.36)">
+          <button onClick="{{ notiLater }}" style="flex:1;height:44px;border:0;background:transparent;font-size:17px;color:#007AFF;cursor:pointer" style-active="background:rgba(0,0,0,0.08)">허용 안 함</button>
+          <button onClick="{{ notiAllow }}" style="flex:1;height:44px;border:0;background:transparent;box-shadow:inset 0.5px 0 0 rgba(60,60,67,0.36);font-size:17px;font-weight:600;color:#007AFF;cursor:pointer" style-active="background:rgba(0,0,0,0.08)">허용</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ exInfoOn }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ info.close }}" style="position:absolute;inset:0;z-index:48;background:rgba(0,0,0,0.36);animation:lfFade 200ms ease-out both;display:flex;flex-direction:column;justify-content:flex-end">
+      <div onClick="{{ stop }}" style="margin:0 10px 10px;border-radius:28px;background:#FFFFFF;box-shadow:0 8px 32px rgba(0,0,0,0.12);padding:10px 20px 20px;display:flex;flex-direction:column;gap:16px;animation:lfSheet 440ms cubic-bezier(0.32,0.72,0,1) both">
+        <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:#D1D6DB"></span>
+        <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:22px;font-weight:700;color:#191F28">{{ info.n }}</span><button onClick="{{ info.star }}" style="width:44px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="{{ info.starColor }}" stroke="none"><path d="m12 2.500 2.900 6 6.600.9-4.800 4.600 1.200 6.500L12 17.300l-5.900 3.200 1.200-6.500L2.500 9.400l6.600-.9z"></path></svg></button></div>
+        <div style="height:190px;border-radius:20px;background:{{ info.tint }};display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="loafy-icon" name="{{ info.icon }}" size="96" active="true" hint-size="96px,96px"></x-import></div>
+        <div style="display:flex;flex-direction:column;gap:14px;padding:4px 2px 4px">
+          <div style="display:flex;gap:20px"><span style="width:64px;font-size:15px;color:#8B95A1">타입</span><span style="flex:1;font-size:16px;color:#191F28">{{ info.type }}</span></div>
+          <div style="display:flex;gap:20px"><span style="width:64px;font-size:15px;color:#8B95A1">장비</span><span style="flex:1;font-size:16px;color:#191F28">{{ info.equip }}</span></div>
+          <div style="display:flex;gap:20px"><span style="width:64px;font-size:15px;color:#8B95A1">운동 부하</span><span style="flex:1;font-size:16px;line-height:24px;color:#191F28">{{ info.parts }}</span></div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button onClick="{{ info.close }}" style="flex:1;height:54px;border:0;border-radius:16px;background:#F2F4F6;color:#4E5968;font-size:17px;font-weight:600;cursor:pointer">닫기</button>
+          <button onClick="{{ info.toggle }}" style="flex:1.4;height:54px;border:0;border-radius:16px;background:#1E2228;color:#FFFFFF;font-size:17px;font-weight:600;cursor:pointer">{{ info.cta }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ checkinModal }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeCheckin }}" style="position:absolute;inset:0;z-index:45;background:rgba(0,0,0,0.36);animation:lfFade 160ms ease-out both;display:flex;flex-direction:column;justify-content:flex-end">
+      <div onClick="{{ stop }}" style="margin:0 10px 10px;border-radius:28px;background:#FFFFFF;box-shadow:0 8px 32px rgba(0,0,0,0.12);padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:6px;animation:lfSheet 300ms cubic-bezier(0.32,0.72,0,1) both">
+        <div style="width:120px;height:120px;border-radius:50%;background:{{ catBg }};display:flex;align-items:center;justify-content:center;margin-bottom:8px;animation:lfPop 420ms 80ms cubic-bezier(0.32,0.72,0,1) both">
+          <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" expr="happy" pose="stamp" scale="3" hint-size="96px,99px"></x-import>
+        </div>
+        <span style="font-size:15px;font-weight:600;color:#5B6472">출석 완료</span>
+        <span style="font-size:44px;line-height:50px;font-weight:800;color:#000;letter-spacing:-0.02em">D+{{ streak }}</span>
+        <span style="font-size:15px;color:rgba(60,60,67,0.6);padding-bottom:20px">{{ nextHint }}</span>
+        <button onClick="{{ nav.routine }}" style="width:100%;height:56px;border:0;border-radius:16px;background:#1E2228;color:#fff;font-size:17px;font-weight:600;cursor:pointer;margin-bottom:8px" style-active="background:#111418;transform:scale(0.98)">오늘 운동 기록하기</button>
+        <div style="width:100%;display:flex;gap:10px">
+          <button onClick="{{ nav.share }}" style="flex:1;height:50px;border:0;border-radius:16px;background:#F2F3F5;color:#1E2228;font-size:16px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">공유카드</button>
+          <button onClick="{{ closeCheckin }}" style="flex:1;height:50px;border:0;border-radius:16px;background:#F2F3F5;color:#6B7684;font-size:16px;font-weight:600;cursor:pointer" style-active="transform:scale(0.98)">닫기</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ bannerOn }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:8px;right:8px;top:calc({{ fr.top }} + 6px);z-index:70;padding:12px 14px;border-radius:22px;background:rgba(250,250,250,0.86);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 8px 32px rgba(0,0,0,0.16);display:flex;gap:10px;align-items:flex-start;animation:lfBanner 420ms cubic-bezier(0.32,0.72,0,1) both">
+      <span style="width:38px;height:38px;border-radius:9px;background:{{ catBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" acc="{{ catAcc }}" scale="1.1" hint-size="35px,36px"></x-import></span>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:15px;font-weight:600;color:#000">{{ banner.title }}</span><span style="font-size:13px;color:rgba(60,60,67,0.6)">지금</span></div>
+        <span style="font-size:15px;line-height:20px;color:#000">{{ banner.body }}</span>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ cookieOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ closeCookies }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.36);animation:lfFade 240ms ease-out both;display:flex;flex-direction:column;justify-content:flex-end">
       <div onClick="{{ stop }}" style="background:#FFFFFF;margin:0 10px 10px;border-radius:28px;box-shadow:0 8px 32px rgba(0,0,0,0.12);animation:lfSheet 440ms cubic-bezier(0.32,0.72,0,1) both;padding:10px 20px 24px;display:flex;flex-direction:column;gap:16px">
@@ -1119,7 +1501,7 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
                 <span style="font-size:16px;font-weight:700;color:#191F28">쿠키 {{ p.n }}개</span>
                 <span style="font-size:13px;font-weight:600;color:#1B64DA">{{ p.bonus }}</span>
               </div>
-              <button onClick="{{ p.buy }}" style="height:36px;padding:0 14px;border:0;border-radius:999px;background:#1E2228;color:#FFFFFF;font-size:14px;font-weight:600;cursor:pointer;opacity:{{ p.op }}" style-active="transform:scale(0.96)">{{ p.cta }}</button>
+              <button onClick="{{ p.buy }}" style="height:36px;padding:0 14px;border:0;border-radius:999px;background:#1E2228;color:#FFFFFF;font-size:14px;font-weight:600;cursor:pointer;opacity:{{ p.op }}" style-active="transform:scale(0.98)">{{ p.cta }}</button>
             </div>
           </sc-for>
         </div>
@@ -1158,12 +1540,14 @@ textarea::placeholder,input::placeholder{color:#B0B3BA}
 </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;frame&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;web&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;web&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;webHeight&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;login&quot;,&quot;obAgree&quot;,&quot;terms&quot;,&quot;obProfile&quot;,&quot;obName&quot;,&quot;obGoal&quot;,&quot;obGym&quot;,&quot;obCoat&quot;,&quot;obShell&quot;,&quot;obTime&quot;,&quot;obRule&quot;,&quot;home&quot;,&quot;lcd&quot;,&quot;checkin&quot;,&quot;share&quot;,&quot;letter&quot;,&quot;letterDone&quot;,&quot;shop&quot;,&quot;shopBuy&quot;,&quot;deco&quot;,&quot;decoCat&quot;,&quot;record&quot;,&quot;my&quot;,&quot;alarm&quot;,&quot;letters&quot;,&quot;noti&quot;],&quot;default&quot;:&quot;splash&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;missed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;body&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;slim&quot;,&quot;bulk&quot;,&quot;fit&quot;,&quot;normal&quot;,&quot;jjin&quot;,&quot;loaf&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;lcd&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;mono&quot;],&quot;default&quot;:&quot;color&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;shell&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#C9CCD3&quot;,&quot;#F1E4CB&quot;,&quot;#A8DCCB&quot;,&quot;#CFC8EC&quot;],&quot;default&quot;:&quot;#C9CCD3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;ads&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;frame&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;web&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;web&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;webHeight&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;login&quot;,&quot;obAgree&quot;,&quot;terms&quot;,&quot;obProfile&quot;,&quot;obName&quot;,&quot;obGoal&quot;,&quot;obGym&quot;,&quot;obCoat&quot;,&quot;obShell&quot;,&quot;obTime&quot;,&quot;obRule&quot;,&quot;home&quot;,&quot;lcd&quot;,&quot;checkin&quot;,&quot;share&quot;,&quot;letter&quot;,&quot;letterDone&quot;,&quot;shop&quot;,&quot;shopBuy&quot;,&quot;deco&quot;,&quot;decoCat&quot;,&quot;record&quot;,&quot;my&quot;,&quot;alarm&quot;,&quot;letters&quot;,&quot;noti&quot;,&quot;routine&quot;,&quot;notiModal&quot;,&quot;push&quot;],&quot;default&quot;:&quot;splash&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;missed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;body&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;slim&quot;,&quot;bulk&quot;,&quot;fit&quot;,&quot;normal&quot;,&quot;jjin&quot;,&quot;loaf&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;로피&quot;},&quot;lcd&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;color&quot;,&quot;mono&quot;],&quot;default&quot;:&quot;color&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;shell&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#C9CCD3&quot;,&quot;#F1E4CB&quot;,&quot;#A8DCCB&quot;,&quot;#CFC8EC&quot;],&quot;default&quot;:&quot;#C9CCD3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;빵틀&quot;},&quot;ads&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;}}">
 class Component extends DCLogic {
   state = {
-    screen: ['edit', 'deco', 'decoCat'].includes(this.props.start) ? 'deco' : this.props.start === 'shopBuy' ? 'shop' : (this.props.start || 'splash'), pawRun: 0, shopTab: this.props.start === 'decoCat' ? 'cat' : 'device',
+    screen: ['edit', 'deco', 'decoCat'].includes(this.props.start) ? 'deco' : this.props.start === 'shopBuy' ? 'shop' : this.props.start === 'notiModal' ? 'home' : (this.props.start || 'splash'), pawRun: 0, notiModal: this.props.start === 'notiModal', notiOn: false, rStep: 'pick', shopTab: this.props.start === 'decoCat' ? 'cat' : 'device',
     owned: ['deco', 'decoCat'].includes(this.props.start) ? ['chain-silver', 'coat-blue'] : [], strap: 'none', schedMode: 'count', days: [false, true, true, true, true, true, false], shopFilter: 'all', buy: this.props.start === 'shopBuy' ? 'chain-gold' : null, buying: false,
-    gym: '', notiRead: [], notiFrom: 'home', termKey: 'terms', shopTop: 'device', catAcc: 'none', cookies: 50, cookieSheet: false, paying: null, pattern: 'none', editId: null, toastAct: null,
+    gym: '', scene: 'none', lcdbg: '', routineDay: 20261013, exInfo: null, soundOn: true, checkinModal: false, rTab: 'search', rQuery: '', rCat: '전체', favs: ['스쿼트', '벤치프레스'], pushOn: { remind: true, evening: true, streak: true, letter: true, routine: false, mile: true }, banner: null, form: 'egg', exText: '', routineFrom: 'home', rd: { parts: [], mins: 60, level: 1, exs: [], memo: '', adj: 0 },
+    routines: { 20261009: { parts: ['가슴', '어깨'], mins: 60, level: 1, adj: 0, kcal: 450, exs: [{ n: '벤치프레스', sets: [{ kg: 40, reps: 10, done: true }, { kg: 40, reps: 10, done: true }, { kg: 40, reps: 8, done: true }] }, { n: '숄더프레스', sets: [{ kg: 20, reps: 10, done: true }, { kg: 20, reps: 10, done: true }] }], memo: '어깨 컨디션 좋음' }, 20261010: { parts: ['하체', '유산소'], mins: 75, level: 2, adj: 0, kcal: 750, exs: [{ n: '스쿼트', sets: [{ kg: 50, reps: 10, done: true }, { kg: 50, reps: 10, done: true }, { kg: 50, reps: 8, done: true }, { kg: 50, reps: 8, done: true }] }, { n: '러닝머신', cardio: true, min: 20 }], memo: '' } },
+    notiRead: [], notiFrom: 'home', termKey: 'terms', shopTop: 'device', catAcc: 'none', cookies: 50, cookieSheet: false, paying: null, pattern: 'none', editId: null, toastAct: null,
     letters: [{ id: 1005, date: '10월 5일 월요일', text: '야근하느라 출석을 깜빡했어요' }],
     name: '로피', goal: 'slim', coat: this.props.coat || 'cheese',
     agree: { terms: false, privacy: false, age: false, mkt: false }, gender: null, birth: '',
@@ -1188,23 +1572,48 @@ class Component extends DCLogic {
   pawGo = (s) => { this.setState(st => ({ pawRun: st.pawRun + 1 })); clearTimeout(this._pg); this._pg = setTimeout(() => this.go(s), 560); };
   armSplash() { clearTimeout(this._sp); this._sp = setTimeout(() => { if (this.state.screen === 'splash') this.pawGo('login'); }, 6000); }
   onLogoDone = (e) => { if (this.mine(e) && this.state.screen === 'splash') { clearTimeout(this._sp); this._sp = setTimeout(() => this.state.screen === 'splash' && this.pawGo('login'), 700); } };
-  componentDidMount() { document.addEventListener('loafy:logo-done', this.onLogoDone); if (this.state.screen === 'splash') this.armSplash(); document.addEventListener('loafy:open-lcd', this.onOpen); document.addEventListener('loafy:device-feed', this.onFeed); }
-  componentWillUnmount() { document.removeEventListener('loafy:logo-done', this.onLogoDone); clearTimeout(this._sp); clearTimeout(this._pg); clearTimeout(this._pt); clearTimeout(this._bt); clearTimeout(this._ct); clearTimeout(this._tt); document.removeEventListener('loafy:open-lcd', this.onOpen); document.removeEventListener('loafy:device-feed', this.onFeed); }
+  componentDidMount() { document.addEventListener('loafy:logo-done', this.onLogoDone); document.addEventListener('click', this.onClickAny, true); if (this.state.screen === 'splash') this.armSplash(); document.addEventListener('loafy:open-lcd', this.onOpen); document.addEventListener('loafy:device-feed', this.onFeed); }
+  componentWillUnmount() { document.removeEventListener('loafy:logo-done', this.onLogoDone); document.removeEventListener('click', this.onClickAny, true); clearTimeout(this._sp); clearTimeout(this._pg); clearTimeout(this._pt); clearTimeout(this._bt); clearTimeout(this._ct); clearTimeout(this._tt); document.removeEventListener('loafy:open-lcd', this.onOpen); document.removeEventListener('loafy:device-feed', this.onFeed); }
   go = (s) => {
     clearTimeout(this._ct);
-    if (s === 'decoCat') return this.setState({ screen: 'deco', shopTab: 'cat', sheet: false, buy: null });
-    if (s === 'decoDevice' || s === 'edit' || s === 'deco') return this.setState({ screen: 'deco', shopTab: 'device', sheet: false, buy: null });
+    const snapNow = () => { const q = this.state; return { coat: q.coat, shell: q.shell, strap: q.strap, pattern: q.pattern, form: q.form, catAcc: q.catAcc, scene: q.scene, lcdbg: q.lcdbg }; };
+    if (s === 'decoCat') return this.setState({ screen: 'deco', shopTab: 'cat', sheet: false, buy: null, checkinModal: false, decoSnap: this.state.screen === 'deco' ? this.state.decoSnap : snapNow() });
+    if (s === 'decoDevice' || s === 'edit' || s === 'deco') return this.setState({ screen: 'deco', shopTab: 'device', sheet: false, buy: null, checkinModal: false, decoSnap: this.state.screen === 'deco' ? this.state.decoSnap : snapNow() });
     if (s === 'splash') this.armSplash();
     if (s === 'noti') return this.setState({ screen: 'noti', notiFrom: this.state.screen === 'noti' ? this.state.notiFrom : this.state.screen, sheet: false, buy: null });
     if (s === 'letter') return this.setState({ screen: 'letter', editId: null, sheet: false, buy: null });
     if (s === 'shopBuy') return this.setState({ screen: 'shop', buy: 'chain-gold', buying: false, sheet: false });
-    this.setState({ screen: s, sheet: false, buy: null });
+    this.setState({ screen: s, sheet: false, buy: null, checkinModal: false });
   };
+  openRoutine = (from) => this.setState(s => { const r = s.routines[20261013]; return { screen: 'routine', routineDay: 20261013, checkinModal: false, rTab: 'search', rQuery: '', rCat: '전체', rStep: r ? 'edit' : 'pick', routineFrom: from, sheet: false, buy: null, exText: '', rd: r ? { ...r } : { parts: [], mins: 60, level: 1, exs: [], memo: '', adj: 0 } }; });
+  sfx = (n) => {
+    if (!this.state.soundOn) return;
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      const ctx = this._ac = this._ac || new AC(); if (ctx.state === 'suspended') ctx.resume();
+      const t0 = ctx.currentTime;
+      const tone = (f, st, d, type, v, f2) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type || 'sine'; o.frequency.setValueAtTime(f, t0 + st); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + st + d); g.gain.setValueAtTime(0.0001, t0 + st); g.gain.exponentialRampToValueAtTime(v || 0.1, t0 + st + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t0 + st + d); o.connect(g); g.connect(ctx.destination); o.start(t0 + st); o.stop(t0 + st + d + 0.05); };
+      const S = {
+        tap: () => tone(620, 0, 0.06, 'triangle', 0.06),
+        set: () => { tone(660, 0, 0.08, 'sine', 0.1); tone(990, 0.07, 0.12, 'sine', 0.1); },
+        checkin: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.09, 0.3, 'triangle', 0.1)),
+        coin: () => { tone(988, 0, 0.08, 'square', 0.045); tone(1319, 0.08, 0.26, 'square', 0.045); },
+        eat: () => [0, 0.1, 0.2].forEach(s => tone(220, s, 0.07, 'sawtooth', 0.045, 120)),
+        meow: () => { tone(700, 0, 0.34, 'triangle', 0.09, 460); tone(1400, 0, 0.3, 'sine', 0.022, 920); },
+        notif: () => { tone(880, 0, 0.12, 'sine', 0.1); tone(1175, 0.13, 0.24, 'sine', 0.1); }
+      };
+      S[n] && S[n]();
+    } catch (e) {}
+  };
+  onClickAny = (e) => { if (!this.mine(e)) return; const b = e.target && e.target.closest && e.target.closest('button'); if (b) this.sfx('tap'); };
+  showBanner(title, body) { this.sfx('notif'); clearTimeout(this._bb); this.setState({ banner: { title, body } }); this._bb = setTimeout(() => this.setState({ banner: null }), 4200); }
+  openRoutineView = (k) => this.setState(s => { const r = s.routines[k]; return { screen: 'routine', checkinModal: false, rStep: 'done', routineFrom: 'record', routineDay: k, sheet: false, buy: null, rd: { ...r, minsManual: r.mins, kcalMode: 'manual', kcalManual: r.kcal } }; });
   doCheckin(fromDevice) {
     if (this.state.checked) return;
     this.setState(s => ({ checked: true, streak: s.streak + 1 }));
     if (!fromDevice) { const rt = document.querySelector('[data-loafy-root="' + this.uid + '"]'); const t = rt && rt.querySelector('loafy-tama'); t && t.play && t.play('eat'); }
-    clearTimeout(this._ct); this._ct = setTimeout(() => this.pawGo('checkin'), 1500);
+    this.setState({ checkinModal: true });
+    this.sfx('eat'); setTimeout(() => this.sfx('checkin'), 260); setTimeout(() => this.sfx('meow'), 760);
   }
   showToast(msg, action) { clearTimeout(this._tt); this.setState({ toast: msg, toastAct: action || null }); this._tt = setTimeout(() => this.setState({ toast: null, toastAct: null }), action ? 3200 : 1600); }
   saveImage = async () => {
@@ -1249,6 +1658,18 @@ class Component extends DCLogic {
       { id: 'chain-silver', cat: 'device', kind: 'strap', val: 'silver', hex: '#BFC3CA', name: '실버 체인', desc: '빵틀 위에 다는 볼 체인', price: 120 },
       { id: 'chain-gold', cat: 'device', kind: 'strap', val: 'gold', hex: '#D9B356', name: '골드 체인', desc: '반짝이는 금색 볼 체인', price: 190 },
       { id: 'chain-rose', cat: 'device', kind: 'strap', val: 'rose', hex: '#E0A792', name: '로즈골드 체인', desc: '은은한 분홍빛 볼 체인', price: 190 },
+      { id: 'form-cat', cat: 'device', kind: 'form', val: 'cat', name: '고양이 귀 케이스', desc: '귀가 쫑긋한 빵틀 모양', price: 200 },
+      { id: 'form-cattail', cat: 'device', kind: 'form', val: 'cattail', name: '고양이 귀 + 꼬리', desc: '귀와 꼬리가 모두 달린 빵틀', price: 320 },
+      { id: 'form-tail', cat: 'device', kind: 'form', val: 'tail', name: '꼬리 케이스', desc: '뒤에서 살랑이는 꼬리', price: 200 },
+      { id: 'scene-cloud', cat: 'device', kind: 'scene', val: 'cloud', name: '구름 하늘', desc: '화면 배경에 흘러가는 구름', price: 200 },
+      { id: 'scene-meadow', cat: 'device', kind: 'scene', val: 'meadow', name: '초원', desc: '꽃이 핀 푸른 언덕', price: 200 },
+      { id: 'scene-desert', cat: 'device', kind: 'scene', val: 'desert', name: '사막', desc: '해가 뜨는 모래 언덕', price: 200 },
+      { id: 'scene-night', cat: 'device', kind: 'scene', val: 'night', name: '밤하늘', desc: '반짝이는 별과 달', price: 220 },
+      { id: 'pat-stars', cat: 'device', kind: 'pattern', val: 'stars', name: '별 무늬', desc: '빵틀 가득 작은 별', price: 160 },
+      { id: 'pat-check', cat: 'device', kind: 'pattern', val: 'check', name: '체크 무늬', desc: '깔끔한 체크', price: 160 },
+      { id: 'pat-paws', cat: 'device', kind: 'pattern', val: 'paws', name: '발바닥 무늬', desc: '고양이 발바닥 도장', price: 180 },
+      { id: 'pat-waves', cat: 'device', kind: 'pattern', val: 'waves', name: '물결 무늬', desc: '잔잔한 물결', price: 160 },
+      { id: 'pat-flowers', cat: 'device', kind: 'pattern', val: 'flowers', name: '꽃 무늬', desc: '봄꽃이 핀 케이스', price: 180 },
       { id: 'pat-dots', cat: 'device', kind: 'pattern', val: 'dots', name: '점박이 무늬', desc: '빵틀에 동글동글 점박이', price: 150 },
       { id: 'pat-hearts', cat: 'device', kind: 'pattern', val: 'hearts', name: '하트 무늬', desc: '빵틀 가득 작은 하트', price: 150 },
       { id: 'pat-stripes', cat: 'device', kind: 'pattern', val: 'stripes', name: '줄무늬', desc: '가로로 지나가는 줄무늬', price: 150 },
@@ -1267,11 +1688,18 @@ class Component extends DCLogic {
       const pc = lum > 150 ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.55)';
       if (k === 'dots') return 'radial-gradient(circle, ' + pc + ' 28%, transparent 31%) 0 0/12px 12px, ' + base;
       if (k === 'stripes') return 'repeating-linear-gradient(0deg, ' + pc + ' 0 3px, transparent 3px 8px), ' + base;
+      if (k === 'check') return 'repeating-conic-gradient(' + pc + ' 0 25%, transparent 0 50%) 0 0/16px 16px, ' + base;
+      if (k === 'waves') return 'repeating-radial-gradient(circle at 50% 120%, ' + pc + ' 0 2px, transparent 2px 7px), ' + base;
+      if (k === 'stars' || k === 'paws' || k === 'flowers') { const fk = lum > 150 ? "fill='black' fill-opacity='0.2'" : "fill='white' fill-opacity='0.6'", d = k === 'stars' ? 'M8 2l1.800 3.700 4 .6-2.900 2.800.7 4L8 11.200 4.400 13.100l.7-4L2.200 6.300l4-.6z' : k === 'paws' ? 'M8 7.500a2.500 2 0 1 0 .01 0zM4.500 6a1 1 0 1 0 .01 0zM8 4.200a1 1 0 1 0 .01 0zM11.500 6a1 1 0 1 0 .01 0z' : 'M8 3.500a1.600 1.600 0 1 0 .01 0zM11.600 7a1.600 1.600 0 1 0 .01 0zM8 10.500a1.600 1.600 0 1 0 .01 0zM4.400 7a1.600 1.600 0 1 0 .01 0z'; return 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27%3E%3Cpath d=%27' + d.replace(/ /g, '%20') + '%27 ' + fk.replace(/'/g, '%27').replace(/ /g, '%20') + '/%3E%3C/svg%3E") 0 0/16px 16px, ' + base; }
+      if (k === 'cloud') return 'linear-gradient(#A9D6FF,#D3EEFF)';
+      if (k === 'meadow') return 'linear-gradient(#CDEBFF 60%, #8FCB6B 60%)';
+      if (k === 'desert') return 'linear-gradient(#FBE3B8 60%, #E9C27D 60%)';
+      if (k === 'night') return '#2B3354';
       if (k === 'hearts') { const fl = lum > 150 ? "fill='black' fill-opacity='0.2'" : "fill='white' fill-opacity='0.6'"; return 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27%3E%3Cpath d=%27M8 13C2 9 3 3.5 8 6C13 3.5 14 9 8 13Z%27 ' + fl.replace(/'/g, '%27') + '/%3E%3C/svg%3E") 0 0/16px 16px, ' + base; }
       return base;
     };
-    const isEq = (bi) => bi.kind === 'catacc' ? S.catAcc === bi.val : bi.kind === 'strap' ? S.strap === bi.val : bi.kind === 'shell' ? S.shell === bi.val : bi.kind === 'pattern' ? S.pattern === bi.val : S.coat === bi.val;
-    const equipItem = (bi) => { const p = bi.kind === 'catacc' ? { catAcc: bi.val } : bi.kind === 'strap' ? { strap: bi.val } : bi.kind === 'shell' ? { shell: bi.val } : bi.kind === 'pattern' ? { pattern: bi.val } : { coat: bi.val }; this.setState({ ...p, buy: null }); this.showToast('적용했어요', { label: '꾸미기에서 보기', fn: () => this.go(bi.kind === 'coat' || bi.kind === 'catacc' ? 'decoCat' : 'decoDevice') }); };
+    const isEq = (bi) => bi.kind === 'scene' ? S.scene === bi.val : bi.kind === 'form' ? S.form === bi.val : bi.kind === 'catacc' ? S.catAcc === bi.val : bi.kind === 'strap' ? S.strap === bi.val : bi.kind === 'shell' ? S.shell === bi.val : bi.kind === 'pattern' ? S.pattern === bi.val : S.coat === bi.val;
+    const equipItem = (bi) => { const p = bi.kind === 'scene' ? { scene: bi.val } : bi.kind === 'form' ? { form: bi.val } : bi.kind === 'catacc' ? { catAcc: bi.val } : bi.kind === 'strap' ? { strap: bi.val } : bi.kind === 'shell' ? { shell: bi.val } : bi.kind === 'pattern' ? { pattern: bi.val } : { coat: bi.val }; this.setState({ ...p, buy: null }); this.showToast('적용했어요', { label: '꾸미기에서 보기', fn: () => this.go(bi.kind === 'coat' || bi.kind === 'catacc' ? 'decoCat' : 'decoDevice') }); };
     const own = (id) => S.owned.includes(id);
     const ALLCOATS = [...COATS, ...ITEMS.filter(i => i.kind === 'coat').map(i => [i.val, i.name])];
     const myCoats = [...COATS, ...ITEMS.filter(i => i.kind === 'coat' && own(i.id)).map(i => [i.val, i.name])];
@@ -1282,9 +1710,10 @@ class Component extends DCLogic {
     const left = 6 - (S.streak % 6);
     const nextHint = body === 'normal' ? (S.goal === 'normal' ? '건강 유지 중' : `${goalName}까지 ${left}일`) : body === 'jjin' || body === 'loaf' ? '출석하면 다시 보통으로' : `${BODY[body]} 유지 중`;
     const is = { tabs: ['home', 'record', 'shop', 'my'].includes(scr), ob: obIdx >= 0 };
-    ['splash', 'login', 'home', 'lcd', 'checkin', 'share', 'letter', 'letterDone', 'letters', 'noti', 'terms', 'shop', 'deco', 'record', 'my', 'alarm', ...OB].forEach(k => is[k] = scr === k);
+    ['splash', 'login', 'home', 'lcd', 'checkin', 'share', 'letter', 'letterDone', 'letters', 'noti', 'terms', 'routine', 'push', 'shop', 'deco', 'record', 'my', 'alarm', ...OB].forEach(k => is[k] = scr === k);
     const nav = {};
-    ['login', 'obAgree', 'home', 'lcd', 'checkin', 'share', 'letter', 'shop', 'decoDevice', 'decoCat', 'record', 'my', 'alarm', 'letters', 'noti'].forEach(k => nav[k] = () => this.go(k));
+    ['login', 'obAgree', 'home', 'lcd', 'checkin', 'share', 'letter', 'shop', 'decoDevice', 'decoCat', 'record', 'my', 'alarm', 'letters', 'noti', 'push'].forEach(k => nav[k] = () => this.go(k));
+    nav.routine = () => this.openRoutine(scr);
     const sel = (on) => ({ border: on ? '#1E2228' : 'transparent', bg: on ? '#FFFFFF' : '#F4F5F7', dot: on ? '#1E2228' : '#E3E5E9', on: on ? 'true' : 'false' });
 
     // agree + profile
@@ -1379,6 +1808,9 @@ class Component extends DCLogic {
     else if (sst === 'miss') Object.assign(day, { title: '결석했어요', tone: '#D70015', tile: '#F2F4F6', type: 'jjin', expr: 'sleep', hasCta: isYesterday, ctaLabel: '사연 보내고 채우기', cta: () => this.go('letter'), ctaBg: '#EAF2FF', ctaColor: '#1B64DA' });
     else if (sst === 'today') Object.assign(day, { title: '아직 출석 전이에요', hasCta: true, ctaLabel: '지금 출석하기', cta: () => { if (S.checked) return; this.setState(s => ({ checked: true, streak: s.streak + 1 })); this.showToast('출석했어요 · D+' + (S.streak + 1), { label: '홈으로', fn: () => this.go('home') }); }, expr: 'up' });
     else Object.assign(day, { title: sk < kJoin ? '함께하기 전이에요' : '아직 오지 않은 날이에요', tone: '#B0B8C1', tile: '#F2F4F6', expr: 'sleep' });
+    { const rr = S.routines[sk], LVN = ['가볍게', '적당히', '힘들게']; day.hasRoutine = !!rr && sst === 'ok'; day.canEditRoutine = day.hasRoutine && sk === kToday;
+      if (day.hasRoutine) Object.assign(day, { rParts: rr.parts.length ? rr.parts.join(' · ') : '운동', rKcal: rr.kcal, rMeta: rr.mins + '분 · ' + LVN[rr.level], rExs: rr.exs.map(e => ({ line: e.cardio ? e.n + ' ' + e.min + '분' : e.n + ' ' + e.sets.map(x => x.kg + 'kg×' + x.reps).join(' · ') })), hasMemo: !!rr.memo.trim(), rMemo: rr.memo, editRoutine: (ev) => { ev && ev.stopPropagation && ev.stopPropagation(); this.openRoutine('record'); }, viewRoutine: () => this.openRoutineView(sk) });
+      else if (sst === 'ok' && sk === kToday) Object.assign(day, { hasCta: true, ctaLabel: '오늘 운동 기록하기', cta: () => this.openRoutine('record') }); }
     const cal = {
       year: cy, month: cm, notCurrent: !(cy === TODAY[0] && cm === TODAY[1]),
       openSheet: () => this.setState({ sheet: true, wY: cy, wM: cm }), confirm: () => pickM(wY, wM), closeSheet: () => this.setState({ sheet: false }), toToday: () => pickM(TODAY[0], TODAY[1])
@@ -1390,6 +1822,9 @@ class Component extends DCLogic {
       { label: '카카오톡', d: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z', msg: '카카오톡을 여는 중이에요' },
       { label: '링크 복사', d: 'M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7', msg: '링크를 복사했어요' }
     ];
+    const mKey = Math.floor(kToday / 100), mRoutines = Object.keys(S.routines).filter(k => Math.floor(+k / 100) === mKey).map(k => S.routines[k]);
+    const monthKcal = mRoutines.reduce((a, r) => a + (r.kcal || 0), 0), monthStr = mRoutines.reduce((a, r) => a + r.exs.reduce((b, e) => b + (e.cardio ? 0 : e.sets.length), 0), 0), monthEnd = mRoutines.reduce((a, r) => a + r.exs.reduce((b, e) => b + (e.cardio ? Math.round(e.min / 5) : 0), 0), 0);
+    const evoDone = body === S.goal || (S.goal === 'normal'), evoPctN = evoDone ? 100 : Math.round((S.streak % 6) / 6 * 100);
     const shellName = (ALLSHELLS.find(s => s[1] === S.shell) || ['커스텀'])[0];
     const coatName = (ALLCOATS.find(c => c[0] === S.coat) || [0, '치즈'])[1];
     return {
@@ -1404,7 +1839,7 @@ class Component extends DCLogic {
       onBirth: (e) => { const v = e.target.value; let d = v.replace(/\D/g, '').slice(0, 8); if (v.length < fmt(S.birth).length && d === S.birth) d = d.slice(0, -1); this.setState({ birth: d }); },
       obPct: ((obIdx + 1) / OB.length * 100) + '%', obStep: `${obIdx + 1}/${OB.length}`,
       obCta: obIdx === 0 ? '동의하고 시작하기' : obIdx === OB.length - 1 ? '시작하기' : '다음', obOpacity: obCanNext ? 1 : 0.3,
-      obNext: () => { if (!obCanNext) return; if (obIdx === OB.length - 1) return this.pawGo('home'); this.go(OB[obIdx + 1]); },
+      obNext: () => { if (!obCanNext) return; if (obIdx === OB.length - 1) { this.setState({ notiModal: true }); return this.pawGo('home'); } this.go(OB[obIdx + 1]); },
       skipSplash: () => { clearTimeout(this._sp); this.pawGo('login'); }, pawRun: S.pawRun,
       catBg: ({ cheese: '#FCEBD6', mackerel: '#E7EBF0', tuxedo: '#E6E7EE', cow: '#F2F2EE', cream: '#FBF2E1', blue: '#E3E9F3', choco: '#F1E5DA' })[S.coat] || '#F6F0E1',
       obBack: () => this.go(obIdx <= 0 ? 'login' : OB[obIdx - 1]),
@@ -1417,34 +1852,39 @@ class Component extends DCLogic {
       schedCount: S.schedMode === 'count', schedDays: S.schedMode === 'days',
       dayPresets: DPRE.map(([n, arr]) => { const on = !!dPre && dPre[0] === n; return { name: n, bg: on ? '#1E2228' : '#F2F4F6', color: on ? '#FFFFFF' : '#4E5968', pick: () => this.setState({ days: arr.map(Boolean) }) }; }),
       dayToggles: WDN.map((label, i) => ({ label, bg: S.days[i] ? '#1E2228' : '#F2F4F6', color: S.days[i] ? '#FFFFFF' : (i === 0 ? '#F04452' : i === 6 ? '#3182F6' : '#4E5968'), tap: () => this.setState(s => ({ days: s.days.map((v, j) => j === i ? !v : v) })) })),
-      strap: S.strap, pattern: S.pattern, showAds: (this.props.ads ?? true) && !own('noads'),
+      strap: S.strap, pattern: S.pattern, form: S.form, scene: S.scene, lcdbg: S.lcdbg,
+      scenes: [['none', '없음'], ...ITEMS.filter(i => i.kind === 'scene' && own(i.id)).map(i => [i.val, i.name])].map(([k, n]) => ({ k, name: n, ringShadow: S.scene === k ? '0 0 0 2px #fff, 0 0 0 4px #1E2228' : 'inset 0 0 0 1px rgba(0,0,0,0.1)', pick: () => this.setState({ scene: k }) })),
+      lcdColors: [['', '#F6F0E1'], ['#CFE8FF', '#CFE8FF'], ['#D9F2E3', '#D9F2E3'], ['#FFE0E6', '#FFE0E6'], ['#E5DDFB', '#E5DDFB'], ['#FFF0C7', '#FFF0C7'], ['#2B3354', '#2B3354']].map(([k, hex]) => ({ hex, ring: S.lcdbg === k ? '0 0 0 2px #fff, 0 0 0 4px #1E2228' : 'inset 0 0 0 1px rgba(0,0,0,0.12)', pick: () => this.setState({ lcdbg: k }) })),
+      forms: [['egg', '기본'], ...ITEMS.filter(i => i.kind === 'form' && own(i.id)).map(i => [i.val, i.name])].map(([k, n]) => ({ name: n, ring: S.form === k ? '#1E2228' : 'transparent', pick: () => this.setState({ form: k }) })), showAds: (this.props.ads ?? true) && !own('noads'),
       cookies: S.cookies, openCookies: () => this.setState({ cookieSheet: true }), closeCookies: () => this.setState({ cookieSheet: false, paying: null }),
       cookieOpen: S.cookieSheet && (scr === 'shop' || scr === 'my'),
-      packs: [[100, 0], [300, 30], [1000, 150]].map(([n, bonus]) => ({ n, bonus: bonus ? '+' + bonus + '개 보너스' : '기본', op: S.paying && S.paying !== n ? 0.4 : 1, cta: S.paying === n ? '결제 중…' : '테스트 결제', buy: () => { if (S.paying) return; this.setState({ paying: n }); clearTimeout(this._pt); this._pt = setTimeout(() => { this.setState(s => ({ cookies: s.cookies + n + bonus, paying: null })); this.showToast('쿠키 ' + (n + bonus) + '개를 받았어요'); }, 800); } })),
+      packs: [[100, 0], [300, 30], [1000, 150]].map(([n, bonus]) => ({ n, bonus: bonus ? '+' + bonus + '개 보너스' : '기본', op: S.paying && S.paying !== n ? 0.4 : 1, cta: S.paying === n ? '결제 중…' : '테스트 결제', buy: () => { if (S.paying) return; this.setState({ paying: n }); clearTimeout(this._pt); this._pt = setTimeout(() => { this.sfx('coin'); this.setState(s => ({ cookies: s.cookies + n + bonus, paying: null })); this.showToast('쿠키 ' + (n + bonus) + '개를 받았어요'); }, 800); } })),
       noadsCard: { show: !own('noads') && (this.props.ads ?? true), price: '₩9,900', tap: () => this.setState({ buy: 'noads', buying: false }) },
       goNoads: () => this.setState({ screen: 'shop', shopFilter: 'all', buy: 'noads', buying: false, sheet: false }),
       patterns: [['none', '없음'], ...ITEMS.filter(i => i.kind === 'pattern' && own(i.id)).map(i => [i.val, i.name.replace(' 무늬', '')])].map(([k, n]) => ({ name: n, swatch: swatch(k, S.shell), ring: S.pattern === k ? '#1E2228' : 'transparent', pick: () => this.setState({ pattern: k }) })),
       lcdStats: [
         { label: '체형', value: BODY[body] + ' · ' + nextHint, pct: (body === S.goal ? 100 : Math.round((S.streak % 6) / 6 * 100)) + '%', fill: '#1E2228' },
         { label: '배부름', value: S.checked ? '배불러요' : '배고파요 · 출석하면 밥을 줘요', pct: S.checked ? '100%' : '40%', fill: '#F49A3C' },
-        { label: '기분', value: missedOpen ? '조금 서운해요' : '좋아요', pct: missedOpen ? '55%' : '90%', fill: '#F6A2A6' }
+        { label: '기분', value: missedOpen ? '조금 서운해요' : '좋아요', pct: missedOpen ? '55%' : '90%', fill: '#F6A2A6' },
+        { label: '이번 달 소모', value: monthKcal.toLocaleString() + ' kcal', pct: Math.min(100, Math.round(monthKcal / 4000 * 100)) + '%', fill: '#F49A3C' },
+        { label: '성장 수치', value: '근력 +' + monthStr + ' · 지구력 +' + monthEnd, pct: Math.min(100, Math.round((monthStr + monthEnd) / 60 * 100)) + '%', fill: '#3182F6' }
       ],
       shopTops: [['device', '빵틀'], ['cat', '고양이']].map(([k, label]) => ({ label, color: S.shopTop === k ? '#191F28' : '#B0B8C1', line: S.shopTop === k ? 'inset 0 -2px 0 #191F28' : 'none', tap: () => this.setState({ shopTop: k, shopFilter: 'all' }) })),
-      shopFilters: (S.shopTop === 'cat' ? [['all', '전체'], ['catacc', '액세서리'], ['coat', '털색']] : [['all', '전체'], ['strap', '액세서리'], ['pattern', '무늬'], ['shell', '케이스']]).map(([k, n]) => ({ name: n, bg: S.shopFilter === k ? '#1E2228' : '#F2F4F6', color: S.shopFilter === k ? '#FFFFFF' : '#4E5968', pick: () => this.setState({ shopFilter: k }) })),
-      shopSections: (S.shopTop === 'cat' ? [['catacc', '액세서리'], ['coat', '털색']] : [['strap', '액세서리'], ['pattern', '무늬'], ['shell', '케이스']]).filter(([k]) => S.shopFilter === 'all' || S.shopFilter === k).map(([k, title]) => ({ title, count: ITEMS.filter(i => i.kind === k).length, items: ITEMS.filter(i => i.kind === k).map(i => ({ ...i, isStrap: i.kind === 'strap', isShell: i.kind === 'shell', isCoat: i.kind === 'coat', isCatAcc: i.kind === 'catacc', isPattern: i.kind === 'pattern', swatch: swatch(i.val, S.shell), tile: i.kind === 'coat' || i.kind === 'catacc' ? '#F6F0E1' : '#F2F4F6', notOwned: !own(i.id), priceLabel: own(i.id) ? '보유 중' : String(i.price), priceBg: own(i.id) ? '#F2F4F6' : '#FFEEF1', priceColor: own(i.id) ? '#8B95A1' : '#191F28', tap: () => this.setState({ buy: i.id, buying: false }) })) })),
+      shopFilters: (S.shopTop === 'cat' ? [['all', '전체'], ['catacc', '액세서리'], ['coat', '털색']] : [['all', '전체'], ['form', '모양'], ['strap', '액세서리'], ['pattern', '무늬'], ['shell', '케이스'], ['scene', '배경']]).map(([k, n]) => ({ name: n, bg: S.shopFilter === k ? '#1E2228' : '#F2F4F6', color: S.shopFilter === k ? '#FFFFFF' : '#4E5968', pick: () => this.setState({ shopFilter: k }) })),
+      shopSections: (S.shopTop === 'cat' ? [['catacc', '액세서리'], ['coat', '털색']] : [['form', '모양'], ['strap', '액세서리'], ['pattern', '무늬'], ['shell', '케이스'], ['scene', '배경']]).filter(([k]) => S.shopFilter === 'all' || S.shopFilter === k).map(([k, title]) => ({ title, count: ITEMS.filter(i => i.kind === k).length, items: ITEMS.filter(i => i.kind === k).map(i => ({ ...i, isStrap: i.kind === 'strap', isShell: i.kind === 'shell', isCoat: i.kind === 'coat', isForm: i.kind === 'form', isCatAcc: i.kind === 'catacc', isPattern: i.kind === 'pattern', isScene: i.kind === 'scene', sceneKey: i.val, swatch: swatch(i.val, S.shell), tile: i.kind === 'coat' || i.kind === 'catacc' ? '#F6F0E1' : '#F2F4F6', notOwned: !own(i.id), priceLabel: own(i.id) ? '보유 중' : String(i.price), priceBg: own(i.id) ? '#F2F4F6' : '#FFEEF1', priceColor: own(i.id) ? '#8B95A1' : '#191F28', tap: () => this.setState({ buy: i.id, buying: false }) })) })),
       restore: () => this.showToast('구매 내역을 복원했어요'),
       buyOpen: !!S.buy && scr === 'shop',
       buy: (() => {
         const bi = ITEMS.find(i => i.id === S.buy); if (!bi) return {};
         const cash = bi.kind === 'noads', enough = cash || S.cookies >= bi.price;
-        return { ...bi, isCoat: bi.kind === 'coat', isCatAcc: bi.kind === 'catacc', isNoads: bi.kind === 'noads', isDevice: ['strap', 'shell', 'pattern'].includes(bi.kind), tile: bi.kind === 'coat' || bi.kind === 'catacc' ? '#F6F0E1' : '#F2F2F7', pShell: bi.kind === 'shell' ? bi.val : S.shell, pStrap: bi.kind === 'strap' ? bi.val : S.strap, pPattern: bi.kind === 'pattern' ? bi.val : S.pattern, owned: own(bi.id), notOwned: !own(bi.id), op: S.buying ? 0.6 : 1, balance: S.cookies, showBalance: !cash,
+        return { ...bi, isCoat: bi.kind === 'coat', isCatAcc: bi.kind === 'catacc', isNoads: bi.kind === 'noads', isDevice: ['strap', 'shell', 'pattern', 'form', 'scene'].includes(bi.kind), tile: bi.kind === 'coat' || bi.kind === 'catacc' ? '#F6F0E1' : '#F2F2F7', pShell: bi.kind === 'shell' ? bi.val : S.shell, pStrap: bi.kind === 'strap' ? bi.val : S.strap, pPattern: bi.kind === 'pattern' ? bi.val : S.pattern, pForm: bi.kind === 'form' ? bi.val : S.form, pScene: bi.kind === 'scene' ? bi.val : S.scene, owned: own(bi.id), notOwned: !own(bi.id), op: S.buying ? 0.6 : 1, balance: S.cookies, showBalance: !cash,
           cta: S.buying ? '구매 중…' : cash ? '₩9,900 구매하기' : enough ? '쿠키 ' + bi.price + '개로 구매하기' : '쿠키가 부족해요 · 충전하기',
           equipLabel: bi.kind === 'noads' ? '확인' : isEq(bi) ? '적용 중' : '바로 적용하기',
           purchase: () => {
             if (S.buying) return; if (!enough) return this.setState({ cookieSheet: true });
             this.setState({ buying: true }); clearTimeout(this._bt);
             this._bt = setTimeout(() => {
-              this.setState(s => ({ owned: s.owned.includes(bi.id) ? s.owned : [...s.owned, bi.id], buying: false, cookies: s.cookies - (cash ? 0 : bi.price), buy: null }));
+              this.sfx('coin'); this.setState(s => ({ owned: s.owned.includes(bi.id) ? s.owned : [...s.owned, bi.id], buying: false, cookies: s.cookies - (cash ? 0 : bi.price), buy: null }));
               if (bi.kind === 'noads') this.showToast('이제 광고 없이 쓸 수 있어요');
               else this.showToast(bi.name + josa(bi.name, '을', '를') + ' 샀어요', { label: '바로 적용', fn: () => equipItem(bi) });
             }, 700);
@@ -1486,18 +1926,28 @@ class Component extends DCLogic {
       shells: myShells.map(([n, hex]) => ({ name: n, hex, ring: hex === S.shell ? '0 0 0 2px #fff, 0 0 0 4px #1E2228' : 'inset 0 0 0 1px rgba(0,0,0,0.12)', pick: () => this.setState({ shell: hex }) })),
       lcdModes: [['color', '컬러'], ['mono', '흑백']].map(([k, n]) => ({ name: n, bg: S.lcd === k ? '#FFFFFF' : 'transparent', shadow: S.lcd === k ? '0 2px 6px rgba(0,0,0,0.10)' : 'none', pick: () => this.setState({ lcd: k }) })),
       shopTabs: [['device', '빵틀'], ['cat', '고양이']].map(([k, label]) => ({ label, color: S.shopTab === k ? '#191F28' : '#B0B8C1', line: S.shopTab === k ? 'inset 0 -2px 0 #191F28' : 'none', tap: () => this.setState({ shopTab: k }) })),
+      alarmTabs: [['alarm', '출석 시간'], ['push', '알림 종류']].map(([k, label]) => ({ label, color: scr === k ? '#191F28' : '#B0B8C1', line: scr === k ? 'inset 0 -2px 0 #191F28' : 'none', tap: () => scr === k ? null : this.go(k) })),
+      ...(() => {
+        const cur = { coat: S.coat, shell: S.shell, strap: S.strap, pattern: S.pattern, form: S.form, catAcc: S.catAcc, scene: S.scene, lcdbg: S.lcdbg }, snap = S.decoSnap || cur;
+        const changed = Object.keys(cur).some(k => cur[k] !== snap[k]);
+        return {
+          decoBtnLabel: changed ? '적용하기' : '적용됨', decoBtnBg: changed ? '#1E2228' : '#F2F4F6', decoBtnColor: changed ? '#FFFFFF' : '#B0B8C1',
+          decoApply: () => { if (!changed) return; this.setState({ decoSnap: cur }); this.showToast('적용했어요'); },
+          decoBack: () => { if (changed) { this.setState({ ...snap, decoSnap: null, screen: 'my' }); this.showToast('변경 사항을 적용하지 않았어요'); } else this.go('my'); }
+        };
+      })(),
       shopDevice: S.shopTab === 'device', shopCat: S.shopTab === 'cat',
       weekdays: WD.map((label, i) => ({ label, color: i === 0 ? '#F04452' : i === 6 ? '#3182F6' : '#8B95A1' })),
       weeks, monthCount, cal, day, calStats, sheetOpen: S.sheet && scr === 'record', calWheel, stop: (e) => e.stopPropagation(),
       legend: [{ label: '출석', bg: '#EEF0F3', icon: 'pawpink', hasIcon: true, noIcon: false }, { label: '사연', bg: '#DCEBFF', icon: 'letterblue', hasIcon: true, noIcon: false }, { label: '결석', bg: '#F04452', icon: '', hasIcon: false, noIcon: true }],
       myStats: [{ label: '연속 출석', value: 'D+' + S.streak, tap: () => this.go('lcd') }, { label: '이번 달', value: octCount + '일', tap: () => this.setState({ screen: 'record', calY: 2026, calM: 10, selD: 13, sheet: false }) }, { label: '사연', value: S.letters.filter(l => Math.floor(l.id / 100) === 10).length + '/2', tap: () => this.go('letters') }],
+      growth: { month: mKey % 100, stats: [{ label: '소모 칼로리', value: monthKcal.toLocaleString() + ' kcal' }, { label: '근력', value: '+' + monthStr }, { label: '지구력', value: '+' + monthEnd }], evoPct: evoPctN + '%', evoText: nextHint, evoSub: evoDone ? '지금 모습을 유지하고 있어요' : '6일 연속 출석하면 한 단계 진화해요 · ' + (S.streak % 6) + '/6일' },
+      myQuick: [{ icon: 'brush', tint: '#FFF4D1', label: '빵틀 꾸미기', tap: () => this.go('decoDevice') }, { icon: 'paw', tint: '#FFEBD9', label: '고양이 변경', tap: () => this.go('decoCat') }, { icon: 'letter', tint: '#E3EEFF', label: '사연 내역', tap: () => this.go('letters') }],
       myRows: [
         { icon: 'cookie', tint: '#FFEEF1', label: '발자국 쿠키', value: S.cookies + '개', tap: () => this.setState({ cookieSheet: true }) },
-        { icon: 'brush', tint: '#FFF4D1', label: '빵틀 꾸미기', value: shellName, tap: () => this.go('decoDevice') },
-        { icon: 'paw', tint: '#FFEBD9', label: '고양이 변경', value: coatName, tap: () => this.go('decoCat') },
         { icon: 'home', tint: '#FFEBD9', label: '출석 장소', value: S.gym.trim() || '미설정', tap: () => this.showToast('출석 장소 변경은 다음 버전에서 열려요') },
-        { icon: 'bell', tint: '#FFF4D1', label: '출석 알림', value: freqName + ' · ' + timeLabel, tap: () => this.go('alarm') },
-        { icon: 'letter', tint: '#E3EEFF', label: '사연 내역', value: '이번 달 ' + S.letters.filter(l => Math.floor(l.id / 100) === 10).length + '/2', tap: () => this.go('letters') },
+        { icon: S.soundOn ? 'speaker' : 'speaker_off', tint: '#E3EEFF', label: '사운드', value: S.soundOn ? '켜짐' : '꺼짐', tap: () => { this.setState(s => ({ soundOn: !s.soundOn })); } },
+        { icon: 'bell', tint: '#FFF4D1', label: '알림 설정', value: freqName + ' · ' + timeLabel, tap: () => this.go('alarm') },
         { icon: 'shop', tint: '#F1ECFD', label: '광고 제거', value: own('noads') ? '적용 중' : '', tap: () => own('noads') ? this.showToast('이미 광고 없이 쓰고 있어요') : this.setState({ screen: 'shop', shopFilter: 'all', buy: 'noads', buying: false }) }
       ],
       tabs: [['home', 'home', '홈'], ['record', 'record', '기록'], ['shop', 'shop', '샵'], ['my', 'my', '마이']].map(([k, icon, label]) => ({ icon, label, on: scr === k ? 'true' : 'false', bg: scr === k ? 'rgba(120,120,128,0.14)' : 'transparent', color: scr === k ? '#1E2228' : '#8E929B', tap: () => this.go(k) })),
@@ -1544,6 +1994,129 @@ class Component extends DCLogic {
         };
         const cur = T[S.termKey] || T.terms;
         return { title: cur[0], sections: cur[1].map(([h, p]) => ({ h, p })), back: () => this.go('obAgree'), agree: () => this.setState(s => ({ agree: { ...s.agree, [s.termKey]: true }, screen: 'obAgree' })) };
+      })(),
+...(() => {
+        const rd = S.rd, step = S.rStep, up = (p) => this.setState(s => ({ rd: { ...s.rd, ...(typeof p === 'function' ? p(s.rd) : p) } }));
+        const PARTS = ['가슴', '등', '하체', '어깨', '팔', '코어', '유산소'];
+        const EX = [['러닝머신', '유산소'], ['사이클', '유산소'], ['인클라인 러닝머신', '유산소'], ['로잉머신', '유산소'], ['벤치프레스', '가슴'], ['인클라인 덤벨프레스', '가슴'], ['체스트 프레스 머신', '가슴'], ['케이블 크로스오버', '가슴'], ['푸시업', '가슴'], ['랫풀다운', '등'], ['바벨로우', '등'], ['시티드 로우', '등'], ['데드리프트', '등'], ['풀업', '등'], ['스쿼트', '하체'], ['레그프레스', '하체'], ['런지', '하체'], ['레그 익스텐션', '하체'], ['힙 쓰러스트', '하체'], ['숄더프레스', '어깨'], ['사이드 레터럴 레이즈', '어깨'], ['페이스 풀', '어깨'], ['바벨컬', '팔'], ['트라이셉스 푸시다운', '팔'], ['해머컬', '팔'], ['플랭크', '코어'], ['크런치', '코어'], ['레그 레이즈', '코어']];
+        const BASEKG = { 벤치프레스: 40, 스쿼트: 50, 데드리프트: 60, 레그프레스: 80, 랫풀다운: 35, 바벨로우: 40 };
+        const partOf = (n) => (EX.find(e => e[0] === n) || [0, '직접'])[1];
+        const isCardio = (n) => partOf(n) === '유산소';
+        const ICN = { 유산소: 'ex_run', 가슴: 'ex_chest', 등: 'ex_back', 하체: 'ex_leg', 어깨: 'ex_shoulder', 팔: 'ex_arm', 코어: 'ex_core', 직접: 'dumbbell' };
+        const TINT = { 유산소: '#FFEBD9', 가슴: '#FFEBD9', 등: '#E3EEFF', 하체: '#E8F6EC', 어깨: '#F1ECFD', 팔: '#FFF4D1', 코어: '#FFEEF1', 직접: '#F2F4F6' };
+        const num = (v, lo, hi) => { const q = parseFloat(v); return isNaN(q) ? lo : Math.min(hi, Math.max(lo, q)); };
+        const lastOf = (n) => { const ks = Object.keys(S.routines).map(Number).sort((a, b) => b - a); for (const k of ks) { const x = S.routines[k].exs.find(y => y.n === n); if (x) return x; } return null; };
+        const mkEx = (n) => { const l = lastOf(n); if (isCardio(n)) return { n, cardio: true, min: l && l.min ? l.min : 20, level: 1 }; return { n, level: 1, sets: l && l.sets ? l.sets.map(x => ({ kg: x.kg, reps: x.reps, done: false })) : [0, 1, 2].map(() => ({ kg: BASEKG[n] || 20, reps: 10, done: false })) }; };
+        const has = (n) => rd.exs.some(e => e.n === n);
+        const toggleEx = (n) => up(r => ({ exs: r.exs.some(e => e.n === n) ? r.exs.filter(e => e.n !== n) : [...r.exs, mkEx(n)] }));
+        const EXD = {
+          '러닝머신': ['시간', '머신', '유산소, 코어, 엉덩이, 내전근, 대퇴사두근, 햄스트링, 종아리'], '사이클': ['시간', '머신', '유산소, 대퇴사두근, 햄스트링, 종아리'], '인클라인 러닝머신': ['시간', '머신', '유산소, 엉덩이, 햄스트링, 종아리'], '로잉머신': ['시간', '머신', '유산소, 등, 팔, 대퇴사두근'],
+          '벤치프레스': ['무게 · 횟수', '바벨', '가슴, 어깨, 삼두'], '인클라인 덤벨프레스': ['무게 · 횟수', '덤벨', '상부 가슴, 어깨, 삼두'], '체스트 프레스 머신': ['무게 · 횟수', '머신', '가슴, 삼두'], '케이블 크로스오버': ['무게 · 횟수', '케이블', '가슴'], '푸시업': ['횟수', '맨몸', '가슴, 어깨, 삼두, 코어'],
+          '랫풀다운': ['무게 · 횟수', '케이블', '광배근, 이두'], '바벨로우': ['무게 · 횟수', '바벨', '등, 이두, 후면 어깨'], '시티드 로우': ['무게 · 횟수', '머신', '중부 등, 이두'], '데드리프트': ['무게 · 횟수', '바벨', '등, 엉덩이, 햄스트링, 코어'], '풀업': ['횟수', '맨몸', '광배근, 이두, 코어'],
+          '스쿼트': ['무게 · 횟수', '바벨', '대퇴사두근, 엉덩이, 햄스트링, 코어'], '레그프레스': ['무게 · 횟수', '머신', '대퇴사두근, 엉덩이, 햄스트링'], '런지': ['무게 · 횟수', '덤벨', '대퇴사두근, 엉덩이, 햄스트링'], '레그 익스텐션': ['무게 · 횟수', '머신', '대퇴사두근'], '힙 쓰러스트': ['무게 · 횟수', '바벨', '엉덩이, 햄스트링'],
+          '숄더프레스': ['무게 · 횟수', '덤벨', '어깨, 삼두'], '사이드 레터럴 레이즈': ['무게 · 횟수', '덤벨', '측면 어깨'], '페이스 풀': ['무게 · 횟수', '케이블', '후면 어깨, 상부 등'],
+          '바벨컬': ['무게 · 횟수', '바벨', '이두'], '트라이셉스 푸시다운': ['무게 · 횟수', '케이블', '삼두'], '해머컬': ['무게 · 횟수', '덤벨', '이두, 전완'],
+          '플랭크': ['시간', '맨몸', '코어, 어깨'], '크런치': ['횟수', '맨몸', '복직근'], '레그 레이즈': ['횟수', '맨몸', '하복부, 고관절 굴곡근']
+        };
+        const dt = (n) => { const d = EXD[n]; return d ? { type: d[0], equip: d[1], parts: d[2] } : { type: isCardio(n) ? '시간' : '무게 · 횟수', equip: '기타', parts: partOf(n) === '직접' ? '직접 등록한 운동' : partOf(n) }; };
+        const lvOf = (e) => e.level ?? 1;
+        const exMin = (e) => e.cardio ? e.min : e.sets.length * 3;
+        const exKcal = (e) => e.cardio ? e.min * [6, 9, 12][lvOf(e)] : e.sets.length * 3 * [5, 7, 9][lvOf(e)];
+        const autoMin = rd.exs.reduce((a, e) => a + exMin(e), 0), mins = rd.minsManual != null ? rd.minsManual : autoMin;
+        const kcalAuto = Math.round(rd.exs.reduce((a, e) => a + exKcal(e), 0)), manual = rd.kcalMode === 'manual', kcal = manual ? (rd.kcalManual != null ? rd.kcalManual : kcalAuto) : kcalAuto;
+        const minsShow = mins >= 60 ? Math.floor(mins / 60) + '시간 ' + (mins % 60 ? mins % 60 + '분' : '') : mins + '분';
+        const setSet = (i, j, fn) => up(r => ({ exs: r.exs.map((e, a) => a !== i ? e : { ...e, sets: e.sets.map((x, b) => b !== j ? x : { ...x, ...fn(x) }) }) }));
+        const setEx = (i, fn) => up(r => ({ exs: r.exs.map((e, a) => a !== i ? e : { ...e, ...fn(e) }) }));
+        const RECS = {
+          push: { icon: 'ex_chest', tint: '#FFEBD9', name: '상체 푸시 데이', parts: ['가슴', '어깨', '팔'], list: ['벤치프레스', '인클라인 덤벨프레스', '숄더프레스', '트라이셉스 푸시다운'] },
+          pull: { icon: 'ex_back', tint: '#E3EEFF', name: '등 · 이두 데이', parts: ['등', '팔'], list: ['랫풀다운', '바벨로우', '데드리프트', '바벨컬'] },
+          leg: { icon: 'ex_leg', tint: '#E8F6EC', name: '하체 데이', parts: ['하체', '코어'], list: ['스쿼트', '레그프레스', '런지', '플랭크'] },
+          light: { icon: 'ex_run', tint: '#FFEBD9', name: '가볍게 유산소 + 코어', parts: ['유산소', '코어'], list: ['러닝머신', '사이클', '플랭크', '크런치'] }
+        };
+        const prevKeys = Object.keys(S.routines).map(Number).filter(k => k < kToday), last = prevKeys.length ? S.routines[Math.max(...prevKeys)] : null, lp = last ? last.parts : [];
+        let order = lp.includes('하체') ? ['push', 'pull', 'leg', 'light'] : (lp.includes('가슴') || lp.includes('어깨')) ? ['pull', 'leg', 'push', 'light'] : ['leg', 'push', 'pull', 'light'];
+        if (S.goal === 'slim') order = ['light', ...order.filter(k => k !== 'light')];
+        const rt = S.routines[kToday], card = rt ? { title: '오늘 운동 기록 완료', sub: (rt.parts.join(' · ') || '운동') + ' · ' + rt.mins + '분 · ' + rt.kcal + ' kcal', tap: () => this.openRoutine('home') } : { title: '오늘 운동을 기록해보세요', sub: '추천 루틴으로 바로 시작할 수 있어요', tap: () => this.openRoutine('home') };
+        const freq = {}; Object.values(S.routines).forEach(r => r.exs.forEach(e => { freq[e.n] = (freq[e.n] || 0) + 1; }));
+        const freqNames = Object.keys(freq).sort((a, b) => freq[b] - freq[a]);
+        const q = S.rQuery.trim(), cat = S.rCat;
+        let src = EX.map(e => e[0]);
+        if (cat === '자주 했어요') src = freqNames.length ? freqNames : ['러닝머신', '스쿼트', '벤치프레스', '랫풀다운'];
+        else if (cat === '즐겨찾기') src = S.favs;
+        else if (cat !== '전체') src = EX.filter(e => e[1] === cat).map(e => e[0]);
+        src = [...src, ...rd.exs.map(e => e.n).filter(n => !src.includes(n) && (cat === '전체' || cat === '자주 했어요'))];
+        if (q) src = EX.map(e => e[0]).filter(n => n.includes(q));
+        const doneRt = { ...rd, kcal, mins };
+        const finish = () => { this.sfx('checkin'); this.setState({ routineDay: kToday }); const lv = rd.exs.length ? Math.round(rd.exs.reduce((a, e) => a + lvOf(e), 0) / rd.exs.length) : 1; const parts = [...new Set(rd.exs.map(e => partOf(e.n)).filter(p => p !== '직접'))]; this.setState(s => ({ routines: { ...s.routines, [kToday]: { ...s.rd, parts, level: lv, mins, kcal } }, rStep: 'done' })); };
+        const nth = Object.keys({ ...S.routines, [kToday]: 1 }).filter(k => +k <= S.routineDay).length;
+        const loadMap = {}; rd.exs.forEach(e => { const p = partOf(e.n); loadMap[p] = (loadMap[p] || 0) + (e.cardio ? e.min / 10 : e.sets.length / 1.5) * (0.7 + lvOf(e) * 0.3); });
+        const SQ = ['#FFE3C4', '#FFD0A0', '#FFBA7C', '#FF9F55', '#F4833A'];
+        const cards = [{ title: nth + '번째 운동 기록이에요', sub: '운동 습관이 잡히고 있네요.', icon: 'flame' }, { title: '오늘 활동량도 이상 무!', sub: kcal + 'kcal 태웠어요.', icon: 'flame' }];
+        cards.push(mins >= 30 ? { title: '30분 운동 성공!', sub: '하루 30분 이상 운동이 건강을 지키는 데 최고예요.', icon: 'timer' } : { title: '운동 ' + rd.exs.length + '개 완료', sub: '다음엔 30분을 채워봐요.', icon: 'dumbbell' });
+        const goExit = () => this.go(S.routineFrom === 'record' ? 'record' : 'home');
+        const recAll = (c) => c.list.every(has);
+        return {
+          showRoutineCard: S.checked && !missedOpen && !!rt, routineCard: card, routineCtaLabel: rt ? '운동 기록 보기' : '운동 기록하기',
+          stPick: step === 'pick', stEdit: step === 'edit', stDone: step === 'done',
+          rBack: S.rStep === 'pick' && S.rTab === 'rec' ? () => this.setState({ rTab: 'search' }) : goExit, goRecAll: () => this.setState({ rTab: 'rec', rQuery: '' }), rBackEdit: () => this.setState({ rStep: 'pick' }), doneOk: goExit,
+          rQuery: S.rQuery, onRQuery: (e) => this.setState({ rQuery: e.target.value }),
+          rTabSearch: S.rTab === 'search', rTabRec: S.rTab === 'rec',
+          tabSearchColor: S.rTab === 'search' ? '#191F28' : '#B0B8C1', tabRecColor: S.rTab === 'rec' ? '#191F28' : '#B0B8C1',
+          goSearch: () => this.setState({ rTab: 'search' }), goRec: () => this.setState({ rTab: 'rec', rQuery: '' }),
+          rCats: ['전체', '자주 했어요', '즐겨찾기', ...PARTS].map(c => ({ name: c, color: cat === c ? '#191F28' : '#B0B8C1', line: cat === c ? 'inset 0 -2px 0 #191F28' : 'none', tap: () => this.setState({ rCat: c, rQuery: '' }) })),
+          pickList: src.map(n => { const on = has(n), cd = isCardio(n); return { n, part: partOf(n) === '직접' ? '직접 등록' : partOf(n), sel: on, showIcon: !on, icon: ICN[partOf(n)], bg: on ? '#1E2228' : TINT[partOf(n)], starColor: S.favs.includes(n) ? '#FFC53D' : '#E5E8EB', tap: () => toggleEx(n), info: () => this.setState({ exInfo: n }), star: () => this.setState(s => ({ favs: s.favs.includes(n) ? s.favs.filter(x => x !== n) : [...s.favs, n] })) }; }),
+          exText: S.exText, onExText: (e) => this.setState({ exText: e.target.value }), addCustom: () => { const n = S.exText.trim(); if (n && !has(n)) up(r => ({ exs: [...r.exs, mkEx(n)] })); this.setState({ exText: '' }); },
+          recReason: last ? '최근 ' + (last.parts.join('·') || '운동') + ' 기록을 보고 골랐어요' : '처음이라 기본 루틴으로 시작해요',
+          recs: order.slice(0, 4).map((k, i) => { const c = RECS[k], on = recAll(c); return { icon: c.icon, iconBg: c.tint, bc: on ? '#1E2228' : '#E5E8EB', bw: on ? '2px' : '1px', isOn: on, notOn: !on, nPill: c.list.length + '개', delay: (i * 0.25) + 's', items: [...c.list.slice(0, 3).map(n => ({ n })), ...(c.list.length > 3 ? [{ n: '외 ' + (c.list.length - 3) + '개' }] : [])], isTop: i === 0, name: c.name, list: c.list.join(' · '), cta: on ? '담았어요' : '이 루틴 담기', tap: () => up(r => ({ exs: [...r.exs, ...c.list.filter(n => !r.exs.some(e => e.n === n)).map(mkEx)] })) }; }),
+          rNext: () => { if (rd.exs.length) this.setState({ rStep: 'edit' }); }, rNextOp: rd.exs.length ? 1 : 0.4,
+          rNextLabel: rd.exs.length ? '기록하기 (' + rd.exs.length + ')' : '운동을 골라주세요',
+          rDate: Math.floor(S.routineDay / 100) % 100 + '월 ' + (S.routineDay % 100) + '일', doneEditable: S.routineDay === kToday, doneEdit: () => this.setState({ rStep: 'edit' }), rMinsShow: minsShow, rKcal: kcal,
+          minsVal: mins, onMins: (ev) => up({ minsManual: num(ev.target.value, 0, 600) }), minsEdited: rd.minsManual != null, minsReset: () => up({ minsManual: null }),
+          kcalVal: kcal, onKcal: (ev) => up({ kcalManual: num(ev.target.value, 0, 5000) }), kcalAutoOn: !manual, kcalManualOn: manual,
+          setAuto: () => up({ kcalMode: 'auto' }), setManual: () => up({ kcalMode: 'manual', kcalManual: kcalAuto }),
+          autoBg: manual ? 'transparent' : '#FFFFFF', manualBg: manual ? '#FFFFFF' : 'transparent', kcalNote: manual ? '직접 입력한 값으로 기록해요' : '시간과 강도로 계산한 예상값이에요',
+          recBtnBg: S.rTab === 'rec' ? '#1E2228' : '#F2F4F6', recBtnColor: S.rTab === 'rec' ? '#FFFFFF' : '#4E5968', goRecToggle: () => this.setState(s => ({ rTab: s.rTab === 'rec' ? 'search' : 'rec', rQuery: '' })),
+          noMatch: !!q && !src.length, regQuery: () => { if (!has(q)) up(r => ({ exs: [...r.exs, mkEx(q)] })); this.setState({ rQuery: '' }); },
+          doneBody: ({ slim: 'slim', fit: 'fit', bulk: 'bulk', normal: 'fit' })[S.goal] || 'fit',
+          doneExs: rd.exs.map(e => ({ n: e.n, icon: ICN[partOf(e.n)], tint: TINT[partOf(e.n)], sub: e.cardio ? e.min + '분' : e.sets.length + '세트 · 최고 ' + Math.max(...e.sets.map(s => s.kg)) + 'kg' })),
+          doneChips: [{ label: '근력', val: '+' + Math.max(1, rd.exs.reduce((a, e) => a + (e.cardio ? 0 : e.sets.length), 0)) }, { label: '지구력', val: '+' + Math.max(1, Math.round(rd.exs.reduce((a, e) => a + (e.cardio ? e.min / 5 : 0), 0))) }],
+          minDec: () => up(r => ({ madj: (r.madj || 0) - 5 })), minInc: () => up(r => ({ madj: (r.madj || 0) + 5 })),
+          kcalDec: () => up(r => ({ adj: r.adj - 10 })), kcalInc: () => up(r => ({ adj: r.adj + 10 })),
+          sExs: rd.exs.map((e, i) => ({ n: e.n, icon: ICN[partOf(e.n)], tint: TINT[partOf(e.n)], cardio: !!e.cardio, notCardio: !e.cardio, cVal: (e.min || 0) + ' 분', cIn: e.min, onC: (ev) => setEx(i, () => ({ min: num(ev.target.value, 1, 300) })), cChips: [10, 20, 30, 45, 60].map(m => ({ label: m + '분', bg: e.min === m ? '#1E2228' : '#F2F4F6', color: e.min === m ? '#FFFFFF' : '#4E5968', tap: () => setEx(i, () => ({ min: m })) })), hint: (() => { const l = lastOf(e.n); return l && l !== e ? '지난번 ' + (l.cardio ? l.min + '분' : l.sets[0].kg + 'kg × ' + l.sets[0].reps + ' · ' + l.sets.length + '세트') : ''; })(), cDec: () => setEx(i, x => ({ min: Math.max(5, x.min - 5) })), cInc: () => setEx(i, x => ({ min: Math.min(180, x.min + 5) })), del: () => up(r => ({ exs: r.exs.filter((_, j) => j !== i) })),
+            addSet: () => setEx(i, x => ({ sets: [...x.sets, { ...(x.sets[x.sets.length - 1] || { kg: 20, reps: 10 }), done: false }] })), delSet: () => setEx(i, x => ({ sets: x.sets.length > 1 ? x.sets.slice(0, -1) : x.sets })),
+            levels: ['가볍게', '적당히', '격하게'].map((name, k) => { const on = lvOf(e) === k; return { name, expr: ['idle', 'happy', 'surprise'][k], on, off: !on, bg: on ? '#FFE08A' : '#EEF0F3', color: on ? '#191F28' : '#8B95A1', fw: on ? 700 : 500, tap: () => setEx(i, () => ({ level: k })) }; }),
+            rows: e.cardio ? [] : e.sets.map((x, j) => ({ idx: j + 1, kgVal: x.kg, repsVal: x.reps, onKg: (ev) => setSet(i, j, () => ({ kg: num(ev.target.value, 0, 500) })), onReps: (ev) => setSet(i, j, () => ({ reps: num(ev.target.value, 0, 500) })), anim: x.done ? 'lfBump 360ms cubic-bezier(0.32,0.72,0,1) both' : 'none', kg: x.kg + 'kg', reps: x.reps + '회', kgDec: () => setSet(i, j, y => ({ kg: Math.max(0, y.kg - 2.5) })), kgInc: () => setSet(i, j, y => ({ kg: Math.min(300, y.kg + 2.5) })), rDec: () => setSet(i, j, y => ({ reps: Math.max(1, y.reps - 1) })), rInc: () => setSet(i, j, y => ({ reps: Math.min(100, y.reps + 1) })), bg: x.done ? '#1E2228' : '#E5E8EB', color: x.done ? '#FFFFFF' : '#B0B8C1', toggle: () => { this.sfx('set'); setSet(i, j, y => ({ done: !y.done })); } })) })),
+          rMemo: rd.memo, onRMemo: (e) => up({ memo: e.target.value }),
+          rAddMore: () => this.setState({ rStep: 'pick' }), rFinish: () => { if (rd.exs.length) finish(); else this.showToast('운동을 먼저 골라주세요'); },
+          doneNth: nth, doneNames: rd.exs.map(e => e.n).slice(0, 3).join(', ') + (rd.exs.length > 3 ? ' 외 ' + (rd.exs.length - 3) + '개' : ''),
+          loadRows: Object.keys(loadMap).map(p => { const lv = Math.max(1, Math.min(5, Math.round(loadMap[p]))); return { part: p, lv, sq: SQ[lv - 1] }; }),
+          doneCards: cards,
+          exInfoOn: !!S.exInfo, info: S.exInfo ? (() => { const n = S.exInfo, d = dt(n); return { n, icon: ICN[partOf(n)], tint: TINT[partOf(n)], type: d.type, equip: d.equip, parts: d.parts, starColor: S.favs.includes(n) ? '#FFC53D' : '#E5E8EB', star: () => this.setState(s => ({ favs: s.favs.includes(n) ? s.favs.filter(x => x !== n) : [...s.favs, n] })), cta: has(n) ? '선택 해제' : '선택하기', toggle: () => { toggleEx(n); this.setState({ exInfo: null }); }, close: () => this.setState({ exInfo: null }) }; })() : { n: '', icon: 'dumbbell', tint: '#F2F4F6', type: '', equip: '', parts: '', starColor: '#E5E8EB', cta: '', close: () => {}, star: () => {}, toggle: () => {} },
+          checkinModal: S.checkinModal, closeCheckin: () => this.setState({ checkinModal: false }), stop: (e) => e.stopPropagation(),
+          notiModalOn: S.notiModal && scr === 'home' && !S.checkinModal, notiModalSub: '매일 ' + timeLabel + '에 로피가 출석을 알려줘요. 마이에서 시간과 요일을 바꿀 수 있어요.',
+          notiAllow: () => { this.sfx('notif'); this.setState({ notiModal: false, notiOn: true }); this.showToast('매일 ' + timeLabel + '에 알려드릴게요'); },
+          notiLater: () => this.setState({ notiModal: false })
+        };
+      })(),
+      ...(() => {
+        const dstr = S.streak, PT = [
+          ['remind', '출석 시간 알림', timeLabel, name + josa(name, '이', '가') + ' 창밖만 보고 있어요. 오늘 출석하러 갈까요?'],
+          ['evening', '저녁 한 번 더', '오후 9:00 · 아직 출석 전이면', '아직이에요? ' + name + josa(name, '이', '가') + ' 밥그릇 앞에서 기다리고 있어요'],
+          ['streak', '연속 기록 위험', '오후 11:00 · 자정 전', 'D+' + dstr + '이 곧 끝나요. 지금 출석하면 이어져요'],
+          ['letter', '결석 후 사연 안내', '결석한 다음 날 아침', '어제 못 와도 괜찮아요. 사연을 보내면 연속 기록이 이어져요'],
+          ['routine', '운동 루틴 제안', '출석한 뒤', '오늘은 하체 하는 날이에요. 추천 루틴이 준비됐어요'],
+          ['mile', '기념일', 'D+7, 30, 100…', 'D+30 달성! ' + name + josa(name, '이', '가') + ' 한층 탄탄해졌어요']
+        ];
+        const wk = ['월', '화', '수', '목', '금', '토', '일'].map((l, i) => { const st = status(2026, 10, 12 + i); return { l, icon: st === 'letter' ? 'letterblue' : 'pawpink', hasIcon: st === 'letter' || st === 'ok', bg: st === 'ok' ? '#EEF0F3' : st === 'letter' ? '#DCEBFF' : st === 'miss' ? '#FDE5E7' : 'transparent', ring: st === 'today' ? 'inset 0 0 0 2px #1E2228' : st ? 'none' : 'inset 0 0 0 1.5px #D1D6DB', st }; });
+        const n = wk.filter(w => w.st === 'ok' || w.st === 'letter').length;
+        return {
+          bannerOn: !!S.banner, banner: S.banner || { title: '', body: '' },
+          lockBanners: [PT[0], PT[2]].map((p, i) => ({ title: '로피', time: i ? '지금' : '8분 전', body: p[3] })),
+          pushTypes: PT.map(([k, nm, when, body]) => ({ name: nm, when, body, track: S.pushOn[k] ? '#1E2228' : '#E5E8EB', knob: S.pushOn[k] ? '22px' : '2px', op: S.pushOn[k] ? 1 : 0.5, toggle: () => this.setState(s => ({ pushOn: { ...s.pushOn, [k]: !s.pushOn[k] } })), preview: () => this.showBanner('로피', body) })),
+          weekDots: wk.map(w => ({ ...w })), wWeekN: n, wRing: (n / 7 * 176).toFixed(1) + ' 176',
+          wState: S.checked ? '출석 완료' : '출석 전', wStateBg: S.checked ? '#1E2228' : '#FFFFFF', wStateColor: S.checked ? '#FFFFFF' : '#191F28',
+          wBtn: S.checked ? '출석 완료' : '출석하기', wBtnBg: S.checked ? '#F2F4F6' : '#1E2228', wBtnColor: S.checked ? '#8B95A1' : '#FFFFFF', wAct: () => { if (!S.checked) this.doCheckin(false); }
+        };
       })(),
       hasToast: !!S.toast, toast: S.toast, hasToastAction: !!S.toastAct, toastActionLabel: S.toastAct ? S.toastAct.label : '', toastPad: S.toastAct ? '8px 8px 8px 18px' : '12px 18px',
       toastAction: () => { const a = S.toastAct; clearTimeout(this._tt); this.setState({ toast: null, toastAct: null }); a && a.fn(); }

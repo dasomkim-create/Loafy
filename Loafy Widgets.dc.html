@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./loafy-sprites.js"></script>
+<style>
+@font-face{font-family:"Pretendard Variable";src:url("./fonts/PretendardVariable.woff2") format("woff2-variations");font-weight:45 920;font-display:swap}
+body{margin:0;background:#EEF0F4;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em}
+a{color:#1E2228;text-decoration:none}a:hover{color:#111418}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="max-width:960px;margin:0 auto;padding:48px 32px 80px;display:flex;flex-direction:column;gap:48px">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span style="font-size:32px;line-height:40px;font-weight:800;color:#191F28">Loafy 위젯</span>
+    <span style="font-size:16px;line-height:24px;color:#6B7684">iOS 홈 화면과 잠금 화면에 추가하는 위젯 시안이에요. 앱 프로토타입과는 별도로 개발해요. 크기는 iPhone 15 기준 pt예요.</span>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:20px;font-weight:700;color:#191F28">홈 화면 · Small</span><span style="font-size:14px;color:#8B95A1">158 × 158</span></div>
+    <div style="padding:32px;border-radius:32px;background:linear-gradient(170deg,#E4E9F2 0%,#CAD3E4 100%);display:flex;gap:28px;flex-wrap:wrap">
+      <sc-for list="{{ states }}" as="s" hint-placeholder-count="2">
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+          <div style="width:158px;height:158px;box-sizing:border-box;padding:14px;border-radius:24px;background:{{ catBg }};box-shadow:0 4px 16px rgba(0,0,0,0.08);display:flex;flex-direction:column;justify-content:space-between">
+            <span style="font-size:26px;line-height:30px;font-weight:800;color:#191F28;letter-spacing:-0.02em">D+{{ s.streak }}</span>
+            <div style="display:flex;align-items:flex-end;justify-content:space-between">
+              <span style="height:26px;padding:0 9px;border-radius:999px;background:{{ s.pillBg }};color:{{ s.pillColor }};font-size:12px;font-weight:700;display:flex;align-items:center;white-space:nowrap;flex-shrink:0">{{ s.label }}</span>
+              <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" scale="1.8" hint-size="58px,60px"></x-import>
+            </div>
+          </div>
+          <span style="font-size:13px;color:#4E5968">{{ s.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:20px;font-weight:700;color:#191F28">홈 화면 · Medium</span><span style="font-size:14px;color:#8B95A1">338 × 158 · 출석하기 버튼으로 앱을 열지 않고 출석</span></div>
+    <div style="padding:32px;border-radius:32px;background:linear-gradient(170deg,#E4E9F2 0%,#CAD3E4 100%);display:flex;gap:28px;flex-wrap:wrap">
+      <sc-for list="{{ states }}" as="s" hint-placeholder-count="2">
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+          <div style="width:338px;height:158px;box-sizing:border-box;padding:14px 16px;border-radius:24px;background:#FFFFFF;box-shadow:0 4px 16px rgba(0,0,0,0.08);display:flex;gap:14px">
+            <div style="width:96px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-size:26px;line-height:30px;font-weight:800;color:#191F28;letter-spacing:-0.02em">D+{{ s.streak }}</span>
+              <span style="width:96px;height:96px;border-radius:20px;background:{{ catBg }};display:flex;align-items:center;justify-content:center">
+                <x-import component-from-global-scope="loafy-sprite" type="{{ body }}" coat="{{ coat }}" scale="2.6" hint-size="83px,86px"></x-import>
+              </span>
+            </div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-size:13px;font-weight:700;color:#4E5968">이번 주</span>
+              <div style="display:flex;gap:4px;justify-content:space-between">
+                <sc-for list="{{ s.week }}" as="w" hint-placeholder-count="7">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                    <span style="font-size:11px;color:#8B95A1">{{ w.l }}</span>
+                    <span style="width:22px;height:22px;border-radius:50%;background:{{ w.bg }};box-shadow:{{ w.ring }};display:flex;align-items:center;justify-content:center">
+                      <sc-if value="{{ w.hasIcon }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="loafy-icon" name="pawpink" size="12" active="true" hint-size="12px,12px"></x-import></sc-if>
+                    </span>
+                  </div>
+                </sc-for>
+              </div>
+              <span style="height:34px;border-radius:999px;background:{{ s.btnBg }};color:{{ s.btnColor }};font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ s.btn }}</span>
+            </div>
+          </div>
+          <span style="font-size:13px;color:#4E5968">{{ s.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:20px;font-weight:700;color:#191F28">잠금 화면</span><span style="font-size:14px;color:#8B95A1">원형 76 × 76 · 직사각형 172 × 76</span></div>
+    <div style="padding:32px;border-radius:32px;background:linear-gradient(170deg,#3A4150,#14171D);display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start">
+      <sc-for list="{{ states }}" as="s" hint-placeholder-count="2">
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div style="width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;position:relative">
+              <svg width="76" height="76" viewBox="0 0 76 76" style="position:absolute;inset:0;transform:rotate(-90deg)"><circle cx="38" cy="38" r="33" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="5"></circle><circle cx="38" cy="38" r="33" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-dasharray="{{ s.ring }}"></circle></svg>
+              <span style="font-size:17px;font-weight:800;color:#FFFFFF">{{ s.weekN }}/7</span>
+            </div>
+            <div style="width:172px;height:76px;box-sizing:border-box;padding:10px 14px;border-radius:18px;background:rgba(255,255,255,0.18);display:flex;flex-direction:column;justify-content:center;gap:1px">
+              <span style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.7)">Loafy</span>
+              <span style="font-size:22px;line-height:26px;font-weight:800;color:#FFFFFF">D+{{ s.streak }}</span>
+              <span style="font-size:13px;color:rgba(255,255,255,0.8)">{{ s.label }}</span>
+            </div>
+          </div>
+          <span style="font-size:13px;color:rgba(255,255,255,0.7)">{{ s.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px;padding:20px 22px;border-radius:20px;background:#FFFFFF">
+    <span style="font-size:16px;font-weight:700;color:#191F28">개발 메모</span>
+    <span style="font-size:15px;line-height:24px;color:#4E5968">WidgetKit으로 만들고, 앱과 App Group으로 연속 일수, 오늘 출석 여부, 이번 주 기록, 털색, 체형을 공유해요. 중간 위젯의 출석하기 버튼은 App Intents(iOS 17 이상)로 처리해요.</span>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;,&quot;blue&quot;,&quot;choco&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;body&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;slim&quot;,&quot;fit&quot;,&quot;normal&quot;,&quot;bulk&quot;,&quot;jjin&quot;,&quot;loaf&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;streak&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:12,&quot;min&quot;:0,&quot;max&quot;:365,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props, coat = p.coat ?? 'cheese', body = p.body ?? 'normal', base = p.streak ?? 12;
+    const BG = { cheese: '#FCEBD6', mackerel: '#E7EBF0', tuxedo: '#E6E7EE', cow: '#F2F2EE', cream: '#FBF2E1', blue: '#E3E9F3', choco: '#F1E5DA' };
+    const mk = (done) => {
+      const st = ['ok', 'ok', done ? 'ok' : 'today', null, null, null, null];
+      const week = ['월', '화', '수', '목', '금', '토', '일'].map((l, i) => ({ l, hasIcon: st[i] === 'ok', bg: st[i] === 'ok' ? '#EEF0F3' : 'transparent', ring: st[i] === 'today' ? 'inset 0 0 0 2px #1E2228' : st[i] ? 'none' : 'inset 0 0 0 1.5px #D1D6DB' }));
+      const n = st.filter(s => s === 'ok').length;
+      return { streak: done ? base + 1 : base, label: done ? '출석 완료' : '출석 전', pillBg: done ? '#1E2228' : '#FFFFFF', pillColor: done ? '#FFFFFF' : '#191F28', btn: done ? '출석 완료' : '출석하기', btnBg: done ? '#F2F4F6' : '#1E2228', btnColor: done ? '#8B95A1' : '#FFFFFF', week, weekN: n, ring: (n / 7 * 207).toFixed(1) + ' 207' };
+    };
+    return { coat, body, catBg: BG[coat] || '#F6F0E1', states: [mk(false), mk(true)] };
+  }
+}
+</script>
+</body>
+</html>

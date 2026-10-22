@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./loafy-sprites.js"></script>
+<style>
+@font-face{font-family:"Pretendard Variable";src:url("./fonts/PretendardVariable.woff2") format("woff2-variations");font-weight:45 920;font-display:swap}
+body{margin:0;background:#F2F4F6;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em}
+a{color:#1E2228;text-decoration:none}a:hover{color:#111418}
+</style>
+</helmet>
+<div style="max-width:1120px;margin:0 auto;padding:56px 32px 96px;display:flex;flex-direction:column;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <span style="font-size:34px;line-height:42px;font-weight:800;color:#191F28">Loafy 아이콘 · 캐릭터 아카이브</span>
+    <span style="font-size:16px;line-height:24px;color:#6B7684;max-width:680px">앱과 같은 코드(loafy-sprites.js, loafy-tama.js)를 그대로 불러와 그려요. 캐릭터, 아이콘, 빵틀이 앱에서 바뀌면 이 페이지도 함께 바뀌어요.</span>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <span style="font-size:22px;font-weight:700;color:#191F28">로고</span>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <div style="padding:36px 44px;border-radius:24px;background:#FFFFFF"><x-import component-from-global-scope="loafy-logo" scale="5" still="" hint-size="230px,110px"></x-import></div>
+      <div style="padding:36px 44px;border-radius:24px;background:#1E2228"><x-import component-from-global-scope="loafy-logo" scale="5" still="" ink="#FFFFFF" hint-size="230px,110px"></x-import></div>
+      <div style="padding:36px 44px;border-radius:24px;background:#FFFFFF"><x-import component-from-global-scope="loafy-logo" scale="5" hint-size="230px,110px"></x-import></div>
+    </div>
+    <span style="font-size:13px;color:#8B95A1">왼쪽부터 기본, 어두운 배경(흰 글자), 픽셀 생성 애니메이션</span>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:22px;font-weight:700;color:#191F28">캐릭터</span><span style="font-size:14px;color:#8B95A1">체형 {{ bodyCount }}종 × 털색 {{ coatCount }}종</span></div>
+    <div style="padding:20px;border-radius:24px;background:#FFFFFF;overflow-x:auto">
+      <div style="display:grid;grid-template-columns:72px repeat({{ coatCount }},minmax(92px,1fr));gap:6px;min-width:760px;align-items:center">
+        <span></span>
+        <sc-for list="{{ coats }}" as="c" hint-placeholder-count="7"><span style="text-align:center;font-size:13px;font-weight:600;color:#4E5968">{{ c.name }}</span></sc-for>
+      </div>
+      <sc-for list="{{ bodies }}" as="b" hint-placeholder-count="6">
+        <div style="display:grid;grid-template-columns:72px repeat({{ coatCount }},minmax(92px,1fr));gap:6px;min-width:760px;align-items:center;box-shadow:inset 0 1px 0 #F2F4F6">
+          <span style="font-size:14px;font-weight:700;color:#191F28">{{ b.name }}</span>
+          <sc-for list="{{ b.cells }}" as="c" hint-placeholder-count="7">
+            <div style="height:100px;display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="loafy-sprite" type="{{ c.type }}" coat="{{ c.coat }}" scale="2.6" hint-size="83px,86px"></x-import></div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:22px;font-weight:700;color:#191F28">표정</span>
+      <div style="padding:20px;border-radius:24px;background:#FFFFFF;display:flex;flex-wrap:wrap;gap:8px 4px">
+        <sc-for list="{{ exprs }}" as="e" hint-placeholder-count="6"><div style="width:96px;display:flex;flex-direction:column;align-items:center;gap:6px"><x-import component-from-global-scope="loafy-sprite" type="normal" coat="cheese" expr="{{ e.k }}" scale="2.6" hint-size="83px,86px"></x-import><span style="font-size:12px;color:#6B7684">{{ e.k }}</span></div></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:22px;font-weight:700;color:#191F28">포즈</span>
+      <div style="padding:20px;border-radius:24px;background:#FFFFFF;display:flex;flex-wrap:wrap;gap:8px 4px">
+        <sc-for list="{{ poses }}" as="p" hint-placeholder-count="4"><div style="width:96px;display:flex;flex-direction:column;align-items:center;gap:6px"><x-import component-from-global-scope="loafy-sprite" type="normal" coat="cheese" pose="{{ p.k }}" scale="2.6" hint-size="83px,86px"></x-import><span style="font-size:12px;color:#6B7684">{{ p.k }}</span></div></sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <span style="font-size:22px;font-weight:700;color:#191F28">고양이 액세서리</span>
+    <div style="padding:20px;border-radius:24px;background:#FFFFFF;display:flex;flex-wrap:wrap;gap:12px">
+      <sc-for list="{{ accs }}" as="a" hint-placeholder-count="4"><div style="width:140px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 0;border-radius:18px;background:#F6F0E1"><x-import component-from-global-scope="loafy-sprite" type="normal" coat="cheese" acc="{{ a.k }}" scale="3.4" hint-size="109px,113px"></x-import><span style="font-size:13px;font-weight:600;color:#4E5968">{{ a.name }}</span></div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:22px;font-weight:700;color:#191F28">빵틀 (3D)</span><span style="font-size:14px;color:#8B95A1">드래그해서 돌려볼 수 있어요</span></div>
+    <div style="display:flex;flex-wrap:wrap;gap:16px">
+      <sc-for list="{{ shells }}" as="s" hint-placeholder-count="4">
+        <div style="width:240px;display:flex;flex-direction:column;gap:8px">
+          <div style="position:relative;height:260px;border-radius:24px;background:#FFFFFF;overflow:hidden"><x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" fit-scale="0.9" color="{{ s.color }}" pattern="{{ s.pattern }}" form="{{ s.form }}" strap="{{ s.strap }}" scene="{{ s.scene }}" still="" body="normal" coat="cheese" lcd="color" streak="3" style="position:absolute;inset:0" hint-size="100%,100%"></x-import></div>
+          <span style="font-size:14px;font-weight:600;color:#4E5968">{{ s.name }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:22px;font-weight:700;color:#191F28">픽셀 아이콘</span><span style="font-size:14px;color:#8B95A1">12 × 12 · 오른쪽이 채운 모양(active)</span></div>
+    <sc-for list="{{ iconGroups }}" as="g" hint-placeholder-count="2">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:15px;font-weight:700;color:#4E5968">{{ g.title }} · {{ g.count }}개</span>
+        <div style="padding:16px;border-radius:24px;background:#FFFFFF;display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px">
+          <sc-for list="{{ g.icons }}" as="i" hint-placeholder-count="8">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 0;border-radius:16px;background:#F9FAFB">
+              <div style="display:flex;gap:12px;align-items:center">
+                <x-import component-from-global-scope="loafy-icon" name="{{ i.name }}" size="40" color="#2F343D" hint-size="40px,40px"></x-import>
+                <x-import component-from-global-scope="loafy-icon" name="{{ i.name }}" size="40" active="true" hint-size="40px,40px"></x-import>
+              </div>
+              <span style="font-size:12px;color:#6B7684">{{ i.name }}</span>
+              <span style="width:18px;height:18px;border-radius:5px;background:{{ i.fill }};box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <span style="font-size:22px;font-weight:700;color:#191F28">털색 팔레트</span>
+    <div style="padding:20px;border-radius:24px;background:#FFFFFF;display:flex;flex-direction:column;gap:14px">
+      <sc-for list="{{ palettes }}" as="p" hint-placeholder-count="7">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <span style="width:72px;font-size:14px;font-weight:700;color:#191F28">{{ p.name }}</span>
+          <sc-for list="{{ p.sw }}" as="s" hint-placeholder-count="5"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:44px;height:44px;border-radius:14px;background:{{ s.hex }};box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)"></span><span style="font-size:11px;color:#8B95A1">{{ s.label }}</span></div></sc-for>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    if (!window.LoafySprites) { this._t = setInterval(() => { if (window.LoafySprites) { clearInterval(this._t); this.forceUpdate(); } }, 80); }
+  }
+  componentWillUnmount() { clearInterval(this._t); }
+  renderVals() {
+    const L = window.LoafySprites || { TYPES: {}, COATS: {}, COAT_NAMES: {}, BODY_NAMES: {}, ICONS: {}, ICON_FILL: {} };
+    const coatKeys = Object.keys(L.COATS), bodyKeys = Object.keys(L.TYPES);
+    const coats = coatKeys.map(k => ({ k, name: L.COAT_NAMES[k] || k }));
+    const bodies = bodyKeys.map(b => ({ name: L.BODY_NAMES[b] || b, cells: coatKeys.map(c => ({ type: b, coat: c })) }));
+    const names = Object.keys(L.ICONS);
+    const wk = (n) => /^ex_/.test(n) || ['dumbbell', 'flame', 'timer'].includes(n);
+    const mk = (n) => ({ name: n, fill: L.ICON_FILL[n] || '#C9CED8' });
+    const iconGroups = [['운동', names.filter(wk)], ['앱 · 탭 · 재화', names.filter(n => !wk(n))]].map(([title, arr]) => ({ title, count: arr.length, icons: arr.map(mk) }));
+    const palettes = coatKeys.map(k => { const c = L.COATS[k]; return { name: L.COAT_NAMES[k] || k, sw: [['base', c.base], ['light', c.light], ['shade', c.shade], ['stripe', c.stripe], ['belly', c.belly], ['line', c.line]].filter(x => x[1]).map(([label, hex]) => ({ label, hex })) }; });
+    return {
+      bodyCount: bodyKeys.length, coatCount: coatKeys.length, coats, bodies, iconGroups, palettes,
+      exprs: ['idle', 'blink', 'happy', 'eat', 'surprise', 'sleep'].map(k => ({ k })),
+      poses: ['sit', 'letter', 'stamp', 'sleep'].map(k => ({ k })),
+      accs: [['none', '없음'], ['glasses', '동글 안경'], ['ribbon', '핑크 리본'], ['crown', '꼬마 왕관']].map(([k, name]) => ({ k, name })),
+      shells: [
+        { name: '기본 · 실버', color: '#C9CCD3', pattern: 'none', form: 'egg', strap: 'none' },
+        { name: '고양이 귀', color: '#C9CCD3', pattern: 'none', form: 'cat', strap: 'none' },
+        { name: '점박이 · 체리', color: '#EE7D8A', pattern: 'dots', form: 'egg', strap: 'none' },
+        { name: '하트 · 스카이', color: '#A9CFF2', pattern: 'hearts', form: 'egg', strap: 'silver' },
+        { name: '줄무늬 · 레몬', color: '#F2DF85', pattern: 'stripes', form: 'egg', strap: 'gold' },
+        { name: '귀 + 하트 · 라벤더', color: '#CFC8EC', pattern: 'hearts', form: 'cat', strap: 'none' },
+        { name: '귀 + 꼬리 · 별', color: '#F2DF85', pattern: 'stars', form: 'cattail', strap: 'none', scene: 'cloud' },
+        { name: '꼬리 · 발바닥', color: '#A9CFF2', pattern: 'paws', form: 'tail', strap: 'none', scene: 'meadow' },
+        { name: '체크 · 사막', color: '#FFE0E6', pattern: 'check', form: 'egg', strap: 'none', scene: 'desert' },
+        { name: '물결 · 밤하늘', color: '#CFE8D8', pattern: 'waves', form: 'egg', strap: 'none', scene: 'night' },
+        { name: '꽃 · 초원', color: '#FFE0E6', pattern: 'flowers', form: 'cat', strap: 'none', scene: 'meadow' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
