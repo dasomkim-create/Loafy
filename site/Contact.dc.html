@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>문의 · Loafy</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/colors-and-base.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/typography.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/shape-motion.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/styles.css">
+<script src="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/_ds_bundle.js"></script>
+<script src="loafy-sprites.js"></script>
+<style>
+body{margin:0;background:#FFFFFF !important;color:#191F28;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em;word-break:keep-all}
+a{color:#191F28;text-decoration:none}a:hover{color:#333D4B}
+textarea::placeholder,input::placeholder{color:#B0B8C1}
+</style>
+</helmet>
+
+<dc-import name="SiteHeader" hint-size="100%,64px"></dc-import>
+
+<main data-screen-label="문의" style="max-width:640px;margin:0 auto;padding:clamp(48px,7vw,80px) clamp(20px,5vw,40px) clamp(72px,10vw,120px);display:flex;flex-direction:column;gap:32px">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h1 style="margin:0;font-size:clamp(30px,4.4vw,40px);line-height:1.25;font-weight:800;letter-spacing:-0.025em">문의</h1>
+    <p style="margin:0;font-size:16px;line-height:1.6;color:#4E5968">[안내 문구 영역] 궁금한 점이나 불편한 점을 남겨주시면 영업일 기준 [N]일 안에 답변드려요.</p>
+  </div>
+
+  <a href="mailto:[support@loafy.app]" style="display:flex;align-items:center;gap:16px;min-height:72px;padding:16px 20px;border-radius:16px;box-shadow:inset 0 0 0 1px #E5E8EB">
+    <loafy-icon name="letter" size="24" active="" color="#191F28"></loafy-icon>
+    <span style="flex:1;display:flex;flex-direction:column;gap:2px">
+      <span style="font-size:13px;font-weight:500;color:#8B95A1">이메일 문의</span>
+      <span style="font-size:16px;font-weight:600;color:#191F28">[support@loafy.app]</span>
+    </span>
+    <span style="font-size:20px;color:#B0B8C1">›</span>
+  </a>
+
+  <div style="height:1px;background:#E5E8EB"></div>
+
+  <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+    <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:500;color:#8B95A1">문의 유형</span>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ types }}" as="t" hint-placeholder-count="4">
+            <button type="button" onClick="{{ t.pick }}" style="height:40px;padding:0 16px;border:0;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <x-import component-from-global-scope="DesignSystem_b38bc5.Input" label="이메일" type="email" placeholder="답변 받을 이메일" required="{{ true }}" hint-size="100%,74px"></x-import>
+      <label style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:13px;font-weight:500;color:#8B95A1">내용</span>
+        <textarea required="" rows="7" placeholder="문의 내용을 적어주세요" style="width:100%;box-sizing:border-box;padding:16px;border:0;outline:0;border-radius:16px;background:#F2F4F6;font:inherit;font-size:16px;line-height:1.6;color:#191F28;resize:vertical"></textarea>
+      </label>
+      <span style="font-size:13px;line-height:1.5;color:#8B95A1">[개인정보 수집·이용 동의 안내 영역] 답변을 위해 이메일 주소를 수집해요. 자세한 내용은 <a href="Privacy.dc.html" style="text-decoration:underline;color:#4E5968">개인정보처리방침</a>에서 확인할 수 있어요.</span>
+      <x-import component-from-global-scope="DesignSystem_b38bc5.Button" type="submit" hint-size="100%,52px">보내기</x-import>
+    </form>
+  </sc-if>
+  <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:40px 20px;border-radius:16px;background:#F9FAFB;text-align:center">
+      <loafy-sprite type="fit" coat="cheese" expr="eat" scale="3"></loafy-sprite>
+      <span style="font-size:20px;font-weight:700">문의가 접수됐어요</span>
+      <span style="font-size:15px;color:#4E5968">입력한 이메일로 답변을 보내드릴게요.</span>
+      <button type="button" onClick="{{ reset }}" style="height:44px;padding:0 20px;border:0;border-radius:12px;background:#F2F4F6;font:inherit;font-size:15px;font-weight:600;color:#191F28;cursor:pointer">새 문의 작성</button>
+    </div>
+  </sc-if>
+</main>
+
+<dc-import name="SiteFooter" hint-size="100%,260px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { type: 0, sent: false };
+  renderVals() {
+    const labels = ['앱 이용', '결제·환불', '계정', '기타'];
+    return {
+      types: labels.map((label, i) => ({ label, pick: () => this.setState({ type: i }), bg: i === this.state.type ? '#191F28' : '#F2F4F6', fg: i === this.state.type ? '#FFFFFF' : '#4E5968' })),
+      sent: this.state.sent, notSent: !this.state.sent,
+      submit: (e) => { e.preventDefault(); this.setState({ sent: true }); },
+      reset: () => this.setState({ sent: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

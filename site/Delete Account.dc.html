@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>계정 삭제 안내 · Loafy</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/colors-and-base.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/typography.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/shape-motion.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/styles.css">
+<script src="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/_ds_bundle.js"></script>
+<script src="loafy-sprites.js"></script>
+<style>
+body{margin:0;background:#FFFFFF !important;color:#191F28;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em;word-break:keep-all}
+a{color:#191F28;text-decoration:none}a:hover{color:#333D4B}
+</style>
+</helmet>
+
+<dc-import name="SiteHeader" hint-size="100%,64px"></dc-import>
+
+<main data-screen-label="계정 삭제" style="max-width:720px;margin:0 auto;padding:clamp(48px,7vw,80px) clamp(20px,5vw,40px) clamp(72px,10vw,120px);display:flex;flex-direction:column;gap:36px">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h1 style="margin:0;font-size:clamp(30px,4.4vw,40px);line-height:1.25;font-weight:800;letter-spacing:-0.025em">계정 삭제 안내</h1>
+    <p style="margin:0;font-size:16px;line-height:1.6;color:#4E5968">[안내 문구 영역] 로피 앱에서 직접 계정을 삭제할 수 있어요. 삭제한 계정은 되돌릴 수 없어요.</p>
+  </div>
+
+  <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px">
+    <li style="display:flex;gap:16px;padding:24px;border-radius:16px;background:#F9FAFB;box-shadow:inset 0 0 0 1px #E5E8EB">
+      <span style="flex:none;width:32px;height:32px;border-radius:50%;background:#191F28;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700">1</span>
+      <span style="display:flex;flex-direction:column;gap:6px;padding-top:4px">
+        <span style="font-size:18px;font-weight:700">앱에서 마이 탭을 열어요</span>
+        <span style="font-size:15px;line-height:1.6;color:#4E5968">[단계 설명 영역] 로그인한 상태에서 하단 탭의 마이를 눌러요.</span>
+      </span>
+    </li>
+    <li style="display:flex;gap:16px;padding:24px;border-radius:16px;background:#F9FAFB;box-shadow:inset 0 0 0 1px #E5E8EB">
+      <span style="flex:none;width:32px;height:32px;border-radius:50%;background:#191F28;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700">2</span>
+      <span style="display:flex;flex-direction:column;gap:6px;padding-top:4px">
+        <span style="font-size:18px;font-weight:700">[설정 › 계정 삭제]를 눌러요</span>
+        <span style="font-size:15px;line-height:1.6;color:#4E5968">[단계 설명 영역] 메뉴 경로는 실제 앱 화면에 맞춰 바꿔주세요.</span>
+      </span>
+    </li>
+    <li style="display:flex;gap:16px;padding:24px;border-radius:16px;background:#F9FAFB;box-shadow:inset 0 0 0 1px #E5E8EB">
+      <span style="flex:none;width:32px;height:32px;border-radius:50%;background:#191F28;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700">3</span>
+      <span style="display:flex;flex-direction:column;gap:6px;padding-top:4px">
+        <span style="font-size:18px;font-weight:700">안내를 확인하고 삭제해요</span>
+        <span style="font-size:15px;line-height:1.6;color:#4E5968">[단계 설명 영역] 삭제되는 정보를 확인한 뒤 계정 삭제를 눌러요.</span>
+      </span>
+    </li>
+  </ol>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:20px;font-weight:700">삭제되는 정보</h2>
+    <p style="margin:0;font-size:16px;line-height:1.75;color:#333D4B">[본문 영역] 출석 기록, 고양이와 빵틀 정보, 보유한 발자국 쿠키 등 삭제 대상과 보관 기간을 여기에 적어요. 이 영역의 문장은 임시 텍스트예요.</p>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:20px;font-weight:700">앱을 사용할 수 없나요</h2>
+    <p style="margin:0;font-size:16px;line-height:1.6;color:#4E5968">앱을 지웠거나 로그인할 수 없다면 가입한 계정 정보를 적어 이메일로 요청해주세요.</p>
+    <a href="mailto:[support@loafy.app]" style="display:flex;align-items:center;gap:16px;min-height:72px;padding:16px 20px;border-radius:16px;box-shadow:inset 0 0 0 1px #E5E8EB">
+      <loafy-icon name="letter" size="24" active="" color="#191F28"></loafy-icon>
+      <span style="flex:1;display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:13px;font-weight:500;color:#8B95A1">계정 삭제 요청</span>
+        <span style="font-size:16px;font-weight:600;color:#191F28">[support@loafy.app]</span>
+      </span>
+      <span style="font-size:20px;color:#B0B8C1">›</span>
+    </a>
+  </section>
+</main>
+
+<dc-import name="SiteFooter" hint-size="100%,260px"></dc-import>
+</x-dc>
+</body>
+</html>

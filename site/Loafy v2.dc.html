@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Loafy 로피 · 출석하면 날렵해지고, 살찌면 식빵이 돼요</title>
+<meta name="description" content="운동 출석 습관 앱 로피. 체육관에 출석하면 고양이가 날렵해지고, 살찌면 식빵이 돼요.">
+<meta property="og:title" content="Loafy 로피">
+<meta property="og:description" content="출석하면 날렵해지고, 살찌면 식빵이 돼요">
+<meta property="og:image" content="assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/colors-and-base.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/typography.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/shape-motion.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/styles.css">
+<script src="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/_ds_bundle.js"></script>
+<script src="loafy-sprites.js"></script>
+<style>
+body{margin:0;background:#FFFFFF !important;color:#191F28;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em;word-break:keep-all}
+a{color:#191F28;text-decoration:none}a:hover{color:#333D4B}
+html{scroll-behavior:smooth}
+button{font-family:inherit;letter-spacing:inherit}
+</style>
+</helmet>
+
+<dc-import name="SiteHeader" hint-size="100%,64px"></dc-import>
+
+<main>
+  <section data-screen-label="Hero" style="max-width:1120px;margin:0 auto;padding:clamp(48px,8vw,96px) clamp(20px,5vw,40px) clamp(56px,8vw,96px);display:flex;flex-wrap:wrap;align-items:center;gap:56px 40px">
+    <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:28px">
+      <span style="align-self:flex-start;height:32px;padding:0 14px;border-radius:999px;background:#F2F4F6;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#4E5968">운동 출석 습관 앱
+      </span>
+      <h1 style="margin:0;font-size:clamp(42px,6.6vw,80px);line-height:1.12;font-weight:800;letter-spacing:-0.035em;text-wrap:balance">출석하면 날렵해지고,<br>살찌면 식빵이 돼요</h1>
+      <p style="margin:0;max-width:460px;font-size:clamp(17px,1.8vw,20px);line-height:1.6;font-weight:500;color:#4E5968;text-wrap:pretty">[한 줄 소개]</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a href="#" aria-label="App Store에서 다운로드" style="height:56px;padding:0 22px 0 18px;border-radius:16px;background:#000000;color:#FFFFFF;display:flex;align-items:center;gap:12px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.21-2.98.8-.94 2.14-1.64 3.25-1.68.03.13.05.28.05.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C3.96 18.38 2.92 15.57 2.92 12.92c0-4.28 2.8-6.55 5.55-6.55 1.450 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.61 0 2.89.06 4.37 2.19-.13.09-2.38 1.37-2.38 4.19 0 3.26 2.85 4.42 2.96 4.45z"></path></svg>
+          <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.15"><span style="font-size:11px;font-weight:500;color:#D1D6DB">다운로드</span><span style="font-size:17px;font-weight:700">App Store</span></span>
+        </a>
+        <a href="#" aria-label="Google Play에서 다운로드" style="height:56px;padding:0 22px 0 18px;border-radius:16px;background:#000000;color:#FFFFFF;display:flex;align-items:center;gap:12px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M4 2.6c0-.5.55-.8.98-.55l16.3 9.4c.43.25.43.86 0 1.1l-16.3 9.4A.64.64 0 0 1 4 21.4z"></path></svg>
+          <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.15"><span style="font-size:11px;font-weight:500;color:#D1D6DB">다운로드</span><span style="font-size:17px;font-weight:700">Google Play</span></span>
+        </a>
+      </div>
+    </div>
+
+    <div style="flex:1 1 400px;min-width:0;display:flex;justify-content:center">
+      <div style="position:relative;width:min(100%,520px);aspect-ratio:520 / 560">
+        <div ref="{{ tamaBigRef }}" style="position:absolute;right:0;top:0;width:82%;height:86%;z-index:1">
+          <div ref="{{ tamaBigFloat }}" style="width:100%;height:100%">
+            <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" color="#C9CCD3" form="cat" strap="silver" fit-scale="0.86" body="{{ heroType }}" coat="{{ coat }}" streak="{{ streak }}" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
+          </div>
+        </div>
+        <div ref="{{ tamaSmallRef }}" style="position:absolute;left:0;bottom:0;width:44%;height:48%;z-index:2">
+          <div ref="{{ tamaSmallFloat }}" style="width:100%;height:100%">
+            <x-import component-from-global-scope="loafy-tama" from="./loafy-tama.js" color="#F1B5BE" pattern="hearts" form="cattail" strap="gold" fit-scale="0.86" body="loaf" coat="tuxedo" streak="0" style="position:absolute;inset:0" hint-size="100%,100%"></x-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div aria-hidden="true" style="overflow:hidden;padding:8px 0 40px">
+    <div ref="{{ paradeRef }}" style="display:flex;gap:40px;width:max-content;align-items:flex-end">
+      <sc-for list="{{ parade }}" as="p" hint-placeholder-count="12">
+        <loafy-sprite type="{{ p.type }}" coat="{{ p.coat }}" expr="{{ p.expr }}" scale="2" animate=""></loafy-sprite>
+      </sc-for>
+    </div>
+  </div>
+
+  <section id="features" data-screen-label="Features" style="background:#F2F2F7;padding:clamp(72px,10vw,128px) clamp(20px,5vw,40px);scroll-margin-top:64px">
+    <div style="max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:15px;font-weight:700;color:#3182F6">직접 눌러보세요</span>
+        <h2 style="margin:0;font-size:clamp(32px,4.8vw,56px);line-height:1.18;font-weight:800;letter-spacing:-0.03em;text-wrap:balance">운동하러 가는 이유가<br>하나 더 생겨요</h2>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:16px">
+        <article data-reveal="" style="flex:2 1 520px;min-width:0;background:#FFFFFF;border-radius:24px;padding:clamp(24px,3.6vw,40px);display:flex;flex-wrap:wrap;gap:32px;align-items:center">
+          <div style="flex:1 1 260px;display:flex;flex-direction:column;gap:20px">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:14px;font-weight:700;color:#3182F6">운동 일정</span>
+              <h3 style="margin:0;font-size:clamp(22px,2.6vw,28px);line-height:1.35;font-weight:700">가는 요일을 고르면<br>체형이 미리 보여요</h3>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ week }}" as="d" hint-placeholder-count="7">
+                <button type="button" onClick="{{ d.toggle }}" aria-pressed="{{ d.on }}" style="width:44px;height:44px;border:0;border-radius:12px;background:{{ d.bg }};color:{{ d.fg }};font-size:15px;font-weight:700;cursor:pointer;transition:background 200ms" style-active="transform:scale(.96)">{{ d.label }}</button>
+              </sc-for>
+            </div>
+            <span style="font-size:15px;line-height:1.6;color:#4E5968">주 <b style="color:#191F28">{{ weekCount }}회</b> 출석하면 4주 뒤 <b style="color:#191F28">{{ weekLabel }}</b> 고양이가 돼요.</span>
+          </div>
+          <div style="flex:1 1 220px;height:240px;border-radius:20px;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
+            <div ref="{{ weekCatRef }}" style="display:flex">
+              <loafy-sprite type="{{ weekType }}" coat="{{ coat }}" expr="{{ weekExpr }}" scale="5" animate=""></loafy-sprite>
+            </div>
+          </div>
+        </article>
+
+        <article data-reveal="" style="flex:1 1 320px;min-width:0;background:#FFFFFF;border-radius:24px;padding:clamp(24px,3.6vw,40px);display:flex;flex-direction:column;gap:24px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:14px;font-weight:700;color:#3182F6">털색 고르기</span>
+            <h3 style="margin:0;font-size:clamp(22px,2.6vw,26px);line-height:1.35;font-weight:700">7가지 털색 중<br>내 고양이를 골라요</h3>
+          </div>
+          <div style="flex:1;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
+            <div ref="{{ coatCatRef }}" style="display:flex">
+              <loafy-sprite type="normal" coat="{{ coat }}" expr="happy" scale="4" animate=""></loafy-sprite>
+            </div>
+            <span style="font-size:15px;font-weight:700">{{ coatLabel }}</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px">
+            <sc-for list="{{ coats }}" as="c" hint-placeholder-count="7">
+              <button type="button" onClick="{{ c.pick }}" aria-label="{{ c.label }}" style="width:36px;height:36px;border:0;border-radius:50%;background:{{ c.color }};box-shadow:{{ c.ring }};cursor:pointer;transition:box-shadow 200ms"></button>
+            </sc-for>
+          </div>
+        </article>
+
+        <article data-reveal="" style="flex:1 1 320px;min-width:0;background:#FFFFFF;border-radius:24px;padding:clamp(24px,3.6vw,40px);display:flex;flex-direction:column;gap:24px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:14px;font-weight:700;color:#3182F6">편지</span>
+            <h3 style="margin:0;font-size:clamp(22px,2.6vw,26px);line-height:1.35;font-weight:700">꾸준히 출석하면<br>고양이가 편지를 보내요</h3>
+          </div>
+          <div style="flex:1;min-height:220px;display:flex;align-items:center;justify-content:center">
+            <sc-if value="{{ letterClosed }}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{ toggleLetter }}" aria-label="편지 열기" style="border:0;padding:0;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:14px" style-hover="transform:translateY(-4px)" style-active="transform:scale(.98)">
+                <div style="width:200px;height:132px;border-radius:12px;background:#F6F0E1;position:relative;overflow:hidden;box-shadow:inset 0 0 0 1px #EFD8B0">
+                  <div style="position:absolute;inset:0;background:#EFD8B0;clip-path:polygon(0 0,100% 0,50% 58%)"></div>
+                  <div style="position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center">
+                    <loafy-icon name="paw" size="24" active="" color="#EE7D8A"></loafy-icon>
+                  </div>
+                </div>
+                <span style="font-size:14px;font-weight:600;color:#6B7684">눌러서 열어보기</span>
+              </button>
+            </sc-if>
+            <sc-if value="{{ letterOpen }}" hint-placeholder-val="{{ false }}">
+              <div ref="{{ letterRef }}" style="width:100%;max-width:300px;box-sizing:border-box;padding:24px;border-radius:16px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E5E8EB;display:flex;flex-direction:column;gap:12px">
+                <span style="font-size:13px;font-weight:600;color:#8B95A1">To. 집사에게</span>
+                <span style="font-size:16px;line-height:1.65;font-weight:500;color:#191F28">이번 주에 세 번이나 와줘서 몸이 한결 가벼워졌어요. 내일도 체육관에서 기다릴게요.</span>
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <span style="font-size:13px;font-weight:600;color:#8B95A1">From. 로피</span>
+                  <loafy-sprite type="slim" coat="{{ coat }}" expr="happy" scale="1"></loafy-sprite>
+                </div>
+                <button type="button" onClick="{{ toggleLetter }}" style="height:40px;border:0;border-radius:12px;background:#F2F4F6;font-size:14px;font-weight:600;color:#191F28;cursor:pointer">다시 접기</button>
+              </div>
+            </sc-if>
+          </div>
+        </article>
+
+        <article data-reveal="" style="flex:2 1 520px;min-width:0;background:#FFFFFF;border-radius:24px;padding:clamp(24px,3.6vw,40px);display:flex;flex-wrap:wrap;gap:32px;align-items:center">
+          <div style="flex:1 1 220px;display:flex;flex-direction:column;gap:20px">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:14px;font-weight:700;color:#3182F6">출석 기록</span>
+              <h3 style="margin:0;font-size:clamp(22px,2.6vw,28px);line-height:1.35;font-weight:700">다녀온 날마다<br>발자국이 찍혀요</h3>
+            </div>
+            <div style="display:flex;gap:28px">
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:#8B95A1">이번 달 출석</span><span style="font-size:28px;font-weight:800;letter-spacing:-0.02em">{{ calCount }}일</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:#8B95A1">최장 연속</span><span style="font-size:28px;font-weight:800;letter-spacing:-0.02em;color:#3182F6">{{ calStreak }}일</span></div>
+            </div>
+            <span style="font-size:14px;color:#8B95A1">날짜를 눌러 출석을 찍어보세요.</span>
+          </div>
+          <div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:16px;font-weight:700">2026년 10월</span>
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;font-size:12px;font-weight:600;color:#8B95A1;text-align:center">
+              <span style="color:#F04452">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span style="color:#3182F6">토</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px">
+              <sc-for list="{{ cal }}" as="c" hint-placeholder-count="35">
+                <button type="button" onClick="{{ c.toggle }}" disabled="{{ c.blank }}" style="aspect-ratio:1;min-height:36px;border:0;border-radius:50%;background:{{ c.bg }};opacity:{{ c.op }};font-size:14px;font-weight:600;color:#4E5968;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0" style-active="transform:scale(.92)">
+                  <sc-if value="{{ c.on }}" hint-placeholder-val="{{ false }}"><loafy-icon name="paw" size="18" active="" color="#EE7D8A"></loafy-icon></sc-if>
+                  <sc-if value="{{ c.off }}" hint-placeholder-val="{{ true }}"><span>{{ c.day }}</span></sc-if>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="App preview" style="max-width:1120px;margin:0 auto;padding:clamp(72px,10vw,128px) clamp(20px,5vw,40px);display:flex;flex-wrap:wrap;align-items:center;gap:48px 64px">
+    <div style="flex:1 1 400px;min-width:0;display:flex;flex-direction:column;gap:32px">
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:15px;font-weight:700;color:#3182F6">앱 미리보기</span>
+        <h2 style="margin:0;font-size:clamp(32px,4.8vw,56px);line-height:1.18;font-weight:800;letter-spacing:-0.03em;text-wrap:balance">하루 한 번,<br>출석만 하면 돼요</h2>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+          <button type="button" onClick="{{ t.pick }}" style="border:0;background:transparent;text-align:left;padding:20px 0;cursor:pointer;box-shadow:inset 0 -1px 0 #E5E8EB;display:flex;flex-direction:column;gap:8px">
+            <span style="display:flex;align-items:center;gap:12px;font-size:clamp(19px,2vw,22px);font-weight:700;color:{{ t.fg }};transition:color 200ms">
+              <loafy-icon name="{{ t.icon }}" size="24" active="{{ t.active }}" color="{{ t.fg }}"></loafy-icon>{{ t.title }}
+            </span>
+            <span style="display:{{ t.descDisplay }};font-size:16px;line-height:1.6;color:#4E5968;padding-left:36px">{{ t.desc }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="flex:1 1 320px;display:flex;justify-content:center">
+      <div style="position:relative;width:316px;height:666px;border-radius:24px">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="1">
+          <div style="position:absolute;inset:0;opacity:{{ t.op }};pointer-events:{{ t.pe }};transform:{{ t.tf }};transition:opacity 340ms cubic-bezier(.32,.72,0,1),transform 340ms cubic-bezier(.32,.72,0,1)">
+            <dc-import name="Phone" width="{{ 300 }}" screen="{{ t.key }}" coat="{{ coat }}" hint-size="316px,666px"></dc-import>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="download" data-screen-label="Download" style="padding:0 clamp(12px,3vw,24px) clamp(12px,3vw,24px);scroll-margin-top:64px">
+    <div data-reveal="" style="max-width:1200px;margin:0 auto;border-radius:32px;background:#111114;color:#FFFFFF;padding:clamp(64px,9vw,112px) clamp(24px,5vw,48px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px">
+      <button type="button" onClick="{{ wake }}" aria-label="고양이 깨우기" style="border:0;padding:0;background:transparent;cursor:pointer;display:flex" style-active="transform:scale(.96)">
+        <div ref="{{ ctaCatRef }}" style="display:flex">
+          <loafy-sprite type="{{ ctaType }}" coat="{{ coat }}" expr="{{ ctaExpr }}" scale="4" animate=""></loafy-sprite>
+        </div>
+      </button>
+      <span style="font-size:14px;font-weight:600;color:#8B95A1;margin-top:-12px">{{ ctaHint }}</span>
+      <h2 style="margin:0;font-size:clamp(32px,5vw,56px);line-height:1.2;font-weight:800;letter-spacing:-0.03em;text-wrap:balance">식빵이 되기 전에<br>오늘 출석해요</h2>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:8px">
+        <a href="#" aria-label="App Store에서 다운로드" style="height:56px;padding:0 22px 0 18px;border-radius:16px;background:#FFFFFF;color:#000000;display:flex;align-items:center;gap:12px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#000000"><path d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.21-2.98.8-.94 2.14-1.64 3.25-1.68.03.13.05.28.05.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.670.91-1.38 0-2.33-1.26-3.43-2.8C3.96 18.38 2.92 15.57 2.92 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.61 0 2.89.06 4.37 2.19-.13.09-2.38 1.37-2.38 4.19 0 3.26 2.85 4.42 2.96 4.45z"></path></svg>
+          <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.15"><span style="font-size:11px;font-weight:500;color:#6B7684">다운로드</span><span style="font-size:17px;font-weight:700">App Store</span></span>
+        </a>
+        <a href="#" aria-label="Google Play에서 다운로드" style="height:56px;padding:0 22px 0 18px;border-radius:16px;background:#FFFFFF;color:#000000;display:flex;align-items:center;gap:12px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#000000"><path d="M4 2.6c0-.5.55-.8.98-.55l16.3 9.4c.43.25.43.86 0 1.1l-16.3 9.4A.64.64 0 0 1 4 21.4z"></path></svg>
+          <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.15"><span style="font-size:11px;font-weight:500;color:#6B7684">다운로드</span><span style="font-size:17px;font-weight:700">Google Play</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dc-import name="SiteFooter" hint-size="100%,260px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;,&quot;blue&quot;,&quot;choco&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;고양이&quot;}}">
+class Component extends DCLogic {
+  BODIES = [['slim','날렵'],['fit','탄탄'],['normal','보통'],['bulk','벌크'],['jjin','찐빵'],['loaf','식빵']];
+  COATS = [['cheese','치즈','#F49A3C'],['mackerel','고등어','#9AA2AC'],['tuxedo','턱시도','#3C3D47'],['cow','얼룩이','#FAFAF7'],['cream','크림','#EFD8B0'],['blue','러시안블루','#8F9BAE'],['choco','초코','#8A5A3C']];
+  state = { lvl: 4, streak: 3, hExpr: 'idle', toast: null, coat: null, week: [false,true,false,true,false,true,false], letter: false, cal: new Set([1,2,5,6,7,9,12,13,14,15,19,20]), tab: 0, awake: false };
+  heroCatRef = React.createRef(); tamaBigRef = React.createRef(); tamaBigFloat = React.createRef(); tamaSmallRef = React.createRef(); tamaSmallFloat = React.createRef(); weekCatRef = React.createRef(); coatCatRef = React.createRef(); ctaCatRef = React.createRef();
+  letterRef = React.createRef(); toastRef = React.createRef(); paradeRef = React.createRef();
+  ease = 'cubic-bezier(.32,.72,0,1)';
+  bounce(ref) { const el = ref.current; if (el && el.animate) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12) translateY(-6px)' }, { transform: 'scale(.96)' }, { transform: 'scale(1)' }], { duration: 420, easing: this.ease }); }
+  reduced() { return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  dropIn(wrap, float, delay, amp, dur, rot) {
+    const w = wrap.current, f = float.current; if (!w || !f || this.reduced()) return;
+    w.animate([{ transform: 'translateY(-110vh) rotate(' + (-rot * 3) + 'deg)', opacity: 0 }, { opacity: 1, offset: 0.2 }, { transform: 'translateY(4%) rotate(' + rot + 'deg)', offset: 0.72 }, { transform: 'translateY(-1.5%) rotate(' + (-rot / 2) + 'deg)', offset: 0.88 }, { transform: 'none', opacity: 1 }], { duration: 1300, delay, easing: 'cubic-bezier(.32,.72,0,1)', fill: 'backwards' });
+    this.floats = this.floats || [];
+    this.floats.push(f.animate([{ transform: 'translateY(0) rotate(0deg)' }, { transform: 'translateY(-' + amp + 'px) rotate(' + rot + 'deg)' }, { transform: 'translateY(0) rotate(0deg)' }], { duration: dur, delay: delay + 1300, iterations: Infinity, easing: 'ease-in-out' }));
+  }
+  componentDidMount() {
+    this.dropIn(this.tamaBigRef, this.tamaBigFloat, 100, 14, 4200, 1.5);
+    this.dropIn(this.tamaSmallRef, this.tamaSmallFloat, 420, 20, 3400, -3);
+    const p = this.paradeRef.current;
+    if (p && !this.reduced()) this.paradeAnim = p.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-50%)' }], { duration: 48000, iterations: Infinity });
+    if ('IntersectionObserver' in window && !this.reduced()) {
+      this.io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.style.opacity = ''; e.target.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 640, easing: this.ease });
+        this.io.unobserve(e.target);
+      }), { threshold: 0.15 });
+      document.querySelectorAll('[data-reveal]').forEach(el => { if (el.getBoundingClientRect().top > innerHeight) { el.style.opacity = '0'; this.io.observe(el); } });
+    }
+  }
+  componentDidUpdate(_, prev) {
+    if (this.state.letter && !prev.letter && this.letterRef.current) this.letterRef.current.animate([{ opacity: 0, transform: 'translateY(24px) scale(.96)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: this.ease });
+    if (this.state.toast && this.state.toast !== prev.toast && this.toastRef.current) this.toastRef.current.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 340, easing: this.ease });
+  }
+  componentWillUnmount() { (this.floats || []).forEach(a => a.cancel()); this.paradeAnim && this.paradeAnim.cancel(); this.io && this.io.disconnect(); clearTimeout(this.tt); clearTimeout(this.et); clearTimeout(this.ct); }
+  flash(toast, expr) {
+    clearTimeout(this.tt); clearTimeout(this.et);
+    this.tt = setTimeout(() => this.setState({ toast: null }), 1800);
+    this.et = setTimeout(() => this.setState(s => ({ hExpr: s.lvl === 5 ? 'sleep' : 'idle' })), 1400);
+    this.setState({ toast, hExpr: expr });
+  }
+  attend = () => { const lvl = Math.max(0, this.state.lvl - 1), streak = this.state.streak + 1; this.setState({ lvl, streak }); this.flash('출석 완료 · ' + streak + '일 연속', 'happy'); this.bounce(this.heroCatRef); };
+  rest = () => { const lvl = Math.min(5, this.state.lvl + 1); this.setState({ lvl, streak: 0 }); this.flash(lvl === 5 ? '식빵이 됐어요' : '조금 동그래졌어요', lvl === 5 ? 'sleep' : 'surprise'); this.bounce(this.heroCatRef); };
+  weekBody(n) { return n >= 6 ? 0 : n === 5 ? 1 : n === 4 ? 2 : n === 3 ? 3 : n >= 1 ? 4 : 5; }
+  longest(set) { let best = 0, run = 0; for (let d = 1; d <= 31; d++) { run = set.has(d) ? run + 1 : 0; best = Math.max(best, run); } return best; }
+  renderVals() {
+    const s = this.state, coat = s.coat ?? this.props.coat ?? 'cheese';
+    const [heroType, heroLabel] = this.BODIES[s.lvl];
+    const n = s.week.filter(Boolean).length, wb = this.weekBody(n);
+    const offset = new Date(2026, 9, 1).getDay(), cal = [];
+    for (let i = 0; i < offset; i++) cal.push({ blank: true, on: false, off: false, day: '', bg: 'transparent', op: 0, toggle: null });
+    for (let d = 1; d <= 31; d++) { const on = s.cal.has(d); cal.push({ blank: false, on, off: !on, day: d, bg: on ? '#FFEEF1' : '#F9FAFB', op: 1, toggle: () => this.setState(st => { const c = new Set(st.cal); c.has(d) ? c.delete(d) : c.add(d); return { cal: c }; }) }); }
+    const tabs = [
+      { key: 'checkin', icon: 'paw', title: '체육관에서 출석하기', desc: '도착하면 출석하기 한 번이면 끝이에요. 고양이가 바로 반응해요.' },
+      { key: 'record', icon: 'record', title: '달력으로 기록 보기', desc: '이번 달 출석과 쉰 날, 연속 기록을 한눈에 볼 수 있어요.' },
+      { key: 'shop', icon: 'shop', title: '쿠키로 꾸미기', desc: '출석하며 모은 발자국 쿠키로 빵틀과 소품을 바꿔요.' },
+      { key: 'letters', icon: 'letter', title: '고양이 편지 받기', desc: '꾸준히 출석하면 고양이가 편지를 보내요.' }
+    ].map((t, i) => { const a = i === s.tab; return { ...t, active: a ? 'true' : null, fg: a ? '#191F28' : '#B0B8C1', descDisplay: a ? 'block' : 'none', op: a ? 1 : 0, pe: a ? 'auto' : 'none', tf: a ? 'none' : 'translateY(16px) scale(.98)', pick: () => this.setState({ tab: i }) }; });
+    const pBase = [['slim','cheese'],['loaf','tuxedo'],['fit','cow'],['jjin','cream'],['normal','mackerel'],['bulk','choco'],['loaf','blue'],['slim','cream'],['jjin','cheese'],['fit','tuxedo'],['normal','choco'],['loaf','cow']].map(([type, c], i) => ({ type, coat: c, expr: type === 'loaf' ? 'sleep' : (i % 3 === 0 ? 'happy' : 'idle') }));
+    return {
+      coat, heroType, heroLabel, heroExpr: s.hExpr, streak: s.streak, toast: s.toast,
+      heroSegs: this.BODIES.map(([, label], i) => ({ label, bg: i === s.lvl ? '#191F28' : (i < s.lvl ? '#D1D6DB' : '#E5E8EB') })),
+      attend: this.attend, rest: this.rest,
+      week: ['월','화','수','목','금','토','일'].map((label, i) => ({ label, on: s.week[i], bg: s.week[i] ? '#191F28' : '#F2F4F6', fg: s.week[i] ? '#FFFFFF' : '#6B7684', toggle: () => { this.setState(st => { const w = st.week.slice(); w[i] = !w[i]; return { week: w }; }); this.bounce(this.weekCatRef); } })),
+      weekCount: n, weekType: this.BODIES[wb][0], weekLabel: this.BODIES[wb][1], weekExpr: wb === 5 ? 'sleep' : wb <= 1 ? 'happy' : 'idle',
+      coats: this.COATS.map(([k, label, color]) => ({ label, color, ring: k === coat ? '0 0 0 3px #FFFFFF, 0 0 0 5px #191F28' : 'inset 0 0 0 1px #E5E8EB', pick: () => { this.setState({ coat: k }); this.bounce(this.coatCatRef); } })),
+      coatLabel: (this.COATS.find(c => c[0] === coat) || this.COATS[0])[1],
+      letterOpen: s.letter, letterClosed: !s.letter, toggleLetter: () => this.setState(st => ({ letter: !st.letter })),
+      cal, calCount: s.cal.size, calStreak: this.longest(s.cal),
+      tabs, parade: pBase.concat(pBase),
+      ctaType: s.awake ? 'fit' : 'loaf', ctaExpr: s.awake ? 'happy' : 'sleep', ctaHint: s.awake ? '깨어났어요. 이제 출석하러 가요' : '고양이를 눌러 깨워보세요',
+      wake: () => { this.setState(st => ({ awake: !st.awake })); this.bounce(this.ctaCatRef); },
+      heroCatRef: this.heroCatRef, tamaBigRef: this.tamaBigRef, tamaBigFloat: this.tamaBigFloat, tamaSmallRef: this.tamaSmallRef, tamaSmallFloat: this.tamaSmallFloat, weekCatRef: this.weekCatRef, coatCatRef: this.coatCatRef, ctaCatRef: this.ctaCatRef, letterRef: this.letterRef, toastRef: this.toastRef, paradeRef: this.paradeRef
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="width:{{ outerW }};height:{{ outerH }};padding:8px;background:#111114;border-radius:{{ radius }};box-sizing:border-box;flex:none">
+  <div style="width:100%;height:100%;border-radius:{{ innerRadius }};overflow:hidden;position:relative;background:#F2F2F7">
+    <div style="width:375px;height:812px;transform:{{ transform }};transform-origin:0 0;position:absolute;left:0;top:0">
+      <dc-import name="Loafy App" frame="web" web-height="812px" start="{{ screen }}" coat="{{ coat }}" missed="{{ false }}" hint-size="375px,812px"></dc-import>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;300px&quot;,&quot;height&quot;:&quot;580px&quot;},&quot;width&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:260,&quot;tsType&quot;:&quot;number&quot;},&quot;screen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;checkin&quot;,&quot;record&quot;,&quot;shop&quot;,&quot;my&quot;,&quot;letter&quot;,&quot;lcd&quot;,&quot;deco&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;,&quot;blue&quot;,&quot;choco&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const w = this.props.width ?? 260, s = w / 375, h = Math.round(812 * s);
+    return {
+      screen: this.props.screen ?? 'home', coat: this.props.coat ?? 'cheese',
+      outerW: (w + 16) + 'px', outerH: (h + 16) + 'px',
+      radius: Math.round(w * 0.15) + 'px', innerRadius: Math.round(w * 0.15 - 8) + 'px',
+      transform: 'scale(' + s + ')'
+    };
+  }
+}
+</script>
+</body>
+</html>

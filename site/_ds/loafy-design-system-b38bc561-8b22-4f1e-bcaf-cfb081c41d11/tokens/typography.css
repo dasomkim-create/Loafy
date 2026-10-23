@@ -1,0 +1,14 @@
+@font-face{font-family:"Pretendard Variable";src:url("../fonts/PretendardVariable.woff2") format("woff2-variations");font-weight:45 920;font-display:swap}
+:root{
+--font:"Pretendard Variable",Pretendard,-apple-system,sans-serif;
+--fs-10:10px;--fs-11:11px;--fs-12:12px;--fs-13:13px;--fs-14:14px;--fs-15:15px;--fs-16:16px;--fs-17:17px;--fs-20:20px;--fs-22:22px;--fs-26:26px;--fs-28:28px;--fs-34:34px;
+--fw-regular:400; /* @kind other */
+--fw-medium:500; /* @kind other */
+--fw-semibold:600; /* @kind other */
+--fw-bold:700; /* @kind other */
+--tracking:-0.01em;
+}
+body{margin:0;font-family:var(--font);color:var(--ink-900);-webkit-font-smoothing:antialiased;letter-spacing:var(--tracking)}
+a{color:var(--ink-800);text-decoration:none}a:hover{color:var(--blue)}
+button,input,textarea{font-family:inherit;letter-spacing:inherit}
+input::placeholder,textarea::placeholder{color:#B0B3BA}

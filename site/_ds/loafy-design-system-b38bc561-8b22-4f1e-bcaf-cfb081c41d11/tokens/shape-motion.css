@@ -1,0 +1,15 @@
+:root{
+--r-xs:4px;--r-sm:9px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-2xl:28px;--r-pill:999px;
+--shadow-card:0 8px 32px rgba(0,0,0,0.12);--ring:inset 0 0 0 1px var(--line);--ring-soft:inset 0 0 0 1px rgba(0,0,0,0.08); /* @kind shadow */
+--hairline:inset 0 -1px 0 var(--surface-2);
+--ease:cubic-bezier(0.32,0.72,0,1); /* @kind other */
+--dur-in:340ms; /* @kind other */
+--dur-sheet:420ms; /* @kind other */
+
+--app-max:480px;--pad-x:20px;--btn-h:52px;--hit-min:44px;
+}
+@keyframes lfIn{from{opacity:0;transform:translateY(6px) scale(0.996)}to{opacity:1;transform:none}}
+@keyframes lfFade{from{opacity:0}to{opacity:1}}
+@keyframes lfSheet{from{transform:translateY(calc(100% + 16px))}to{transform:translateY(0)}}
+@keyframes lfToast{from{opacity:0;transform:translate(-50%,10px) scale(0.98)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes lfBanner{from{transform:translateY(-140%);opacity:0}to{transform:none;opacity:1}}

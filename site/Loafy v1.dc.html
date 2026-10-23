@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Loafy 로피 · 출석하면 날렵해지고, 빠지면 식빵이 돼요</title>
+<meta name="description" content="운동 출석 습관 앱 로피. 체육관에 출석하면 고양이가 날렵해지고, 빠지면 식빵이 돼요.">
+<meta property="og:title" content="Loafy 로피">
+<meta property="og:description" content="출석하면 날렵해지고, 빠지면 식빵이 돼요">
+<meta property="og:image" content="assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/colors-and-base.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/typography.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/shape-motion.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/styles.css">
+<script src="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/_ds_bundle.js"></script>
+<script src="loafy-sprites.js"></script>
+<style>
+body{margin:0;background:#FFFFFF !important;color:#191F28;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em}
+a{color:#191F28;text-decoration:none}a:hover{color:#333D4B}
+html{scroll-behavior:smooth}
+[data-strip]::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<dc-import name="SiteHeader" hint-size="100%,64px"></dc-import>
+
+<main>
+  <section data-screen-label="Hero" style="padding:clamp(56px,9vw,104px) clamp(20px,5vw,40px) 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div style="width:136px;height:136px;border-radius:50%;background:#F6F0E1;display:flex;align-items:center;justify-content:center">
+        <loafy-sprite type="{{ heroType }}" coat="{{ coat }}" scale="3" animate=""></loafy-sprite>
+      </div>
+      <span style="height:28px;padding:0 12px;border-radius:999px;background:#F2F4F6;display:flex;align-items:center;font-size:13px;font-weight:600;color:#4E5968">지금 체형 · {{ heroLabel }}</span>
+    </div>
+    <h1 style="margin:0;font-size:clamp(36px,6.4vw,68px);line-height:1.2;font-weight:800;letter-spacing:-0.03em;color:#191F28;text-wrap:balance">출석하면 날렵해지고,<br>빠지면 식빵이 돼요</h1>
+    <p style="margin:0;max-width:520px;font-size:clamp(16px,2vw,19px);line-height:1.6;font-weight:500;color:#4E5968;text-wrap:pretty">[한 줄 소개]</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px">
+      <a href="#" aria-label="App Store에서 다운로드" style="height:56px;padding:0 22px 0 18px;border-radius:16px;background:#000000;color:#FFFFFF;display:flex;align-items:center;gap:12px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.21-2.98.8-.94 2.14-1.64 3.25-1.68.03.13.05.28.05.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C3.96 18.38 2.92 15.57 2.92 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.61 0 2.89.06 4.37 2.19-.13.09-2.38 1.37-2.38 4.19 0 3.26 2.85 4.42 2.96 4.45z"></path></svg>
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.15"><span style="font-size:11px;font-weight:500;color:#D1D6DB">다운로드</span><span style="font-size:17px;font-weight:700">App Store</span></span>
+      </a>
+      <a href="#" aria-label="Google Play에서 다운로드" style="height:56px;padding:0 22px 0 18px;border-radius:16px;background:#000000;color:#FFFFFF;display:flex;align-items:center;gap:12px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M4 2.6c0-.5.55-.8.98-.55l16.3 9.4c.43.25.43.86 0 1.1l-16.3 9.4A.64.64 0 0 1 4 21.4z"></path></svg>
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.15"><span style="font-size:11px;font-weight:500;color:#D1D6DB">다운로드</span><span style="font-size:17px;font-weight:700">Google Play</span></span>
+      </a>
+    </div>
+  </section>
+
+  <div data-strip="" ref="{{ stripRef }}" style="margin-top:clamp(48px,7vw,80px);overflow-x:auto;scrollbar-width:none;padding:0 0 4px;position:relative;z-index:1">
+    <div style="display:flex;align-items:flex-end;gap:clamp(14px,2vw,24px);width:max-content;margin:0 auto;padding:0 clamp(20px,5vw,40px)">
+      <dc-import name="Phone" width="{{ 220 }}" screen="record" coat="{{ coat }}" hint-size="236px,492px"></dc-import>
+      <dc-import name="Phone" width="{{ 240 }}" screen="checkin" coat="{{ coat }}" hint-size="256px,536px"></dc-import>
+      <dc-import name="Phone" width="{{ 280 }}" screen="{{ heroScreen }}" coat="{{ coat }}" hint-size="296px,622px"></dc-import>
+      <dc-import name="Phone" width="{{ 240 }}" screen="shop" coat="{{ coat }}" hint-size="256px,536px"></dc-import>
+      <dc-import name="Phone" width="{{ 220 }}" screen="my" coat="{{ coat }}" hint-size="236px,492px"></dc-import>
+    </div>
+  </div>
+
+  <section id="features" data-screen-label="Features" style="margin-top:-120px;padding:clamp(184px,18vw,224px) clamp(20px,5vw,40px) clamp(72px,10vw,120px);background:#F2F2F7;scroll-margin-top:64px">
+    <div style="max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
+      <h2 style="margin:0;text-align:center;font-size:clamp(28px,4.4vw,44px);line-height:1.3;font-weight:800;letter-spacing:-0.025em;text-wrap:balance">운동하러 가는 이유가<br>하나 더 생겨요</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px">
+
+        <article style="grid-column:1 / -1;background:#FFFFFF;border-radius:24px;padding:clamp(28px,4vw,44px);display:flex;flex-direction:column;gap:32px">
+          <div style="display:flex;flex-direction:column;gap:10px;max-width:560px">
+            <span style="font-size:14px;font-weight:700;color:#3182F6">출석 체크</span>
+            <h3 style="margin:0;font-size:clamp(22px,2.8vw,28px);line-height:1.35;font-weight:700">출석할수록 날렵해지고,<br>빠질수록 식빵이 돼요</h3>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#4E5968;text-wrap:pretty">체육관에 도착해서 출석하기를 누르면 고양이 체형이 한 단계씩 바뀌어요. 며칠 쉬면 다시 동그래져요.</p>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px 12px;padding:28px clamp(8px,3vw,32px);background:#F9FAFB;border-radius:16px">
+            <sc-for list="{{ bodies }}" as="b" hint-placeholder-count="6">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:10px;min-width:72px">
+                <loafy-sprite type="{{ b.type }}" coat="{{ coat }}" expr="{{ b.expr }}" scale="2"></loafy-sprite>
+                <span style="font-size:13px;font-weight:600;color:#6B7684">{{ b.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </article>
+
+        <article style="background:#FFFFFF;border-radius:24px;padding:clamp(28px,4vw,40px);display:flex;flex-direction:column;gap:28px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:14px;font-weight:700;color:#3182F6">고양이 꾸미기</span>
+            <h3 style="margin:0;font-size:clamp(22px,2.8vw,26px);line-height:1.35;font-weight:700">7가지 털색 중에<br>내 고양이를 골라요</h3>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#4E5968;text-wrap:pretty">치즈, 고등어, 턱시도부터 초코까지. 발자국 쿠키를 모아 빵틀과 소품도 바꿀 수 있어요.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 8px;margin-top:auto">
+            <sc-for list="{{ coats }}" as="c" hint-placeholder-count="7">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                <loafy-sprite type="normal" coat="{{ c.coat }}" scale="2"></loafy-sprite>
+                <span style="font-size:12px;font-weight:600;color:#6B7684">{{ c.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </article>
+
+        <article style="background:#FFFFFF;border-radius:24px;padding:clamp(28px,4vw,40px) clamp(28px,4vw,40px) 0;display:flex;flex-direction:column;gap:28px;overflow:hidden">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:14px;font-weight:700;color:#3182F6">편지와 기록</span>
+            <h3 style="margin:0;font-size:clamp(22px,2.8vw,26px);line-height:1.35;font-weight:700">꾸준히 출석하면<br>고양이가 편지를 보내요</h3>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#4E5968;text-wrap:pretty">달력에 쌓인 출석 기록을 보고, 연속 출석을 이어가면 고양이의 편지가 도착해요.</p>
+          </div>
+          <div style="height:300px;display:flex;justify-content:center;margin-top:auto">
+            <dc-import name="Phone" width="{{ 240 }}" screen="letters" coat="{{ coat }}" hint-size="256px,536px"></dc-import>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="download" data-screen-label="Download" style="padding:clamp(80px,11vw,136px) clamp(20px,5vw,40px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px;scroll-margin-top:64px">
+    <loafy-sprite type="loaf" coat="{{ coat }}" expr="sleep" scale="4" animate=""></loafy-sprite>
+    <h2 style="margin:0;font-size:clamp(30px,4.8vw,48px);line-height:1.3;font-weight:800;letter-spacing:-0.025em;text-wrap:balance">식빵이 되기 전에<br>오늘 출석해요</h2>
+    <p style="margin:-8px 0 0;font-size:17px;line-height:1.6;color:#4E5968">로피는 무료로 시작할 수 있어요.</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px">
+      <a href="#" aria-label="App Store에서 다운로드" style="height:56px;padding:0 22px 0 18px;border-radius:16px;background:#000000;color:#FFFFFF;display:flex;align-items:center;gap:12px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.990 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.21-2.98.8-.94 2.14-1.640 3.25-1.68.03.13.05.28.05.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C3.96 18.38 2.92 15.57 2.92 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.61 0 2.89.06 4.37 2.19-.13.09-2.38 1.37-2.38 4.19 0 3.26 2.85 4.42 2.960 4.45z"></path></svg>
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.15"><span style="font-size:11px;font-weight:500;color:#D1D6DB">다운로드</span><span style="font-size:17px;font-weight:700">App Store</span></span>
+      </a>
+      <a href="#" aria-label="Google Play에서 다운로드" style="height:56px;padding:0 22px 0 18px;border-radius:16px;background:#000000;color:#FFFFFF;display:flex;align-items:center;gap:12px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M4 2.6c0-.5.55-.8.98-.55l16.3 9.4c.43.25.43.86 0 1.1l-16.3 9.4A.64.64 0 0 1 4 21.4z"></path></svg>
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.15"><span style="font-size:11px;font-weight:500;color:#D1D6DB">다운로드</span><span style="font-size:17px;font-weight:700">Google Play</span></span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<dc-import name="SiteFooter" hint-size="100%,260px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;coat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cheese&quot;,&quot;mackerel&quot;,&quot;tuxedo&quot;,&quot;cow&quot;,&quot;cream&quot;,&quot;blue&quot;,&quot;choco&quot;],&quot;default&quot;:&quot;cheese&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;고양이&quot;},&quot;heroScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;lcd&quot;,&quot;checkin&quot;,&quot;record&quot;,&quot;letter&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;히어로&quot;}}">
+class Component extends DCLogic {
+  state = { i: 0 };
+  stripRef = React.createRef();
+  componentDidMount() {
+    this.t = setInterval(() => this.setState(s => ({ i: (s.i + 1) % 6 })), 1400);
+    const el = this.stripRef.current;
+    if (el) requestAnimationFrame(() => { el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2; });
+  }
+  componentWillUnmount() { clearInterval(this.t); }
+  renderVals() {
+    const bodies = [
+      { type: 'slim', label: '날렵', expr: 'idle' }, { type: 'fit', label: '탄탄', expr: 'idle' },
+      { type: 'normal', label: '보통', expr: 'idle' }, { type: 'bulk', label: '벌크', expr: 'idle' },
+      { type: 'jjin', label: '찐빵', expr: 'idle' }, { type: 'loaf', label: '식빵', expr: 'sleep' }
+    ];
+    const coats = [['cheese','치즈'],['mackerel','고등어'],['tuxedo','턱시도'],['cow','얼룩이'],['cream','크림'],['blue','러시안블루'],['choco','초코']].map(([coat, label]) => ({ coat, label }));
+    const cyc = bodies[this.state.i];
+    return {
+      coat: this.props.coat ?? 'cheese',
+      heroScreen: this.props.heroScreen ?? 'home',
+      heroType: cyc.type, heroLabel: cyc.label,
+      bodies, coats, stripRef: this.stripRef
+    };
+  }
+}
+</script>
+</body>
+</html>

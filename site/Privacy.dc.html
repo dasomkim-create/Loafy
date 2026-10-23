@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>개인정보처리방침 · Loafy</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/colors-and-base.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/typography.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/tokens/shape-motion.css">
+<link rel="stylesheet" href="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/styles.css">
+<script src="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/_ds_bundle.js"></script>
+<script src="loafy-sprites.js"></script>
+<style>
+body{margin:0;background:#FFFFFF !important;color:#191F28;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-0.01em;word-break:keep-all}
+a{color:#191F28;text-decoration:none}a:hover{color:#333D4B}
+html{scroll-behavior:smooth}
+</style>
+</helmet>
+
+<dc-import name="SiteHeader" hint-size="100%,64px"></dc-import>
+
+<main data-screen-label="개인정보처리방침" style="max-width:1040px;margin:0 auto;padding:clamp(48px,7vw,80px) clamp(20px,5vw,40px) clamp(72px,10vw,120px);display:flex;flex-direction:column;gap:clamp(32px,5vw,48px)">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h1 style="margin:0;font-size:clamp(30px,4.4vw,40px);line-height:1.25;font-weight:800;letter-spacing:-0.025em">개인정보처리방침</h1>
+    <span style="font-size:14px;font-weight:500;color:#6B7684">시행일 [YYYY. MM. DD.] · 버전 [1.0]</span>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:32px 56px">
+    <nav aria-label="목차" style="flex:1 1 220px;max-width:280px;position:sticky;top:88px;display:flex;flex-direction:column;gap:2px;padding:20px;border-radius:16px;background:#F9FAFB;box-shadow:inset 0 0 0 1px #E5E8EB">
+      <span style="font-size:13px;font-weight:700;color:#8B95A1;padding:0 0 8px">목차</span>
+      <sc-for list="{{ sections }}" as="s" hint-placeholder-count="9">
+        <a href="{{ s.href }}" style="font-size:14px;line-height:20px;font-weight:600;color:#4E5968;padding:8px 0">{{ s.no }}. {{ s.title }}</a>
+      </sc-for>
+    </nav>
+    <article style="flex:999 1 480px;min-width:0;display:flex;flex-direction:column;gap:40px">
+      <p style="margin:0;padding:20px;border-radius:16px;background:#F2F4F6;font-size:15px;line-height:1.7;color:#4E5968">[서문 영역] 로피(이하 '회사')는 이용자의 개인정보를 소중히 다루며 관련 법령을 지켜요. 이 영역의 문장은 임시 텍스트예요.</p>
+      <sc-for list="{{ sections }}" as="s" hint-placeholder-count="9">
+        <section id="{{ s.id }}" style="display:flex;flex-direction:column;gap:12px;scroll-margin-top:88px">
+          <h2 style="margin:0;font-size:20px;line-height:1.4;font-weight:700">제{{ s.no }}조 {{ s.title }}</h2>
+          <p style="margin:0;font-size:16px;line-height:1.75;color:#333D4B;text-wrap:pretty">[본문 영역] 여기에 조항 내용이 들어가요. 문단 길이와 줄 간격을 확인하기 위한 임시 문장이에요. 실제 문구는 개발 단계에서 채워 넣어요.</p>
+          <p style="margin:0;font-size:16px;line-height:1.75;color:#333D4B;text-wrap:pretty">[본문 영역] 두 번째 문단 자리예요. 항목이 여러 개라면 목록으로 나눠서 넣어도 돼요.</p>
+        </section>
+      </sc-for>
+    </article>
+  </div>
+</main>
+
+<dc-import name="SiteFooter" hint-size="100%,260px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const titles = ['수집하는 개인정보 항목', '개인정보의 수집 및 이용 목적', '보유 및 이용 기간', '개인정보의 제3자 제공', '개인정보 처리 위탁', '이용자의 권리와 행사 방법', '개인정보의 파기 절차 및 방법', '개인정보 보호책임자', '고지의 의무'];
+    return { sections: titles.map((title, i) => ({ no: i + 1, title, id: 's' + (i + 1), href: '#s' + (i + 1) })) };
+  }
+}
+</script>
+</body>
+</html>
