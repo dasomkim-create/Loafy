@@ -12,19 +12,19 @@
 <script src="_ds/loafy-design-system-b38bc561-8b22-4f1e-bcaf-cfb081c41d11/_ds_bundle.js"></script>
 <script src="loafy-sprites.js"></script>
 </helmet>
-<footer style="background:#F9FAFB;box-shadow:inset 0 1px 0 #E5E8EB">
+<footer style="background:{{ bg }};box-shadow:{{ edge }}">
   <div style="max-width:1120px;margin:0 auto;padding:48px clamp(20px,5vw,40px) 56px;display:flex;flex-direction:column;gap:28px">
     <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px">
       <loafy-logo still="" scale="2"></loafy-logo>
       <nav style="display:flex;flex-wrap:wrap;gap:4px 20px">
         <a href="Privacy.dc.html" style="font-size:14px;font-weight:700;color:#191F28;padding:10px 0">개인정보처리방침</a>
-        <a href="Terms.dc.html" style="font-size:14px;font-weight:600;color:#4E5968;padding:10px 0">이용약관</a>
-        <a href="Delete Account.dc.html" style="font-size:14px;font-weight:600;color:#4E5968;padding:10px 0">계정 삭제</a>
-        <a href="Contact.dc.html" style="font-size:14px;font-weight:600;color:#4E5968;padding:10px 0">문의</a>
+        <a href="Terms.dc.html" style="font-size:14px;font-weight:600;color:{{ sub }};padding:10px 0">이용약관</a>
+        <a href="Delete Account.dc.html" style="font-size:14px;font-weight:600;color:{{ sub }};padding:10px 0">계정 삭제</a>
+        <a href="Contact.dc.html" style="font-size:14px;font-weight:600;color:{{ sub }};padding:10px 0">문의</a>
       </nav>
     </div>
-    <div style="height:1px;background:#E5E8EB"></div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13px;line-height:20px;font-weight:500;color:#6B7684">
+    <div style="height:1px;background:{{ rule }}"></div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13px;line-height:20px;font-weight:500;color:{{ sub }}">
       <span>상호 [상호명]</span>
       <span>대표자 [대표자명]</span>
       <span>사업자등록번호 [000-00-00000]</span>
@@ -32,13 +32,20 @@
       <span>주소 [사업장 주소]</span>
       <span>이메일 [contact@loafy.app]</span>
     </div>
-    <span style="font-size:13px;font-weight:500;color:#8B95A1">© 2026 Loafy. All rights reserved.</span>
+    <span style="font-size:13px;font-weight:500;color:{{ sub }}">© 2026 Loafy. All rights reserved.</span>
   </div>
   <div aria-hidden="true" style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,40px) clamp(24px,4vw,40px);overflow:hidden">
     <img src="assets/Loafy.svg" alt="" style="display:block;width:100%;height:auto;opacity:.06;image-rendering:pixelated">
   </div>
 </footer>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;1200px&quot;,&quot;height&quot;:&quot;260px&quot;}}"></script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;1200px&quot;,&quot;height&quot;:&quot;260px&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pink&quot;,&quot;gray&quot;],&quot;default&quot;:&quot;pink&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const g = this.props.tone === 'gray';
+    return g ? { bg: '#F9FAFB', edge: 'inset 0 1px 0 #E5E8EB', rule: '#E5E8EB', sub: '#4E5968' } : { bg: '#F4B6BF', edge: 'none', rule: '#E89AA5', sub: '#333D4B' };
+  }
+}
+</script>
 </body>
 </html>

@@ -17,14 +17,21 @@
     <a href="Loafy.dc.html" aria-label="Loafy 홈" style="display:flex;align-items:center;height:44px">
       <loafy-logo still="" scale="2"></loafy-logo>
     </a>
-    <nav style="display:flex;align-items:center;gap:4px">
-      <a href="Loafy.dc.html#features" style="height:44px;padding:0 12px;display:flex;align-items:center;font-size:15px;font-weight:600;color:#4E5968">기능</a>
+    <nav style="display:flex;align-items:center;gap:6px">
       <a href="Contact.dc.html" style="height:44px;padding:0 12px;display:flex;align-items:center;font-size:15px;font-weight:600;color:#4E5968">문의</a>
-      <a href="Loafy.dc.html#download" style="height:40px;padding:0 16px;margin-left:4px;display:flex;align-items:center;font-size:15px;font-weight:600;color:#FFFFFF;background:#000000;border-radius:12px">다운로드</a>
+      <a href="#" aria-label="App Store에서 다운로드" style="height:40px;padding:0 14px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#FFFFFF;background:#000000;border-radius:12px" style-active="transform:scale(.98)"><svg width="16" height="16" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.22-3 .82-.94 2.18-1.64 3.28-1.68.03.13.01.3.01.45zM20.8 17.3c-.04.1-.6 2.05-1.98 4.03-1.2 1.73-2.44 3.45-4.4 3.45-1.95 0-2.45-1.13-4.7-1.13-2.18 0-2.96 1.17-4.75 1.17-1.79 0-3.03-1.62-4.47-3.6C-.1 18.9-.95 15.03.7 12.2c.83-1.4 2.3-2.29 3.89-2.31 1.74-.03 2.81 1.17 4.67 1.17 1.8 0 2.92-1.17 4.73-1.17 1.3 0 2.97.62 4.12 2.07-3.6 1.98-3.02 7.15.69 8.34z"></path></svg><span style="display:{{ labelDisp }}">App Store</span></a>
+      <a href="#" aria-label="Google Play에서 다운로드" style="height:40px;padding:0 14px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#FFFFFF;background:#000000;border-radius:12px" style-active="transform:scale(.98)"><svg width="14" height="14" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M4 2.6c0-.5.55-.8.98-.55l16.3 9.4c.43.25.43.86 0 1.1l-16.3 9.4A.64.64 0 0 1 4 21.4z"></path></svg><span style="display:{{ labelDisp }}">Google Play</span></a>
     </nav>
   </div>
 </header>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;1200px&quot;,&quot;height&quot;:&quot;64px&quot;}}"></script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;1200px&quot;,&quot;height&quot;:&quot;64px&quot;}}">
+class Component extends DCLogic {
+  state = { narrow: typeof window !== 'undefined' && innerWidth < 560 };
+  componentDidMount() { this.onR = () => { const n = innerWidth < 560; if (n !== this.state.narrow) this.setState({ narrow: n }); }; addEventListener('resize', this.onR); }
+  componentWillUnmount() { removeEventListener('resize', this.onR); }
+  renderVals() { return { labelDisp: this.state.narrow ? 'none' : 'inline' }; }
+}
+</script>
 </body>
 </html>
